@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/13 19:28:15 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/15 14:35:16 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// char	**getmap(int fd)
-// {
-// 	char **map;
-// 	char *line;
-// 	int i;
-// 	int y;
+void	check_map(char **map); 
 
-// 	i = 0;
-// 	line = get_next_line(fd, 0);
-// 	map = malloc(sizeof(char *)*6);
-// 	while (line)
-// 	{
-// 		map[i] = malloc(sizeof(char)*5000);
-// 		y = 0;
-// 		while (line[y++])
-// 			map[i][y] = line[y];
-// 		map[i][y] = '\0';
-// 		i++;		
-// 		line = get_next_line(fd, 0);
-// 	}
-// 	printf("%s",map[i-1]);
-// 	return (map);
-// }
+int ft_strcmp(char *s1, char *s2)
+{
+	int i = 0;
+
+	while((s1[i] == s2[i]) && s1[i] && s2[i])
+		i++;
+	return (s1[i]-s2[i]);
+}
+
+
 char	*ft_strcpy(char *dest, char *src)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (src[i])
 	{
@@ -71,46 +60,68 @@ char	**ft_realloc(char **map, int size)
 	return (new_map);
 }
 
+int	name_checker(char *str)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (len < 4)
+		return (0);
+	if (ft_strcmp(str + len - 4, ".ber") == 0)
+	{
+		printf("C'est bien un .ber\n");
+		return (1);
+	}
+	printf("C'est pas un .ber\n");
+	return (0);
+}
+
+
 char	**getmap(int fd)
 {
-	char	**map = NULL;
+	char	**map;
 	char	*line;
-	int		i = 0;
+	int		i;
 
+	map = NULL;
+	i = 0;
 	line = get_next_line(fd, 0);
 	while (line)
 	{
-		map = ft_realloc(map, i); // agrandir le tableau de pointeurs
+		map = ft_realloc(map, i);
 		map[i] = malloc(sizeof(char) * (ft_strlen(line) + 1));
 		if (!map[i])
-			return (NULL); // gestion d'erreur simple
+			return (NULL);
 		ft_strcpy(map[i], line);
 		free(line);
 		i++;
 		line = get_next_line(fd, 0);
 	}
-	map = ft_realloc(map, i); // ajouter le NULL final
+	map = ft_realloc(map, i);
 	map[i] = NULL;
-	line = get_next_line(fd, 1); // pour free le buffer de GNL si nécessaire
+	line = get_next_line(fd, 1);
 	return (map);
 }
 
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	**map;
+// 	int		i;
 
-int	main(void)
-{
-	int		fd = open("maps/valid/valid2.ber", O_RDONLY);
-	char	**map;
-	int		i = 0;
-
-	if (fd < 0)
-	{
-		perror("open");
-		return (1);
-	}
-	map = getmap(fd);
-	if (!map)
-		return (1);
-	while (map[i])
-		printf("%s", map[i++]); // pas \n car get_next_line le garde
-	return (0);
-}
+// 	i = 0;
+// 	fd = open("maps/valid/valid5.ber", O_RDONLY);
+// 	if (fd < 0)
+// 	{
+// 		perror("open");
+// 		return (1);
+// 	}
+// 	map = getmap(fd);
+// 	if (!map)
+// 		return (1);
+// 	while (map[i])
+// 		printf("%s", map[i++]);
+// 	printf("map checking >>>>\n");
+// 	check_map(map);
+// 	return (0);
+// }
