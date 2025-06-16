@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/15 14:35:16 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/16 11:13:42 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../My_libft/headers/libft.h"
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-void	check_map(char **map); 
-
-int ft_strcmp(char *s1, char *s2)
-{
-	int i = 0;
-
-	while((s1[i] == s2[i]) && s1[i] && s2[i])
-		i++;
-	return (s1[i]-s2[i]);
-}
-
+#include "../headers/so_long.h"
 
 char	*ft_strcpy(char *dest, char *src)
 {
@@ -75,7 +60,6 @@ int	name_checker(char *str)
 	printf("C'est pas un .ber\n");
 	return (0);
 }
-
 
 char	**getmap(int fd)
 {

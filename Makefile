@@ -3,32 +3,64 @@ NAME = so_long
 
 # === Dossiers ===
 SRCS_DIR = srcs
-HEADERS_DIR = HEADERS
+OBJDIR = objs
 LIBFT_DIR = My_libft
+SO_LONG_DIR = headers
+MLX_DIR = minilibx-linux-master
 
 # === Compilation ===
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-INCLUDES = -I$(HEADERS_DIR) -I$(LIBFT_DIR)
+CFLAGS = 
+INCLUDES = -I$(SO_LONG_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+LDFLAGS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd -no-pie
 
 # === Fichiers sources ===
-SRCS = $(SRCS_DIR)/map.c
+SRCS = $(SRCS_DIR)/map.c \
+	   $(SRCS_DIR)/map_checker.c \
+	   $(SRCS_DIR)/map_utils.c \
+	   $(SRCS_DIR)/flood_fill.c \
+	   main.c \
+		$(SRCS_DIR)/initialize.c \
+		$(SRCS_DIR)/player.c 
+
+# === Objets dans le dossier objs ===
+OBJS = $(SRCS:.c=.o)
+OBJS := $(OBJS:srcs/%=$(OBJDIR)/%)
+
+# === Librairies ===
 LIBFT = $(LIBFT_DIR)/libft.a
+MLX = $(MLX_DIR)/libmlx.a
 
 # === Règles ===
 all: $(NAME)
 
-$(NAME): $(SRCS) $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) $(SRCS) $(LIBFT) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
+
+# Compilation des .o en respectant le dossier objs/
+$(OBJDIR)/%.o: srcs/%.c
+	@mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJDIR)/main.o: main.c
+	@mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR) CFLAGS="-Wall -Wextra -Werror -fPIC"
+	$(MAKE) -C $(LIBFT_DIR)
 
-clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
+$(MLX):
+	$(MAKE) -C $(MLX_DIR)
+
+clean:	
+	$(MAKE) clean -C $(LIBFT_DIR)
+	$(MAKE) clean -C $(MLX_DIR)
+	rm -rf $(OBJDIR)
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	$(MAKE) fclean -C $(LIBFT_DIR)
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re

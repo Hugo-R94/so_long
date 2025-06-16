@@ -1,0 +1,1 @@
+cc main.c srcs/map.c srcs/flood_fill.c srcs/map_checker.c -LMy_libft -lft -IMy_libft -o so_long_test
