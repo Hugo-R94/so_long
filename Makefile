@@ -19,9 +19,11 @@ SRCS = $(SRCS_DIR)/map.c \
 	   $(SRCS_DIR)/map_checker.c \
 	   $(SRCS_DIR)/map_utils.c \
 	   $(SRCS_DIR)/flood_fill.c \
-	   main.c \
-		$(SRCS_DIR)/initialize.c \
-		$(SRCS_DIR)/player.c 
+	   main2.c \
+		$(SRCS_DIR)/init_so.c \
+		$(SRCS_DIR)/player.c \
+		$(SRCS_DIR)/display.c \
+		$(SRCS_DIR)/coin.c 
 
 # === Objets dans le dossier objs ===
 OBJS = $(SRCS:.c=.o)
@@ -42,7 +44,7 @@ $(OBJDIR)/%.o: srcs/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/main.o: main.c
+$(OBJDIR)/main2.o: main2.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 

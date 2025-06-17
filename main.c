@@ -59,15 +59,6 @@ int	name_checker(char *str);
 // 	return (0);
 // }
 
-typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_vars;
 
 void	my_mlx_pixel_put(t_vars *data, int x, int y, int color)
 {

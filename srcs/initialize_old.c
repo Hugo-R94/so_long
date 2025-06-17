@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize.c                                       :+:      :+:    :+:   */
+/*   initialize_old.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:02:22 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/16 16:38:30 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/17 17:07:08 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_texture	initialize_still(void *mlx_ptr)
 
 	return (tx_set);
 }
+
 void	calculate_offset(int height, int width, char **map, int tilesize, int *offset_x,int *offset_y)
 {
 	int	rows = 0;
@@ -99,5 +100,5 @@ void	render_background(void *mlx_ptr,void *win_ptr, t_texture tx_set, char **map
 		}
 		i++;
 	}
-	
 }
+
