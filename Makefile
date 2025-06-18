@@ -10,7 +10,7 @@ MLX_DIR = minilibx-linux-master
 
 # === Compilation ===
 CC = gcc
-CFLAGS = 
+CFLAGS = -g
 INCLUDES = -I$(SO_LONG_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 LDFLAGS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd -no-pie
 
@@ -23,7 +23,8 @@ SRCS = $(SRCS_DIR)/map.c \
 		$(SRCS_DIR)/init_so.c \
 		$(SRCS_DIR)/player.c \
 		$(SRCS_DIR)/display.c \
-		$(SRCS_DIR)/coin.c 
+		$(SRCS_DIR)/coin.c \
+		$(SRCS_DIR)/so_long.c 
 
 # === Objets dans le dossier objs ===
 OBJS = $(SRCS:.c=.o)

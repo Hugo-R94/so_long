@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:12:23 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/17 18:04:16 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/18 17:44:58 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ int	calculate_tile_size_n_mapsize(t_vars *v)
 {
 	int	rows = 0;
 	int	cols = 0;
-	int tile_w;
-	int tile_h;
-	int ret;
 	
 	while (v->t_map.map[rows])
 	{
@@ -27,8 +24,6 @@ int	calculate_tile_size_n_mapsize(t_vars *v)
 			cols++;
 		rows++;
 	}
-	tile_w = RES_X / cols;
-	tile_h = RES_Y / rows;
 	v->tile_size = 100;
 	v->t_map.height_px = rows * v->tile_size;
 	v->t_map.width_px = cols * v->tile_size;
@@ -42,6 +37,7 @@ int	calculate_tile_size_n_mapsize(t_vars *v)
 	// 	v->tile_size = 125;
 	// else
 	// 	v->tile_size = 500;
+	return 0;
 }
 void	calculate_offset(t_vars *v)
 {
@@ -61,6 +57,7 @@ void	calculate_offset(t_vars *v)
 	y_map_size = rows * v->tile_size;
 	v->offset_x = (RES_X - x_map_size)/2;
 	v->offset_y = (RES_Y- y_map_size)/2;
+	v->moving = 0;
 }
 // calculate_map_px_size(t_vars *v)
 // {
@@ -68,8 +65,22 @@ void	calculate_offset(t_vars *v)
 	
 // 	map_size = v->tile_size *v->
 // }
+// void load_texture(t_my_img *img, void *mlx, char *path)
+// {
+// 	int w, h;
+// 	img->img_ptr = mlx_xpm_file_to_image(mlx, path, &w, &h);
+// 	if (!img->img_ptr)
+// 	{
+// 		ft_putendl_fd("Erreur chargement image", 2);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	img->width = w;
+// 	img->height = h;
+// 	img->addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->line_length, &img->endian);
+// }
 
-void	initialize_still(t_vars *v)
+
+void	init_texture(t_vars *v)
 {
 	int			size;
 
@@ -104,6 +115,94 @@ void	initialize_still(t_vars *v)
 		ft_putendl_fd("Erreur: exit.xpm non chargé", 2);
 		exit(EXIT_FAILURE);
 	}
+}
+
+// void	init_my_img(t_my_img *img)
+// {
+// 	img->img_ptr = NULL;
+// 	img->addr = NULL;
+// 	img->bpp = 0;
+// 	img->line_length = 0;
+// 	img->endian = 0;
+// 	img->width = 0;
+// 	img->height = 0;
+// }
+// void	init_all_textures(t_texture *tx)
+// {
+// 	init_my_img(&tx->wall);
+// 	init_my_img(&tx->ground);
+// 	init_my_img(&tx->coin);
+// 	init_my_img(&tx->player);
+// 	init_my_img(&tx->exit);
+// }
+
+// void	init_texture(t_vars *v)
+// {
+// 	load_texture(&v->tx.wall, v->mlx, "placeholder_assets/wall.xpm");
+// 	load_texture(&v->tx.ground, v->mlx, "placeholder_assets/ground.xpm");
+// 	load_texture(&v->tx.coin, v->mlx, "placeholder_assets/coin_0.xpm");
+// 	load_texture(&v->tx.player, v->mlx, "placeholder_assets/player.xpm");
+// 	load_texture(&v->tx.exit, v->mlx, "placeholder_assets/exit.xpm");
+// }
+
+// void	init_texture(t_vars *v)
+// {
+// 	load_texture(&v->tx.wall, v->mlx, "placeholder_assets/wall.xpm");
+// 	if (!v->tx.wall.img_ptr)
+// 	{
+// 		ft_putendl_fd("Erreur: wall.xpm non chargé", 2);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	load_texture(&v->tx.ground, v->mlx,"placeholder_assets/ground.xpm");
+// 	if (!v->tx.ground.img_ptr)
+// 	{
+// 		ft_putendl_fd("Erreur: ground.xpm non chargé", 2);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	load_texture(&v->tx.coin, v->mlx, "placeholder_assets/coin_0.xpm");
+// 	if (!v->tx.coin.img_ptr)
+// 	{
+// 		ft_putendl_fd("Erreur: coin.xpm non chargé", 2);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	load_texture(&v->tx.player, v->mlx, "placeholder_assets/player.xpm");
+// 	if (!v->tx.player.img_ptr)
+// 	{
+// 		ft_putendl_fd("Erreur: hulk_still.xpm non chargé", 2);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	load_texture(&v->tx.exit, v->mlx, "placeholder_assets/exit.xpm");
+// 	if (!v->tx.exit.img_ptr)
+// 	{
+// 		ft_putendl_fd("Erreur: exit.xpm non chargé", 2);
+// 		exit(EXIT_FAILURE);
+// 	}
+// }
+
+void	get_exit(t_vars *v)
+{
+	int x;
+	int	y;
+	
+	x = 0;;
+	y = 0;
+	while (v->t_map.map[x])
+	{
+		y = 0;
+		while (v->t_map.map[x][y])
+		{
+			
+			if (v->t_map.map[x][y] == 'E')
+			{
+				v->exit.ex = x;
+				v->exit.ey = y;
+				v->exit.open = 0;
+			}	
+			y++;
+		}
+		x++;
+	}
+	
 }
 
 void	render_background(t_vars *v)

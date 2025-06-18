@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:41:52 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/17 13:59:07 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/18 11:03:44 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,37 @@ typedef struct s_player {
 	void  *img;
 } t_player;
 
-int key_handler_p(int keycode, t_player player)
-{
-	if (keycode == 32)
-		printf("SPACE");
-    else if (keycode == 97 || keycode == 65361)
-	{
-		player.y -= 0.2; 
-        ft_printf("LEFT (A / ARROW_LEFT)\n");
-	}
-    else if (keycode == 100 || keycode == 65363)
-	{
-		player.y += 0.2; 
-        ft_printf("RIGHT (D / ARROW_RIGHT)\n");
-	}
-    else if (keycode == 115 || keycode == 65364)
-	{
-		player.x -= 0.2; 
-        ft_printf("DOWN (S / ARROW_DOWN)\n");
-	}
-    else if (keycode == 119 || keycode == 65362)
-     {
-		player.x += 0.2; 
-		ft_printf("UP (W / ARROW_UP)\n");
-	 }
-    else
-       ft_printf("%d\n", keycode);
-    return (0);
-}
+// int key_handler_p(int keycode, t_player player)
+// {
+// 	if (keycode == 32)
+// 	{
+// 		printf("SPACE");
+		
+// 	}
+//     else if (keycode == 97 || keycode == 65361)
+// 	{
+// 		player.y -= 0.2; 
+//         ft_printf("LEFT (A / ARROW_LEFT)\n");
+// 	}
+//     else if (keycode == 100 || keycode == 65363)
+// 	{
+// 		player.y += 0.2; 
+//         ft_printf("RIGHT (D / ARROW_RIGHT)\n");
+// 	}
+//     else if (keycode == 115 || keycode == 65364)
+// 	{
+// 		player.x -= 0.2; 
+//         ft_printf("DOWN (S / ARROW_DOWN)\n");
+// 	}
+//     else if (keycode == 119 || keycode == 65362)
+//      {
+// 		player.x += 0.2; 
+// 		ft_printf("UP (W / ARROW_UP)\n");
+// 	 }
+//     else
+//        ft_printf("%d\n", keycode);
+//     return (0);
+// }
 #include <stdio.h>
 
 void get_player_abs_pos(char **map, double *px, double *py)

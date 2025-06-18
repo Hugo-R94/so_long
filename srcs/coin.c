@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:21:26 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/17 18:05:13 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:31:16 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	get_coin_count(t_vars *vars)
 		}
 	i++;
 	}
-	printf("coin count = %i\n",count);
 	vars->coin_count = count;
 }
 
@@ -68,7 +67,15 @@ void load_coin(t_vars *vars)
     }
 }
 
-
+void	init_coins(t_vars *v)
+{
+	int i;
+	
+	i = 0;
+	get_coin_count(v);
+	load_coin(v);
+	v->coin_get = 0;
+}
 
 void render_coin(t_vars *v, t_coin *coin)
 {

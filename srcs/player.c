@@ -6,13 +6,13 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:26:17 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/17 18:17:15 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/18 17:57:40 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	move_player(t_vars *vars, double dx, double dy)
+move_player(t_vars *vars, double dx, double dy)
 {
 	double	new_x;
 	double	new_y;
@@ -21,6 +21,7 @@ void	move_player(t_vars *vars, double dx, double dy)
 	
 	new_x = (vars->player.view_x) + dx;
 	new_y = (vars->player.view_y) + dy;
+	printf("dx = %f  | dy = %f\n",dx,dy);
 	new_x_g = (int )(new_x + 0.5);
 	new_y_g = (int )(new_y + 0.85);
 	if (new_x_g < 0 || new_y_g < 0 || !vars->t_map.map[new_y_g] || !vars->t_map.map[new_y_g][new_x_g])
@@ -32,7 +33,7 @@ void	move_player(t_vars *vars, double dx, double dy)
 	vars->player.grid_x = new_x_g;
 	vars->player.grid_y = new_y_g;
 } 
-int	key_handler_p(int keycode, t_vars *v)
+int	key_pressed_p(int keycode, t_vars *v)
 {
 	printf("key : %i pressed\n",keycode);
 	if (keycode == 65307)
@@ -45,6 +46,21 @@ int	key_handler_p(int keycode, t_vars *v)
 		v->input.up = 1;
 	if (keycode == 115 || keycode == 65364)
 		v->input.down = 1;
+	if (keycode == 32)
+	{
+		printf("SPACE");
+		player_jump(v);
+	}
+	v->moving = 1;
+	return (0);
+}
+int key_handler_p(int keycode, t_vars *v)
+{
+	if (keycode == 32)
+	{
+		printf("SPACE");
+		player_jump(v);
+	}
 	return (0);
 }
 
@@ -59,7 +75,37 @@ int	key_release_p(int keycode, t_vars *v)
 		v->input.up = 0;
 	if (keycode == 115 || keycode == 65364)
 		v->input.down = 0;
+		if (keycode == 32)
+	v->moving = 0;
 	return (0);
+}
+void	player_jump(t_vars *v)
+{
+	double jump_power = -0.6;
+	double gravity = 1.2;
+	double jump_duration = 1.0;
+	double dt = 0.016;
+	int		start_y;
+	if (!v->player.jump)
+	{
+		v->player.jump_timer = 0.0;
+		v->player.jump = 1;
+		v->player.vel_y = jump_power;
+		start_y = v->player.view_y;
+	}
+
+	if (v->player.jump)
+	{
+		v->player.jump_timer += dt;
+		v->player.vel_y += gravity * dt;
+
+		if (v->player.jump_timer >= jump_duration)
+		{
+			v->player.view_y = start_y;
+			v->player.vel_y = 0;
+			v->player.jump = 0;
+		}
+	}
 }
 
 
@@ -94,36 +140,55 @@ int	key_release_p(int keycode, t_vars *v)
 
 int	game_loop(t_vars *v)
 {
-	double dx = 0;
-	double dy = 0;
-	double	m_speed;
-	int i; 
-	
-	i = 0;
-	m_speed = 0.055;
+	double	accel = 0.02;
+	double	friction = 0.85;
+	int		i;
+
 	if (v->input.left)
-		dx -= m_speed;
+		v->player.vel_x -= accel;
 	if (v->input.right)
-		dx += m_speed;
+		v->player.vel_x += accel;
 	if (v->input.up)
-		dy -= m_speed;
+		v->player.vel_y -= accel;
 	if (v->input.down)
-		dy +=	m_speed;
-	if (dx != 0 || dy != 0)
-		move_player(v, dx, dy);
+		v->player.vel_y += accel;
+	v->player.vel_x *= friction;
+	v->player.vel_y *= friction;
+	move_player(v, v->player.vel_x, v->player.vel_y);
+	//continu
+	// if (v->input.left)
+	// 	move_player(v, -0.1, 0);
+	// if (v->input.right)
+	// 	move_player(v, 0.1, 0);
+	// if (v->input.up)
+	// 	move_player(v, 0, -0.1);
+	// if (v->input.down)
+	// 	move_player(v, 0, 0.1);
 	i = 0;
 	while (i < v->coin_count)
-	{	
-		if (v->player.grid_x == v->coin[i].cx && v->player.grid_y == v->coin[i].cy)
+	{
+		if (v->player.grid_x == v->coin[i].cx && v->player.grid_y == v->coin[i].cy && v->coin[i].vis == 1)
+		{
 			v->coin[i].vis = 0;
+			v->coin_get++;
+		}
 		i++;
 	}
+	if (v->coin_get == v->coin_count)
+		v->exit.open = 1;
+	if (v->player.grid_x == v->exit.ex && v->player.grid_y == v->exit.ey && v->exit.open == 1)
+	{
+		printf("VICTOIRE !!\n");
+		exit(EXIT_SUCCESS);
+	}
+		
 	update_camera(v);
 	render_frame(v);
 	usleep(16666);
-
 	return (0);
 }
+
+
 
 
 void get_player_grid_pos(t_vars *v)
@@ -148,10 +213,12 @@ void get_player_grid_pos(t_vars *v)
 	}
 }
 
+
 void render_player(t_vars *v)
 {
     int px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
     int py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y;
+
 
     if (!v->tx.player)
     {
@@ -160,3 +227,4 @@ void render_player(t_vars *v)
     }
     mlx_put_image_to_window(v->mlx, v->win, v->tx.player, px, py);
 }
+

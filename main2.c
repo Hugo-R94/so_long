@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:57 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/17 17:32:42 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/18 17:45:22 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,25 @@ int	main(void)
 	printf("map checking >>>> ");
 	vars->mlx = mlx_init();
 	if (!vars->mlx)
+	{
+		ft_printf("vars mlx failed.");
 		return (1);
+	}
 	vars->win = mlx_new_window(vars->mlx, RES_X, RES_Y, "SO LONG");
 	if (!vars->win)
 		return (1);
 	vars->img = mlx_new_image(vars->mlx, RES_X, RES_Y);
 	if (!vars->img)
 		return (1);
-	initialize_still(vars);
-	get_player_grid_pos(vars);
-	//render_frame(vars);
 	check_map(vars->t_map.map);
-	calculate_tile_size_n_mapsize(vars);
-	calculate_offset(vars);
-	get_coin_count(vars);
-	load_coin(vars);
-	mlx_hook(vars->win, 2, 1L << 0, key_handler_p, vars);     // key down
+	init_level(vars);
+	mlx_hook(vars->win, 2, 1L << 0, key_pressed_p, vars);     // key down
 	mlx_hook(vars->win, 3, 1L << 1, key_release_p, vars);   // key up
-	mlx_loop_hook(vars->mlx, game_loop, vars);           // loop appelée à chaque "frame"
+	//mlx_hook(vars->win, 2, 1L << 0, key_handler_p, vars);
+	mlx_loop_hook(vars->mlx, game_loop, vars);           // loop appelée à chaque "frame"	
+	printf("ca marche jusque la\n");
 	mlx_loop(vars->mlx);
+	
 	free_tab(vars->t_map.map);
 	free(vars);
 	return (0);

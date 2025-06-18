@@ -23,6 +23,16 @@ typedef struct s_input {
 	int down;
 }	t_input;
 
+typedef struct s_my_img {
+	void	*img_ptr;      // image MLX
+	char	*addr;         // retour de mlx_get_data_addr
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+} t_my_img;
+
 typedef struct s_texture
 {
 	void	*wall;
@@ -32,11 +42,16 @@ typedef struct s_texture
 	void	*exit;
 }	t_texture;
 
+
 typedef struct s_player {
 	double view_x;
 	double view_y;
 	int    grid_x;
 	int    grid_y;
+	int		jump;
+	double	jump_timer;
+	double	vel_x;
+	double	vel_y;
 } t_player;
 
 typedef	struct s_coin
@@ -65,6 +80,13 @@ typedef struct s_camera {
 	int limit_bottom;
 } t_camera;
 
+typedef struct s_exit
+{
+	int		open;
+	int		ex;
+	int		ey;
+}	t_exit;
+
 typedef struct	s_vars {
 	void		*mlx;
 	void		*win;
@@ -75,11 +97,13 @@ typedef struct	s_vars {
 	int			offset_y;
 	bool		moving;
 	int			keys[256]; // <--- pour savoir si une touche est pressée
+	t_exit		exit;
 	t_input		input;	
 	t_texture	tx;
 	t_player	player;
 	t_camera	t_cam;
 	int			coin_count;
+	int			coin_get;
 	t_coin		*coin;
 }				t_vars;
 
@@ -109,19 +133,28 @@ void	calculate_map_px_size(t_vars *v);
 
 //player
 void 	render_player(t_vars *v);
-int 	key_handler_p(int keycode, t_vars *v);
+int 	key_pressed_p(int keycode, t_vars *v);
 void	render_frame(t_vars *v);
 void	get_player_grid_pos(t_vars *v);
 int		key_release_p(int keycode, t_vars *v);
-int		key_handler_p(int keycode, t_vars *v);
+int		key_pressed_p(int keycode, t_vars *v);
 int 	game_loop(t_vars *v);
-
+void	player_jump(t_vars *v);
+int 	key_handler_p(int keycode, t_vars *v);
 //camera
 void update_camera(t_vars *v);
 
+void	init_texture(t_vars *v);
 //coins
 void 	load_coin(t_vars *vars);
 void 	render_coin(t_vars *v, t_coin *coin);
 void	get_coin_count(t_vars *vars);	
+
+void	get_exit(t_vars *v);
+void	init_level(t_vars *v);
+void	init_coins(t_vars *v);
+
+// void	init_all_textures(t_texture *tx);
+void	Loop_function(t_vars *v);
 
 #endif
