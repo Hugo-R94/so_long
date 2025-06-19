@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/17 15:21:26 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/18 14:31:16 by hrouchy          ###   ########.fr       */
+/*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
+/*   Updated: 2025/06/19 14:23:10 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,11 @@ void	init_coins(t_vars *v)
 	v->coin_get = 0;
 }
 
-void render_coin(t_vars *v, t_coin *coin)
+void draw_coin(t_vars *v, int index)
 {
-	if (!v->tx.coin || !coin->vis)
-		return;
-
-	int cx = (coin->cx * v->tile_size ) - (int)v->t_cam.x;
-	int cy = (coin->cy * v->tile_size) - (int)v->t_cam.y;
-
-	mlx_put_image_to_window(v->mlx, v->win, v->tx.coin, cx, cy);
+    int cx = (v->coin[index].cx * v->tile_size ) - (int)v->t_cam.x;
+	int cy = (v->coin[index].cy * v->tile_size) - (int)v->t_cam.y;
+	if (v->coin[index].vis == 1)
+   		draw_image(&v->frame, &v->tx.coin, cx, cy);
 }
+

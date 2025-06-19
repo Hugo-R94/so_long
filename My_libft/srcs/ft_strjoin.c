@@ -6,30 +6,12 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:54:12 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/05/13 11:03:29 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/19 11:53:03 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	char	*ft_strcat(char *dest, const char *src)
-{
-	int	i;
-	int	e;
-
-	i = 0;
-	e = 0;
-	while (dest[i] != '\0')
-		i++;
-	while (src[e] != '\0')
-	{
-		dest[i] = src[e];
-		e++;
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

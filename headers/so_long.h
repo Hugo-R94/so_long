@@ -9,11 +9,11 @@
 #include <stdlib.h>
 
 #ifndef RES_X
-# define RES_X 1280
+# define RES_X 1920
 #endif
 
 #ifndef RES_Y
-# define RES_Y 840
+# define RES_Y 1080
 #endif
 
 typedef struct s_input {
@@ -23,23 +23,13 @@ typedef struct s_input {
 	int down;
 }	t_input;
 
-typedef struct s_my_img {
-	void	*img_ptr;      // image MLX
-	char	*addr;         // retour de mlx_get_data_addr
-	int		bpp;
-	int		line_length;
-	int		endian;
-	int		width;
-	int		height;
-} t_my_img;
-
 typedef struct s_texture
 {
-	void	*wall;
-	void	*ground;
-	void	*coin;
-	void	*player;
-	void	*exit;
+	t_img	wall;
+	t_img	ground;
+	t_img	coin;
+	t_img	player;
+	t_img	exit;
 }	t_texture;
 
 
@@ -93,7 +83,7 @@ typedef struct	s_vars {
 	void		*img;
 	t_map		t_map;
 	int			tile_size;
-	int			offset_x;
+	int			offset_x;//peut etre a supprimer
 	int			offset_y;
 	bool		moving;
 	int			keys[256]; // <--- pour savoir si une touche est pressée
@@ -101,10 +91,11 @@ typedef struct	s_vars {
 	t_input		input;	
 	t_texture	tx;
 	t_player	player;
-	t_camera	t_cam;
+	t_camera	t_cam; 
 	int			coin_count;
 	int			coin_get;
 	t_coin		*coin;
+	t_img		frame;
 }				t_vars;
 
 //map building and checking ----- on touche pas ca marche
@@ -124,37 +115,43 @@ char	**ft_realloc(char **map, int size);
 int		name_checker(char *str);
 char	**getmap(int fd);
 
-//initialise texture
-void	initialize_still(t_vars *v);
-void	render_background(t_vars *v);
+//initialize func
+void	init_all(t_vars *v);
+//init texture func
+void	init_img_struct(t_img *txt);
+void	get_img(t_vars *v, t_img *img, const char *txt_name);
+void	init_texture(t_vars *v, t_texture *txt);
+//
+
+//image drawing with alpha
+unsigned int	get_pixel(t_img *img, int x, int y);
+void			put_pixel(t_img *img, int x, int y, unsigned int color);
+void	draw_image(t_img *dst, t_img *src, int dst_x, int dst_y);
+//background
+int	calculate_tile_size_n_mapsize(t_vars *v);
 void	calculate_offset(t_vars *v);
-int		calculate_tile_size_n_mapsize(t_vars *v);
-void	calculate_map_px_size(t_vars *v);
+void	draw_background(t_vars *v, t_img *dst);
+
+//camera 
+void update_camera(t_vars *v);
+int init_frame(t_vars *v, t_img *frame, int width, int height);
+void render_frame(t_vars *v);
 
 //player
-void 	render_player(t_vars *v);
-int 	key_pressed_p(int keycode, t_vars *v);
-void	render_frame(t_vars *v);
-void	get_player_grid_pos(t_vars *v);
-int		key_release_p(int keycode, t_vars *v);
-int		key_pressed_p(int keycode, t_vars *v);
-int 	game_loop(t_vars *v);
-void	player_jump(t_vars *v);
-int 	key_handler_p(int keycode, t_vars *v);
-//camera
-void update_camera(t_vars *v);
+void get_player_grid_pos(t_vars *v);
+void draw_player(t_vars *v);
+//player mouvements
+void	move_player(t_vars *vars, double dx, double dy);
+void	key_pressed_p(int keycode, t_vars *v);
+void	key_release_p(int keycode, t_vars *v);
+void	game_loop(t_vars *v);
 
-void	init_texture(t_vars *v);
 //coins
+void	get_coin_count(t_vars *vars);
 void 	load_coin(t_vars *vars);
-void 	render_coin(t_vars *v, t_coin *coin);
-void	get_coin_count(t_vars *vars);	
-
-void	get_exit(t_vars *v);
-void	init_level(t_vars *v);
 void	init_coins(t_vars *v);
+void draw_coin(t_vars *v, int index);
 
-// void	init_all_textures(t_texture *tx);
-void	Loop_function(t_vars *v);
-
+//exit
+void	get_exit(t_vars *v);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 17:03:30 by hugz              #+#    #+#             */
-/*   Updated: 2025/06/16 11:13:06 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/19 10:24:26 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,39 +32,6 @@ int	flood_fill_element(char **map, int x, int y, char element)
 	return (count);
 }
 
-// char	**clone_map(char **map)
-// {
-// 	char	**new_map;
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	while (map[i])
-// 		i++;
-// 	new_map = malloc(sizeof(char *) * (i + 1));
-// 	if (!new_map)
-// 		return (NULL);
-// 	i = 0;
-// 	while (map[i])
-// 	{
-// 		j = 0;
-// 		while (map[i][j])
-// 			j++;
-// 		new_map[i] = malloc(sizeof(char) * (j + 1));
-// 		if (!new_map[i])
-// 			return (NULL);
-// 		j = 0;
-// 		while (map[i][j])
-// 		{
-// 			new_map[i][j] = map[i][j];
-// 			j++;
-// 		}
-// 		new_map[i][j] = '\0';
-// 		i++;
-// 	}
-// 	new_map[i] = NULL;
-// 	return (new_map);
-// }
 static char	**allocate_clone(char **map)
 {
 	char	**new_map;

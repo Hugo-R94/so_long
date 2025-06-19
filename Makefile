@@ -15,17 +15,19 @@ INCLUDES = -I$(SO_LONG_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 LDFLAGS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd -no-pie
 
 # === Fichiers sources ===
-SRCS = $(SRCS_DIR)/map.c \
-	   $(SRCS_DIR)/map_checker.c \
-	   $(SRCS_DIR)/map_utils.c \
-	   $(SRCS_DIR)/flood_fill.c \
-	   main2.c \
-		$(SRCS_DIR)/init_so.c \
+SRCS =  $(SRCS_DIR)/map.c \
+	    $(SRCS_DIR)/map_checker.c \
+	    $(SRCS_DIR)/map_utils.c \
+	    $(SRCS_DIR)/flood_fill.c \
+		$(SRCS_DIR)/background.c \
+		$(SRCS_DIR)/init.c \
 		$(SRCS_DIR)/player.c \
-		$(SRCS_DIR)/display.c \
+		$(SRCS_DIR)/camera.c \
+		$(SRCS_DIR)/draw.c \
 		$(SRCS_DIR)/coin.c \
-		$(SRCS_DIR)/so_long.c 
-
+		$(SRCS_DIR)/player_mov.c \
+		$(SRCS_DIR)/loop.c \
+		main.c 
 # === Objets dans le dossier objs ===
 OBJS = $(SRCS:.c=.o)
 OBJS := $(OBJS:srcs/%=$(OBJDIR)/%)
@@ -45,7 +47,7 @@ $(OBJDIR)/%.o: srcs/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/main2.o: main2.c
+$(OBJDIR)/main.o: main.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 

@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:26:03 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/13 16:17:49 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/19 11:52:28 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ int		ft_putunsigned(int nb);
 void	ft_print_bit(unsigned char octet);
 unsigned char	ft_swap_bits(unsigned char octet);
 unsigned char	ft_reverse_bits(unsigned char octet);
-
+char	*ft_strcat(char *dest, const char *src);
 #endif
