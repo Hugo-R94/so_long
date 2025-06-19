@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 14:29:17 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:45:08 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	init_all(t_vars *v)
 		return;
 	init_texture(v, &v->tx);
 	// init_background(v);
+	
 	calculate_tile_size_n_mapsize(v);
 	calculate_offset(v);
 	get_player_grid_pos(v);
 	init_coins(v);
-	get_exit(v);
 	
+	get_exit(v);
 	// init_player(v);
 	// init_coins(v);
 	// init_camera(v);
@@ -95,18 +96,35 @@ void	init_texture(t_vars *v, t_texture *txt)
 	if (!txt)
 		return;
 	//init img to NULL
-	init_img_struct(&txt->wall);
+	init_img_struct(&txt->wall.bottom);
+	init_img_struct(&txt->wall.top);
+	init_img_struct(&txt->wall.left);
+	init_img_struct(&txt->wall.right);
+	init_img_struct(&txt->wall.middle);
+	init_img_struct(&txt->wall.corner);
 	init_img_struct(&txt->ground);
 	init_img_struct(&txt->coin);
 	init_img_struct(&txt->player);
 	init_img_struct(&txt->exit);
-
+	init_img_struct(&txt->shadow);
+	
 	//get images
-	get_img(v, &txt->wall, "wall_1");
 	get_img(v, &txt->ground, "ground");
 	get_img(v, &txt->coin, "coin_0");
 	get_img(v, &txt->player, "player_1");
 	get_img(v, &txt->exit, "exit");
+	get_img(v, &txt->shadow, "shadow");
+	get_img(v, &txt->wall.top, "wall_1");
+	get_img(v, &txt->wall.bottom, "wall_bottom");
+	get_img(v, &txt->wall.right, "wall_right");
+	get_img(v, &txt->wall.left, "wall_left");
+	get_img(v, &txt->wall.middle, "wall_mid");
+	get_img(v, &txt->wall.corner, "corner");
+	printf("sizeof(t_img) = %zu\n", sizeof(t_img));
+printf("sizeof(t_wall_textures) = %zu\n", sizeof(t_wall_textures));
+printf("sizeof(t_texture) = %zu\n", sizeof(t_texture));
+printf("sizeof(t_vars) = %zu\n", sizeof(t_vars));
 
 	init_frame(v, &v->frame, RES_X, RES_Y);
+	
 }

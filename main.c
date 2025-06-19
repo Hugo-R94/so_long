@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:57 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 14:18:33 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:46:03 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ int	main(void)
 	init_all(vars);
 	// printf("offsetx = %i | offset_y = %i\n ",vars->offset_x,vars->offset_y);
 	// printf("cam x = %f | cam y = %f\n",vars->t_cam.x,vars->t_cam.y);
-	render_frame(vars);
+	//render_frame(vars);
+	
 	mlx_hook(vars->win, 2, 1L << 0, key_pressed_p, vars);     // key down
 	mlx_hook(vars->win, 3, 1L << 1, key_release_p, vars);   // key up
 	mlx_loop_hook(vars->mlx, game_loop, vars);           // loop appelée à chaque "frame"
-	mlx_loop_hook(vars->mlx, game_loop, vars);
 	mlx_loop(vars->mlx);
 	return 0;
 }

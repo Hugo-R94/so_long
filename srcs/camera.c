@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 14:36:59 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:29:31 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void render_frame(t_vars *v)
     memset(v->frame.data, 0, v->frame.height * v->frame.size_line); // nettoie frame
 
     draw_background(v, &v->frame);
-    // render_coin(v, &v->frame); // si tu en as
 	while (i < v->coin_count)
     		draw_coin(v, i++);
+	draw_shadow(v);
     draw_player(v);
-	g
+	
     mlx_put_image_to_window(v->mlx, v->win, v->frame.image, 0, 0);
 }
 
@@ -42,7 +42,7 @@ int init_frame(t_vars *v, t_img *frame, int width, int height)
 
 	frame->width = width;
 	frame->height = height;
-
+//	printf("ici ca marche \n");
 	frame->image = (XImage *)mlx_new_image(v->mlx, width, height);
 	if (!frame->image)
 	{
@@ -58,7 +58,6 @@ int init_frame(t_vars *v, t_img *frame, int width, int height)
 	}
 
 	memset(frame->data, 0, height * frame->size_line);
-
 	return (0);
 }
 

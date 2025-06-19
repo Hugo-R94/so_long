@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 14:22:29 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:33:02 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	game_loop(t_vars *v)
 		printf("VICTOIRE !!\n");
 		exit(EXIT_SUCCESS);
 	}
+	
 	update_camera(v);
 	render_frame(v);
 	usleep(500);

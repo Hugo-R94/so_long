@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 13:34:51 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/19 14:59:55 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,11 @@ void draw_player(t_vars *v)
         return;
     }
     draw_image(&v->frame, &v->tx.player, px, py);
+}
+
+void	draw_shadow(t_vars *v)
+{
+	 int px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
+   	 int py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y ;
+	 draw_image(&v->frame, &v->tx.shadow, px, py);
 }

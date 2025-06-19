@@ -23,13 +23,23 @@ typedef struct s_input {
 	int down;
 }	t_input;
 
+typedef struct s_wall_textures {
+    t_img top;
+    t_img bottom;
+    t_img left;
+    t_img right;
+    t_img corner;
+    t_img middle; // chaise pliante par exemple
+} t_wall_textures;
+
 typedef struct s_texture
 {
-	t_img	wall;
+	t_wall_textures	wall;
 	t_img	ground;
 	t_img	coin;
 	t_img	player;
 	t_img	exit;
+	t_img	shadow;
 }	t_texture;
 
 
@@ -140,6 +150,8 @@ void render_frame(t_vars *v);
 //player
 void get_player_grid_pos(t_vars *v);
 void draw_player(t_vars *v);
+void	draw_shadow(t_vars *v);
+
 //player mouvements
 void	move_player(t_vars *vars, double dx, double dy);
 void	key_pressed_p(int keycode, t_vars *v);
