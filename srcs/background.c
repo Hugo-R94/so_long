@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 16:48:56 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/20 18:30:39 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,85 +48,165 @@ void	calculate_offset(t_vars *v)
 	y_map_size = rows * v->tile_size;
 	v->offset_x = (RES_X - x_map_size)/2;
 	v->offset_y = (RES_Y- y_map_size)/2;
+	v->t_map.map_rows = rows;
+	v->t_map.map_cols = cols;
 	v->moving = 0;
 }
 
-void draw_x_wall(t_img *dst, t_vars *v, int x, int y)
+// void draw_x_wall(t_img *dst, t_vars *v, int x, int y)
+// {
+// 	int draw_x = (y * v->tile_size) - (int)v->t_cam.x;
+// 	int draw_y = (x * v->tile_size) - (int)v->t_cam.y;
+
+// 	int rows = v->t_map.map_rows;
+// 	int cols = v->t_map.map_cols;
+
+// 	if ((x + 1 < rows && y + 1 < cols && v->t_map.map[x + 1][y] == '1' && v->t_map.map[x][y + 1] == '1') ||
+// 		(x - 1 >= 0 && y + 1 < cols && v->t_map.map[x - 1][y] == '1' && v->t_map.map[x][y + 1] == '1') ||
+// 		(x - 1 >= 0 && y - 1 >= 0 && v->t_map.map[x - 1][y] == '1' && v->t_map.map[x][y - 1] == '1') ||
+// 		(x + 1 < rows && y - 1 >= 0 && v->t_map.map[x + 1][y] == '1' && v->t_map.map[x][y - 1] == '1'))
+// 	{
+// 		draw_image(dst, &v->tx.wall.corner, draw_x, draw_y);
+// 	}
+// 	else if (x == 0)
+// 		draw_image(dst, &v->tx.wall.top, draw_x, draw_y);
+// 	else if (x == rows - 1)
+// 		draw_image(dst, &v->tx.wall.bottom, draw_x, draw_y);
+// 	else if (y == 0)
+// 		draw_image(dst, &v->tx.wall.left, draw_x, draw_y);
+// 	else if (y == cols - 1)
+// 		draw_image(dst, &v->tx.wall.right, draw_x, draw_y);
+// 	else
+// 		draw_image(dst, &v->tx.wall.middle, draw_x, draw_y); // 💺 Chaise pliante ici
+// }
+
+// void draw_pixel_wall(t_vars *v, int px, int py, int x, int y)
+// {
+//     int draw_x = (y * v->tile_size) - (int)v->t_cam.x + px;
+//     int draw_y = (x * v->tile_size) - (int)v->t_cam.y + py;
+
+//     int rows = v->t_map.map_rows;
+//     int cols = v->t_map.map_cols;
+
+//     uint32_t *wall_tx = NULL;
+
+//     if ((x + 1 < rows && y + 1 < cols && v->t_map.map[x + 1][y] == '1' && v->t_map.map[x][y + 1] == '1') ||
+//         (x - 1 >= 0 && y + 1 < cols && v->t_map.map[x - 1][y] == '1' && v->t_map.map[x][y + 1] == '1') ||
+//         (x - 1 >= 0 && y - 1 >= 0 && v->t_map.map[x - 1][y] == '1' && v->t_map.map[x][y - 1] == '1') ||
+//         (x + 1 < rows && y - 1 >= 0 && v->t_map.map[x + 1][y] == '1' && v->t_map.map[x][y - 1] == '1'))
+//     {
+//         wall_tx = v->opt_txt.wall[5]; // corner
+//     }
+//     else if (x == 0)
+//         wall_tx = v->opt_txt.wall[1]; // top
+//     else if (x == rows - 1)
+//         wall_tx = v->opt_txt.wall[2]; // bottom
+//     else if (y == 0)
+//         wall_tx = v->opt_txt.wall[3]; // left
+//     else if (y == cols - 1)
+//         wall_tx = v->opt_txt.wall[4]; // right
+//     else
+//         wall_tx = v->opt_txt.wall[6]; // middle
+
+//     if (!wall_tx)
+//         return;
+
+//     unsigned int color = wall_tx[py * v->tile_size + px];
+
+//     if (color != 0x000000)
+//         put_pixel(v->frame.image, draw_x, draw_y, color);
+// }
+
+
+// //MARCHEE
+// void draw_pixel_background(t_vars *v, int px, int py)
+// {
+//     int top = (int)v->player.view_y - 3;
+//     int bottom = (int)v->player.grid_y + 3;
+//     int left = (int)v->player.grid_x - 6;
+//     int right = (int)v->player.grid_x + 6;
+
+//     if (top < 0) top = 0;
+//     if (bottom >= v->t_map.map_rows) bottom = v->t_map.map_rows - 1;
+//     if (left < 0) left = 0;
+//     if (right >= v->t_map.map_cols) right = v->t_map.map_cols - 1;
+
+//     for (int ty = top; ty <= bottom; ty++)
+//     {
+//         for (int tx = left; tx <= right; tx++)
+//         {
+//             int draw_x = (tx * v->tile_size) - (int)v->t_cam.x + px;
+//             int draw_y = (ty * v->tile_size) - (int)v->t_cam.y + py;
+
+//             char tile = v->t_map.map[ty][tx];
+//             unsigned int color = 0x000000;
+			
+//             if (tile == '1')
+// 			{
+// 				if (!v->opt_txt.wall)
+// 					printf("c dla merde");
+// 				if (px < 0 || px >= v->tile_size || py < 0 || py >= v->tile_size) {
+// 					printf("Erreur: px ou py hors limites px=%d py=%d\n", px, py);
+// 					return;
+// 				}
+// 				printf("BP\n");	
+//                 color = v->opt_txt.wall[py * v->tile_size + px];
+// 			}
+
+//             else if (tile == 'E')			
+//                 color = v->opt_txt.exit[py * v->tile_size + px];
+//             else
+//                 color = v->opt_txt.ground[py * v->tile_size + px];
+
+//             if (color != 0x000000)
+//                 put_pixel(v->frame.image, draw_x, draw_y, color);
+			
+//         }
+//     }
+// }
+
+void draw_pixel_background(t_vars *v, int px, int py)
 {
-	int draw_x = (y * v->tile_size) - (int)v->t_cam.x;
-	int draw_y = (x * v->tile_size) - (int)v->t_cam.y;
+    int top = (int)v->player.view_y - 3;
+    int bottom = (int)v->player.grid_y + 3;
+    int left = (int)v->player.grid_x - 6;
+    int right = (int)v->player.grid_x + 6;
 
-	int rows = v->t_map.map_rows;
-	int cols = v->t_map.map_cols;
+    if (top < 0) top = 0;
+    if (bottom >= v->t_map.map_rows) bottom = v->t_map.map_rows - 1;
+    if (left < 0) left = 0;
+    if (right >= v->t_map.map_cols) right = v->t_map.map_cols - 1;
 
-	if ((x + 1 < rows && y + 1 < cols && v->t_map.map[x + 1][y] == '1' && v->t_map.map[x][y + 1] == '1') ||
-		(x - 1 >= 0 && y + 1 < cols && v->t_map.map[x - 1][y] == '1' && v->t_map.map[x][y + 1] == '1') ||
-		(x - 1 >= 0 && y - 1 >= 0 && v->t_map.map[x - 1][y] == '1' && v->t_map.map[x][y - 1] == '1') ||
-		(x + 1 < rows && y - 1 >= 0 && v->t_map.map[x + 1][y] == '1' && v->t_map.map[x][y - 1] == '1'))
-	{
-		draw_image(dst, &v->tx.wall.corner, draw_x, draw_y);
-	}
-	else if (x == 0)
-		draw_image(dst, &v->tx.wall.top, draw_x, draw_y);
-	else if (x == rows - 1)
-		draw_image(dst, &v->tx.wall.bottom, draw_x, draw_y);
-	else if (y == 0)
-		draw_image(dst, &v->tx.wall.left, draw_x, draw_y);
-	else if (y == cols - 1)
-		draw_image(dst, &v->tx.wall.right, draw_x, draw_y);
-	else
-		draw_image(dst, &v->tx.wall.middle, draw_x, draw_y); // 💺 Chaise pliante ici
-}
-
-
-
-void draw_background(t_vars *v, t_img *dst)
-{
-    int i, j;
-    int count = 0;
-
-    if (!v->tx.wall.top.image || !v->tx.wall.bottom.image || !v->tx.wall.left.image ||
-        !v->tx.wall.right.image || !v->tx.wall.corner.image)
+    int ty = top;
+    while (ty <= bottom)
     {
-        ft_printf("⚠️ Une texture mur ou corner est NULL\n");
-        return;
-    }
-
-    i = 0;
-    while (v->t_map.map[i])
-    {
-        j = 0;
-        while (v->t_map.map[i][j])
+        int tx = left;
+        while (tx <= right)
         {
-            if (v->t_map.map[i][j] == '1')
-            {
-				int draw_x = (j * v->tile_size) - (int)v->t_cam.x;
-                int draw_y = (i * v->tile_size) - (int)v->t_cam.y;
-                // Ici on passe les indices map, pas les pixels
-                draw_x_wall(dst, v, i, j);
-			  // draw_image(dst, &v->tx.wall.top, draw_x, draw_y);
-                count++;
-            }
-            else if (v->t_map.map[i][j] == 'E')
-            {
-                int draw_x = (j * v->tile_size) - (int)v->t_cam.x;
-                int draw_y = (i * v->tile_size) - (int)v->t_cam.y;
-                draw_image(dst, &v->tx.exit, draw_x, draw_y);
-                count++;
-            }
-            else if (v->t_map.map[i][j] != '\n')
-            {
-                int draw_x = (j * v->tile_size) - (int)v->t_cam.x;
-                int draw_y = (i * v->tile_size) - (int)v->t_cam.y;
-                draw_image(dst, &v->tx.ground, draw_x, draw_y);
-                count++;
-            }
-            j++;
+            int draw_x = (tx * v->tile_size) - (int)v->t_cam.x + px;
+            int draw_y = (ty * v->tile_size) - (int)v->t_cam.y + py;
+
+            char tile = v->t_map.map[ty][tx];
+            unsigned int color = 0x000000;
+
+            if (tile == '1')
+                color = v->opt_txt.wall[py * v->tile_size + px];
+            else if (tile == 'E')
+                color = v->opt_txt.exit[py * v->tile_size + px];
+            else
+                color = v->opt_txt.ground[py * v->tile_size + px];
+
+            if (color != 0x000000)
+                put_pixel(v->frame.image, draw_x, draw_y, color);
+
+            tx++;
         }
-        i++;
+        ty++;
     }
-    ft_printf("Tiles drawn in background: %d\n", count);
 }
+
+
+
 
 void	get_exit(t_vars *v)
 {
@@ -140,16 +220,163 @@ void	get_exit(t_vars *v)
 		y = 0;
 		while (v->t_map.map[x][y])
 		{
-			
 			if (v->t_map.map[x][y] == 'E')
 			{
 				v->exit.ex = x;
 				v->exit.ey = y;
 				v->exit.open = 0;
-			}	
+			}
 			y++;
 		}
 		x++;
 	}
 	
 }
+// t_img *get_wall_texture(t_vars *v, int x, int y)
+// {
+// 	int rows = v->t_map.map_rows;
+// 	int cols = v->t_map.map_cols;
+
+// 	if ((x + 1 < rows && y + 1 < cols && v->t_map.map[x + 1][y] == '1' && v->t_map.map[x][y + 1] == '1') ||
+// 		(x - 1 >= 0 && y + 1 < cols && v->t_map.map[x - 1][y] == '1' && v->t_map.map[x][y + 1] == '1') ||
+// 		(x - 1 >= 0 && y - 1 >= 0 && v->t_map.map[x - 1][y] == '1' && v->t_map.map[x][y - 1] == '1') ||
+// 		(x + 1 < rows && y - 1 >= 0 && v->t_map.map[x + 1][y] == '1' && v->t_map.map[x][y - 1] == '1'))
+// 	{
+// 		return &v->tx.wall.corner;
+// 	}
+// 	else if (x == 0)
+// 		return &v->tx.wall.top;
+// 	else if (x == rows - 1)
+// 		return &v->tx.wall.bottom;
+// 	else if (y == 0)
+// 		return &v->tx.wall.left;
+// 	else if (y == cols - 1)
+// 		return &v->tx.wall.right;
+// 	else
+// 		return &v->tx.wall.middle; // 🪑 ici aussi la chaise pliante
+// }
+
+// void draw_pixel_background(t_vars *v, int x, int y)
+// {
+// 	int i = 0;
+// 	while (v->t_map.map[i])
+// 	{
+// 		int j = 0;
+// 		while (v->t_map.map[i][j])
+// 		{
+// 			char tile = v->t_map.map[i][j];
+// 			if (tile == '\n')
+// 			{
+// 				j++;
+// 				continue;
+// 			}
+
+// 			t_img *tex = NULL;
+// 			if (tile == '1')
+// 				tex = get_wall_texture(v, i, j);
+// 			else if (tile == 'E')
+// 				tex = &v->tx.exit;
+// 			else
+// 				tex = &v->tx.ground;
+
+// 			if (!tex || !tex->image)
+// 			{
+// 				j++;
+// 				continue;
+// 			}
+
+// 			// Attention ici : draw_x/y décalés une seule fois par tile
+// 			int draw_x = (j * v->tile_size) - (int)v->t_cam.x;
+// 			int draw_y = (i * v->tile_size) - (int)v->t_cam.y;
+
+// 			// Et là tu viens ajouter le pixel local x/y
+// 			unsigned int color = get_pixel(tex, x, y);
+// 			if (color != 0x000000)
+// 				put_pixel(v->frame.image, draw_x + x, draw_y + y, color);
+
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
+
+
+///worksssHERE
+// void draw_pixel_background(t_vars *v, int px, int py)
+// {
+//     int top = (int)v->player.view_y  - 3;
+//     int bottom = (int)v->player.grid_y + 3;
+//     int left = (int)v->player.grid_x - 6;
+//     int right = (int)v->player.grid_x + 6;
+
+//     if (top < 0) top = 0;
+//     if (bottom >= v->t_map.map_rows) bottom = v->t_map.map_rows - 1;
+//     if (left < 0) left = 0;
+//     if (right >= v->t_map.map_cols) right = v->t_map.map_cols - 1;
+// 	//printf("top = %i | bot = %i | left = %i | right = %i\n",top,bottom,left,right);
+//     // On boucle sur toutes les tiles visibles
+//     for (int ty = top; ty <= bottom; ty++)
+//     {
+//         for (int tx = left; tx <= right; tx++)
+//         {
+//             // Calcul de la position en pixels sur l’écran de ce pixel particulier (px, py) dans la tile (tx, ty)
+//             int draw_x = (tx * v->tile_size) - (int)v->t_cam.x + px;
+//             int draw_y = (ty * v->tile_size) - (int)v->t_cam.y + py;
+
+//             // Vérifie que le pixel à dessiner correspond bien à celui que l'on veut (px, py)
+//             // Ici c’est implicite car on boucle sur les tiles, puis chaque pixel est appelé par la boucle externe
+
+//             char tile = v->t_map.map[ty][tx];
+//             unsigned int color = 0x000000;
+
+//             if (tile == '1')
+//                 color = get_pixel(&v->tx.wall, px, py);
+//             else if (tile == 'E')
+//                 color = get_pixel(&v->tx.exit, px, py);
+//             else 
+//                 color = get_pixel(&v->tx.ground, px, py);
+
+//             if (color != 0x000000)
+//                 put_pixel(v->frame.image, draw_x, draw_y, color);
+//         }
+//     }
+// }
+
+
+
+	//printf("sorti dans pixel bgg \n");
+
+
+
+
+// while (v->t_map.map[i][j])
+// 		{
+// 			char tile = v->t_map.map[i][j];
+// 			if (tile == '\n')
+// 			{
+// 				j++;
+// 				continue;
+// 			}
+
+// 			t_img *tex = NULL;
+// 			if (tile == '1')
+// 				tex = get_wall_texture(v, i, j);
+// 			else if (tile == 'E')
+// 				tex = &v->tx.exit;
+// 			else
+// 				tex = &v->tx.ground;
+
+// 			if (!tex || !tex->image)
+// 			{
+// 				j++;
+// 				continue;
+// 			}
+
+// 			// Attention ici : draw_x/y décalés une seule fois par tile
+// 			int draw_x = (j * v->tile_size) - (int)v->t_cam.x;
+// 			int draw_y = (i * v->tile_size) - (int)v->t_cam.y;
+
+// 			// Et là tu viens ajouter le pixel local x/y
+// 			unsigned int color = get_pixel(tex, x, y);
+// 			if (color != 0x000000)
+// 				put_pixel(v->frame.image, draw_x + x, draw_y + y, color);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:57 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 16:46:03 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/20 18:05:23 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	main(void)
 		return (1);
 
 	i = 0;
-	name_checker(map_valid2);
-	fd = open(map_valid2, O_RDONLY);
+	name_checker(map_valid5);
+	fd = open(map_valid5, O_RDONLY);
 	if (fd < 0)
 	{
 		perror("open");
@@ -83,6 +83,7 @@ int	main(void)
 		return (1);
 	check_map(vars->t_map.map);
 	init_all(vars);
+	
 	// printf("offsetx = %i | offset_y = %i\n ",vars->offset_x,vars->offset_y);
 	// printf("cam x = %f | cam y = %f\n",vars->t_cam.x,vars->t_cam.y);
 	//render_frame(vars);

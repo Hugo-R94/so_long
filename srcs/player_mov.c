@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_mov.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:35:11 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 14:20:20 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/20 11:31:25 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void move_player(t_vars *vars, double dx, double dy)
 } 
 void	key_pressed_p(int keycode, t_vars *v)
 {
-	printf("key : %i pressed\n",keycode);
+	//printf("key : %i pressed\n",keycode);
 	if (keycode == 65307)
 		exit(0);
 	if (keycode == 97 || keycode == 65361)
@@ -48,7 +48,7 @@ void	key_pressed_p(int keycode, t_vars *v)
 		v->input.down = 1;
 	if (keycode == 32)
 	{
-		printf("SPACE");
+		//printf("SPACE");
 		//player_jump(v);
 	}
 	v->moving = 1;
@@ -57,7 +57,7 @@ void	key_pressed_p(int keycode, t_vars *v)
 
 void	key_release_p(int keycode, t_vars *v)
 {
-	printf("key : %i released\n",keycode);
+	//printf("key : %i released\n",keycode);
 	if (keycode == 97 || keycode == 65361)
 		v->input.left = 0;
 	if (keycode == 100 || keycode == 65363)

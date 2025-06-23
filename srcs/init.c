@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 16:45:08 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/20 18:33:01 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,18 @@ void	init_all(t_vars *v)
 {
 	if (!v)
 		return;
-	init_texture(v, &v->tx);
-	// init_background(v);
-	
+
 	calculate_tile_size_n_mapsize(v);
 	calculate_offset(v);
+	// init_background(v);
+	init_texture(v, &v->tx);
+	
+	
 	get_player_grid_pos(v);
 	init_coins(v);
 	
 	get_exit(v);
+
 	// init_player(v);
 	// init_coins(v);
 	// init_camera(v);
@@ -86,16 +89,42 @@ void get_img(t_vars *v, t_img *img, const char *txt_name)
         ft_printf("Erreur : impossible de récupérer data pour %s\n", txt_name);
         exit(EXIT_FAILURE);
     }
-	printf("Image '%s' chargée : width=%d, height=%d, bpp=%d, size_line=%d, data=%p\n",
-        txt_name, img->width, img->height, img->bpp, img->size_line, (void *)img->data);
 }
 
+uint32_t *opt_texture(t_img *img, t_vars *v)
+{
+    int x = 0;
+    int y = 0;
+    uint32_t *tx;
+
+    tx = malloc(sizeof(uint32_t) * v->tile_size * v->tile_size);
+    if (!tx)
+        return NULL;
+
+    while (x < v->tile_size)
+    {
+        y = 0;
+        while (y < v->tile_size)
+        {
+            int index = y * v->tile_size + x;
+            tx[index] = get_pixel(img, x, y);
+            y++;
+        }
+        x++;
+    }
+	//  if (img->image)
+    // {
+    //     mlx_destroy_image(v->mlx, img->image);
+    //     img->image = NULL;
+    //     img->data = NULL;
+    // }
+    return tx;
+}
 
 void	init_texture(t_vars *v, t_texture *txt)
 {
 	if (!txt)
 		return;
-	//init img to NULL
 	init_img_struct(&txt->wall.bottom);
 	init_img_struct(&txt->wall.top);
 	init_img_struct(&txt->wall.left);
@@ -107,8 +136,6 @@ void	init_texture(t_vars *v, t_texture *txt)
 	init_img_struct(&txt->player);
 	init_img_struct(&txt->exit);
 	init_img_struct(&txt->shadow);
-	
-	//get images
 	get_img(v, &txt->ground, "ground");
 	get_img(v, &txt->coin, "coin_0");
 	get_img(v, &txt->player, "player_1");
@@ -118,13 +145,56 @@ void	init_texture(t_vars *v, t_texture *txt)
 	get_img(v, &txt->wall.bottom, "wall_bottom");
 	get_img(v, &txt->wall.right, "wall_right");
 	get_img(v, &txt->wall.left, "wall_left");
-	get_img(v, &txt->wall.middle, "wall_mid");
+	get_img(v, &txt->wall.middle, "wall");
 	get_img(v, &txt->wall.corner, "corner");
-	printf("sizeof(t_img) = %zu\n", sizeof(t_img));
-printf("sizeof(t_wall_textures) = %zu\n", sizeof(t_wall_textures));
-printf("sizeof(t_texture) = %zu\n", sizeof(t_texture));
-printf("sizeof(t_vars) = %zu\n", sizeof(t_vars));
+
+
+	transfer_tx(v);
 
 	init_frame(v, &v->frame, RES_X, RES_Y);
-	
+
+}
+
+
+void transfer_tx(t_vars *v)
+{
+	v->opt_txt.wall = opt_texture(&v->tx.wall.top, v);
+
+    // v->opt_txt.wall[1] = opt_texture(&v->tx.wall.bottom, v);
+    // v->opt_txt.wall[2] = opt_texture(&v->tx.wall.left, v);
+    // v->opt_txt.wall[3] = opt_texture(&v->tx.wall.right, v);
+    // v->opt_txt.wall[4] = opt_texture(&v->tx.wall.corner, v);
+    // v->opt_txt.wall[5] = opt_texture(&v->tx.wall.middle, v);
+    v->opt_txt.ground = opt_texture(&v->tx.ground, v);
+    v->opt_txt.exit = opt_texture(&v->tx.exit, v);
+	v->opt_txt.coin = opt_texture(&v->tx.coin, v);
+	v->opt_txt.player = opt_texture(&v->tx.player, v);
+	dump_texture(v->opt_txt.wall, v->tile_size * v->tile_size);
+
+}
+#include <stdio.h>
+#include <stdint.h>
+
+void dump_texture(uint32_t *texture, int length)
+{
+    FILE *f = fopen("test.txt", "w");
+    if (!f)
+    {
+        perror("Erreur ouverture fichier");
+        return;
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        if (i > 0 && i % 200 == 0)
+            fputc('\n', f);
+
+        if (texture[i] == 0x000000)
+            fputc(' ', f);
+        else
+            fputc('x', f);
+    }
+
+    fputc('\n', f);
+    fclose(f);
 }
