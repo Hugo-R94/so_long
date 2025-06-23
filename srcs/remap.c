@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:49:28 by hugz              #+#    #+#             */
-/*   Updated: 2025/06/23 13:24:12 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 14:38:32 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char set_wall(char **map, int y, int x, int rows, int cols)
         return 'R';  // mur right
 
     // Mur intérieur
-    return 'M';
+    return '1';
 }
 
 char **remap(char **map)

@@ -28,6 +28,8 @@ SRCS =  $(SRCS_DIR)/map.c \
 		$(SRCS_DIR)/player_mov.c \
 		$(SRCS_DIR)/loop.c \
 		$(SRCS_DIR)/remap.c \
+		$(SRCS_DIR)/mob.c \
+		$(SRCS_DIR)/mob_mouv.c \
 		main.c 
 # === Objets dans le dossier objs ===
 OBJS = $(SRCS:.c=.o)

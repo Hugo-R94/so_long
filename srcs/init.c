@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/23 13:11:57 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 16:21:36 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	init_all(t_vars *v)
 	// init_background(v);
 	init_texture(v, &v->tx);
 	
-	
+	nb_mob(v);
 	get_player_grid_pos(v);
 	init_coins(v);
-	
+	set_all_ennemy(v);
 	get_exit(v);
 
 	// init_player(v);
@@ -120,6 +120,28 @@ uint32_t *opt_texture(t_img *img, t_vars *v)
     // }
     return tx;
 }
+void print_img(t_img *img)
+{
+	if (!img)
+	{
+		printf("Image: NULL\n");
+		return;
+	}
+
+	printf("  image        : %p\n", (void *)img->image);
+	printf("  pix          : %lu\n", (unsigned long)img->pix);
+	printf("  gc           : %p\n", (void *)img->gc);
+	printf("  size_line    : %d\n", img->size_line);
+	printf("  bpp          : %d\n", img->bpp);
+	printf("  width        : %d\n", img->width);
+	printf("  height       : %d\n", img->height);
+	printf("  type         : %d\n", img->type);
+	printf("  format       : %d\n", img->format);
+	printf("  data         : %p\n", (void *)img->data);
+	printf("  shm.shmid    : %d\n", img->shm.shmid);
+	printf("  shm.shmaddr  : %p\n", img->shm.shmaddr);
+	printf("  shm.readOnly : %d\n", img->shm.readOnly);
+}
 
 void	init_texture(t_vars *v, t_texture *txt)
 {
@@ -136,6 +158,7 @@ void	init_texture(t_vars *v, t_texture *txt)
 	init_img_struct(&txt->player);
 	init_img_struct(&txt->exit);
 	init_img_struct(&txt->shadow);
+    init_img_struct(&txt->mob);
 	get_img(v, &txt->ground, "ground");
 	get_img(v, &txt->coin, "coin_0");
 	get_img(v, &txt->player, "player_1");
@@ -147,14 +170,38 @@ void	init_texture(t_vars *v, t_texture *txt)
 	get_img(v, &txt->wall.left, "wall_left");
 	get_img(v, &txt->wall.middle, "chair");
 	get_img(v, &txt->wall.corner, "corner");
-
-
+    get_img(v, &txt->mob, "mob");
+    // printf("mob data : \n",v->tx.player.data);
+    // print_img(&v->tx.mob);
+    // print_img(&v->tx.player);
 	transfer_tx(v);
 
 	init_frame(v, &v->frame, RES_X, RES_Y);
 
 }
 
+void dump_texture(uint32_t *texture, int length)
+{
+    FILE *f = fopen("test.txt", "w");
+    if (!f)
+    {
+        perror("Erreur ouverture fichier");
+        return;
+    }
+    
+    for (int i = 0; i < length; i++)
+    {
+        if (i > 0 && i % 200 == 0)
+            fputc('\n', f);
+
+        if (texture[i] == 0x000000)
+            fputc(' ', f);
+        else
+            fputc('x', f);
+    }
+    fputc('\n', f);
+    fclose(f);
+}
 
 void transfer_tx(t_vars *v)
 {
@@ -169,30 +216,10 @@ void transfer_tx(t_vars *v)
 	v->opt_txt.coin = opt_texture(&v->tx.coin, v);
 	v->opt_txt.player = opt_texture(&v->tx.player, v);
 	v->opt_txt.shadow = opt_texture(&v->tx.shadow, v);
+    v->opt_txt.mob = opt_texture(&v->tx.mob, v);
+ 
+    // dump_texture(v->opt_txt.mob,200*200);
 }
 #include <stdio.h>
 #include <stdint.h>
 
-void dump_texture(uint32_t *texture, int length)
-{
-    FILE *f = fopen("test.txt", "w");
-    if (!f)
-    {
-        perror("Erreur ouverture fichier");
-        return;
-    }
-
-    for (int i = 0; i < length; i++)
-    {
-        if (i > 0 && i % 200 == 0)
-            fputc('\n', f);
-
-        if (texture[i] == 0x000000)
-            fputc(' ', f);
-        else
-            fputc('x', f);
-    }
-
-    fputc('\n', f);
-    fclose(f);
-}

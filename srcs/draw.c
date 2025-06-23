@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:51:14 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/23 12:47:32 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 16:59:36 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,22 +118,17 @@ void draw_frame(t_img *dst, t_vars *v, int dst_x, int dst_y)
             draw_pixel_background(v, px, py);
         }
     }
-	
+
     for (int py = 0; py < v->tile_size; py++)
     {
         for (int px = 0; px < v->tile_size; px++)
         {
+			draw_pixel_mob(v, px, py);
+
             draw_pixel_coins(v, px, py);
 			draw_pixel_shadow(v, px, py);
-
+			
 			draw_pixel_player(v, px, py);
         }
     }
-    // for (int py = 0; py < v->tile_size; py++)
-    // {
-    //     for (int px = 0; px < v->tile_size; px++)
-    //     {
-    //         draw_pixel_player(v, px, py);
-    //     }
-    // }
 }

@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/23 13:05:25 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 17:17:48 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	game_loop(t_vars *v)
 			printf("Coin #%d ramassé, total: %d/%d\n", i, v->coin_get, v->coin_count);
 		}
 	}
-
+	mouv_mob_simple(v);
 if (v->coin_get >= v->coin_count)
 	{
 		v->exit.open = 1;

@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/20 12:27:27 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 15:00:55 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void draw_pixel_coins(t_vars *v, int x, int y)
     if (bottom >= v->t_map.map_rows) bottom = v->t_map.map_rows - 1;
     if (left < 0) left = 0;
     if (right >= v->t_map.map_cols) right = v->t_map.map_cols - 1;
-
+    
     for (int i = 0; i < v->coin_count; i++)
     {
         int cx = v->coin[i].cx;

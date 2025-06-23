@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/16 11:13:22 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/23 15:08:47 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_invalid(char **map)
 		while (map[i][y])
 		{
 			if (map[i][y] != '1' && map[i][y] != 'C' && map[i][y] != '0' &&
-				map[i][y] != 'E' && map[i][y] != 'P' && map[i][y] != '\n')
+				map[i][y] != 'E' && map[i][y] != 'P'  && map[i][y] != 'M' && map[i][y] != '\n')
 				return (-1);
 			y++;
 		}

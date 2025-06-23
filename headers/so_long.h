@@ -40,6 +40,7 @@ typedef struct s_opt_tx
 	uint32_t	*exit;
 	uint32_t	*shadow;
 	uint32_t	*wall[6];
+	uint32_t	*mob;
 } t_opt_tx;
 
 typedef struct s_texture
@@ -50,6 +51,7 @@ typedef struct s_texture
 	t_img	player;
 	t_img	exit;
 	t_img	shadow;
+	t_img	mob;
 }	t_texture;
 
 
@@ -97,6 +99,17 @@ typedef struct s_exit
 	int		ey;
 }	t_exit;
 
+typedef struct s_mob
+{
+	bool	vis;
+	int		mx;
+	int		my;
+	char	axis;
+	int		dir;
+	double		view_x;
+	double 	view_y;
+}	t_mob;
+
 typedef struct	s_vars {
 	void		*mlx;
 	void		*win;
@@ -104,6 +117,8 @@ typedef struct	s_vars {
 	t_map		t_map;
 	int			tile_size;
 	int			offset_x;//peut etre a supprimer
+	int			nb_mob;
+	t_mob		*mob;
 	int			offset_y;
 	bool		moving;
 	int			keys[256]; // <--- pour savoir si une touche est pressée
@@ -158,7 +173,7 @@ int	calculate_tile_size_n_mapsize(t_vars *v);
 void	calculate_offset(t_vars *v);
 void	draw_background(t_vars *v, t_img *dst);
 void draw_pixel_background(t_vars *v, int px, int py);
-
+int 	is_wall(char c);
 //camera 
 void update_camera(t_vars *v);
 int init_frame(t_vars *v, t_img *frame, int width, int height);
@@ -187,5 +202,16 @@ void draw_pixel_coins(t_vars *v, int x, int y);
 //exit
 void	get_exit(t_vars *v);
 void	draw_frame(t_img *dst, t_vars *v, int dst_x, int dst_y);
+
+//mob
+void	draw_pixel_mob(t_vars *v, int x, int y);
+void	nb_mob(t_vars *v);
+void	set_ennemy(t_vars *v, t_mob *mob, int x, int y);
+void	set_all_ennemy(t_vars *v);
+void	set_mouv_axis(t_vars *v, t_mob *mob);
+void mouv_all_mob(t_vars *v);
+void mouv_mob_simple(t_vars *v);
+
+
 
 #endif
