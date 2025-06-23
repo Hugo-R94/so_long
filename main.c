@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:57 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/20 18:05:23 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 12:54:31 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,21 @@ int	main(void)
 		return (1);
 
 	i = 0;
-	name_checker(map_valid5);
-	fd = open(map_valid5, O_RDONLY);
+	name_checker(map_valid1);
+	fd = open(map_valid1, O_RDONLY);
 	if (fd < 0)
 	{
 		perror("open");
 		return (1);
 	}
 	vars->t_map.map = getmap(fd);
-		// Après avoir lu la map
-
-	// Et si tu as besoin en pixels
 	vars->t_map.width_px = vars->t_map.map_cols * vars->tile_size;
 	vars->t_map.height_px = vars->t_map.map_rows * vars->tile_size;
 	if (!vars->t_map.map)
 		return (1);
-	while (vars->t_map.map[i])
-		printf("%s", vars->t_map.map[i++]);
-	printf("\n");
+	// while (vars->t_map.map[i])
+	// 	printf("%s", vars->t_map.map[i++]);
+	
 	printf("map checking >>>> ");
 	vars->mlx = mlx_init();
 	if (!vars->mlx)
@@ -82,6 +79,10 @@ int	main(void)
 	if (!vars->img)
 		return (1);
 	check_map(vars->t_map.map);
+	vars->t_map.map = remap(vars->t_map.map);
+	while (vars->t_map.map[i])
+		printf("%s", vars->t_map.map[i++]);
+	printf("\n");
 	init_all(vars);
 	
 	// printf("offsetx = %i | offset_y = %i\n ",vars->offset_x,vars->offset_y);

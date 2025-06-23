@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/20 12:26:28 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 12:46:07 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,21 @@ void draw_pixel_player(t_vars *v, int x, int y)
     color_c = v->opt_txt.player[y * v->tile_size + x];    
 	if (color_c != 0x000000 )
 		put_pixel(v->frame.image, px + x, py + y, color_c);
+}
+
+void draw_pixel_shadow(t_vars *v, int x, int y)
+{
+    int px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
+    int py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y;
+    unsigned int color_c;
+
+    // Vérification bornes (optionnelle mais recommandée)
+    if (x < 0 || x >= v->tile_size || y < 0 || y >= v->tile_size)
+        return;
+
+    color_c = v->opt_txt.shadow[y * v->tile_size + x];
+
+    // Dessiner seulement si pixel non noir (0x000000)
+    if (color_c != 0x000000)
+        put_pixel(v->frame.image, px + x, py + y, color_c);
 }

@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/20 18:39:40 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 13:05:25 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	game_loop(t_vars *v)
 {
 	struct timeval start, end;
 	long elapsed_us;
-	const long frame_time_us = 33333; // ~16.666 ms pour 60 FPS
+	const long frame_time_us = 33333;
 
 	gettimeofday(&start, NULL);
 
@@ -48,12 +48,20 @@ void	game_loop(t_vars *v)
 		{
 			v->coin[i].vis = 0;
 			v->coin_get++;
+			printf("Coin #%d ramassé, total: %d/%d\n", i, v->coin_get, v->coin_count);
 		}
 	}
 
-	if (v->coin_get == v->coin_count)
+if (v->coin_get >= v->coin_count)
+	{
 		v->exit.open = 1;
-
+		printf(" player pos x = %i y = %i | exit pos x = %i y = %i\n",v->player.grid_x,v->player.grid_y,v->exit.ex,v->exit.ey);
+		//printf("EXIT OPEN\n");
+	}
+	if (v->player.grid_x == v->exit.ex &&
+		v->player.grid_y == v->exit.ey &&
+		v->exit.open == 1)
+		printf("player sur sortie \n");
 	if (v->player.grid_x == v->exit.ex &&
 		v->player.grid_y == v->exit.ey &&
 		v->exit.open == 1)
@@ -61,19 +69,20 @@ void	game_loop(t_vars *v)
 		printf("VICTOIRE !!\n");
 		exit(EXIT_SUCCESS);
 	}
-
+	//printf("%i | %i\n",v->coin_count, v->coin_get);
 	update_camera(v);
 	render_frame(v);
 
 	gettimeofday(&end, NULL);
 	elapsed_us = (end.tv_sec - start.tv_sec) * 1000000L
 	           + (end.tv_usec - start.tv_usec);
+	
+	int fps = 1000000.0 / elapsed_us;
+	// if (fps < 30)
+	// 	printf("FPS: %i \n", fps);
+	// else
+	// 	printf("FPS: 30\n");
 
-	// Calcul et affichage des FPS
-	double fps = 1000000.0 / (double)elapsed_us;
-	printf("FPS: %.2f (frame time: %ld µs)\n", fps, elapsed_us);
-
-	// Limiter à ~60 FPS
 	if (elapsed_us < frame_time_us)
 		usleep(frame_time_us - elapsed_us);
 }

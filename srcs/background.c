@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/20 18:30:39 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 13:21:12 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,41 +80,43 @@ void	calculate_offset(t_vars *v)
 // 		draw_image(dst, &v->tx.wall.middle, draw_x, draw_y); // 💺 Chaise pliante ici
 // }
 
-// void draw_pixel_wall(t_vars *v, int px, int py, int x, int y)
+// unsigned int draw_pixel_wall(t_vars *v, int px, int py, int ty, int tx)
 // {
-//     int draw_x = (y * v->tile_size) - (int)v->t_cam.x + px;
-//     int draw_y = (x * v->tile_size) - (int)v->t_cam.y + py;
+// 	int up    = (ty > 0) && (v->t_map.map[ty - 1][tx] == '1');
+// 	int down  = (ty < v->t_map.map_rows - 1) && (v->t_map.map[ty + 1][tx] == '1');
+// 	int left  = (tx > 0) && (v->t_map.map[ty][tx - 1] == '1');
+// 	int right = (tx < v->t_map.map_cols - 1) && (v->t_map.map[ty][tx + 1] == '1');
 
-//     int rows = v->t_map.map_rows;
-//     int cols = v->t_map.map_cols;
+// 	uint32_t *tex = NULL;
 
-//     uint32_t *wall_tx = NULL;
+// 	if (!up && down && left && right)
+// 		tex = v->opt_txt.wall[0]; // TOP
+// 	else if (up && !down && left && right)
+// 		tex = v->opt_txt.wall[1]; // BOTTOM
+// 	else if (up && down && !left && right)
+// 		tex = v->opt_txt.wall[2]; // LEFT
+// 	else if (up && down && left && !right)
+// 		tex = v->opt_txt.wall[3]; // RIGHT
+// 	else if ((up && left && !down && !right) || (down && right && !up && !left))
+// 		tex = v->opt_txt.wall[4]; // CORNER
+// 	else
+// 		tex = v->opt_txt.wall[5]; // MIDDLE par défaut
+// 	printf("TEX: ");
+// 	if (tex == v->opt_txt.wall[0]) printf("top\n");
+// 	else if (tex == v->opt_txt.wall[1]) printf("bottom\n");
+// 	else if (tex == v->opt_txt.wall[2]) printf("left\n");
+// 	else if (tex == v->opt_txt.wall[3]) printf("right\n");
+// 	else if (tex == v->opt_txt.wall[4]) printf("corner\n");
+// 	else if (tex == v->opt_txt.wall[5]) printf("middle\n");
+// 	else printf("inconnu\n");
 
-//     if ((x + 1 < rows && y + 1 < cols && v->t_map.map[x + 1][y] == '1' && v->t_map.map[x][y + 1] == '1') ||
-//         (x - 1 >= 0 && y + 1 < cols && v->t_map.map[x - 1][y] == '1' && v->t_map.map[x][y + 1] == '1') ||
-//         (x - 1 >= 0 && y - 1 >= 0 && v->t_map.map[x - 1][y] == '1' && v->t_map.map[x][y - 1] == '1') ||
-//         (x + 1 < rows && y - 1 >= 0 && v->t_map.map[x + 1][y] == '1' && v->t_map.map[x][y - 1] == '1'))
-//     {
-//         wall_tx = v->opt_txt.wall[5]; // corner
-//     }
-//     else if (x == 0)
-//         wall_tx = v->opt_txt.wall[1]; // top
-//     else if (x == rows - 1)
-//         wall_tx = v->opt_txt.wall[2]; // bottom
-//     else if (y == 0)
-//         wall_tx = v->opt_txt.wall[3]; // left
-//     else if (y == cols - 1)
-//         wall_tx = v->opt_txt.wall[4]; // right
-//     else
-//         wall_tx = v->opt_txt.wall[6]; // middle
+// 	if (tex == NULL)
+// 	{
+// 		printf("ERREUR: texture mur NULL à (%d,%d)\n", tx, ty);
+// 		return 0xFF00FF; // rose flashy
+// 	}
 
-//     if (!wall_tx)
-//         return;
-
-//     unsigned int color = wall_tx[py * v->tile_size + px];
-
-//     if (color != 0x000000)
-//         put_pixel(v->frame.image, draw_x, draw_y, color);
+// 	return tex[py * v->tile_size + px];
 // }
 
 
@@ -188,17 +190,33 @@ void draw_pixel_background(t_vars *v, int px, int py)
 
             char tile = v->t_map.map[ty][tx];
             unsigned int color = 0x000000;
+			if (is_wall(tile))
+			{
+				if (tile == 'T')       // Top
+					color = v->opt_txt.wall[0][py * v->tile_size + px];
+				else if (tile == 'B')  // Bottom
+					color = v->opt_txt.wall[1][py * v->tile_size + px];
+				else if (tile == 'L')  // Left
+					color = v->opt_txt.wall[2][py * v->tile_size + px];
+				else if (tile == 'R')  // Right
+					color = v->opt_txt.wall[3][py * v->tile_size + px];
+				else if (tile == 'O' || tile == 'A' || tile == 'D' || tile == 'Z')  // Corner
+					color = v->opt_txt.wall[4][py * v->tile_size + px];
+				else                   
+					color = v->opt_txt.wall[5][py * v->tile_size + px];
+			}
 
-            if (tile == '1')
-                color = v->opt_txt.wall[py * v->tile_size + px];
+            // if (tile == 'A' || tile == 'M' || tile == 'O' || tile == 'D' || tile == 'T' || tile == 'B' || tile == 'R' || tile == 'L')
+			// 	color = v->opt_txt.wall[3][py * v->tile_size + px]; // test simple
+			// //	color = draw_pixel_wall(v, px, py, ty, tx);
+            // //    color = v->opt_txt.wall[py * v->tile_size + px];
             else if (tile == 'E')
                 color = v->opt_txt.exit[py * v->tile_size + px];
             else
                 color = v->opt_txt.ground[py * v->tile_size + px];
 
-            if (color != 0x000000)
-                put_pixel(v->frame.image, draw_x, draw_y, color);
-
+			if (color != 0x000000)
+				put_pixel(v->frame.image, draw_x, draw_y, color);
             tx++;
         }
         ty++;
@@ -222,8 +240,8 @@ void	get_exit(t_vars *v)
 		{
 			if (v->t_map.map[x][y] == 'E')
 			{
-				v->exit.ex = x;
-				v->exit.ey = y;
+				v->exit.ex = y;
+				v->exit.ey = x;
 				v->exit.open = 0;
 			}
 			y++;

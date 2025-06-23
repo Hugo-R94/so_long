@@ -39,7 +39,7 @@ typedef struct s_opt_tx
 	uint32_t	*coin;
 	uint32_t	*exit;
 	uint32_t	*shadow;
-	uint32_t	*wall;
+	uint32_t	*wall[6];
 } t_opt_tx;
 
 typedef struct s_texture
@@ -144,12 +144,15 @@ void	get_img(t_vars *v, t_img *img, const char *txt_name);
 void	init_texture(t_vars *v, t_texture *txt);
 uint32_t *opt_texture(t_img *img, t_vars *v);
 void	transfer_tx(t_vars *v);
-//
+
+//remap
+char	**remap(char **map);
+char 	set_wall(char **map, int y, int x, int rows, int cols);
 
 //image drawing with alpha
 unsigned int	get_pixel(t_img *img, int x, int y);
 void			put_pixel(t_img *img, int x, int y, unsigned int color);
-void	draw_image(t_img *dst, t_img *src, int dst_x, int dst_y);
+void			draw_image(t_img *dst, t_img *src, int dst_x, int dst_y);
 //background
 int	calculate_tile_size_n_mapsize(t_vars *v);
 void	calculate_offset(t_vars *v);
@@ -166,6 +169,7 @@ void get_player_grid_pos(t_vars *v);
 void draw_player(t_vars *v);
 void	draw_shadow(t_vars *v);
 void draw_pixel_player(t_vars *v, int x, int y);
+void draw_pixel_shadow(t_vars *v, int x, int y);
 
 //player mouvements
 void	move_player(t_vars *vars, double dx, double dy);

@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/20 18:33:01 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 13:11:57 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	init_texture(t_vars *v, t_texture *txt)
 	get_img(v, &txt->wall.bottom, "wall_bottom");
 	get_img(v, &txt->wall.right, "wall_right");
 	get_img(v, &txt->wall.left, "wall_left");
-	get_img(v, &txt->wall.middle, "wall");
+	get_img(v, &txt->wall.middle, "chair");
 	get_img(v, &txt->wall.corner, "corner");
 
 
@@ -158,19 +158,17 @@ void	init_texture(t_vars *v, t_texture *txt)
 
 void transfer_tx(t_vars *v)
 {
-	v->opt_txt.wall = opt_texture(&v->tx.wall.top, v);
-
-    // v->opt_txt.wall[1] = opt_texture(&v->tx.wall.bottom, v);
-    // v->opt_txt.wall[2] = opt_texture(&v->tx.wall.left, v);
-    // v->opt_txt.wall[3] = opt_texture(&v->tx.wall.right, v);
-    // v->opt_txt.wall[4] = opt_texture(&v->tx.wall.corner, v);
-    // v->opt_txt.wall[5] = opt_texture(&v->tx.wall.middle, v);
+	v->opt_txt.wall[0] = opt_texture(&v->tx.wall.top, v);
+    v->opt_txt.wall[1] = opt_texture(&v->tx.wall.bottom, v);
+    v->opt_txt.wall[2] = opt_texture(&v->tx.wall.left, v);
+    v->opt_txt.wall[3] = opt_texture(&v->tx.wall.right, v);
+    v->opt_txt.wall[4] = opt_texture(&v->tx.wall.corner, v);
+    v->opt_txt.wall[5] = opt_texture(&v->tx.wall.middle, v);
     v->opt_txt.ground = opt_texture(&v->tx.ground, v);
     v->opt_txt.exit = opt_texture(&v->tx.exit, v);
 	v->opt_txt.coin = opt_texture(&v->tx.coin, v);
 	v->opt_txt.player = opt_texture(&v->tx.player, v);
-	dump_texture(v->opt_txt.wall, v->tile_size * v->tile_size);
-
+	v->opt_txt.shadow = opt_texture(&v->tx.shadow, v);
 }
 #include <stdio.h>
 #include <stdint.h>

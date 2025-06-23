@@ -6,11 +6,20 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:35:11 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/20 11:31:25 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 12:30:52 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int 	is_wall(char c)
+{
+	if (c == 'M' || c == 'D' || c == 'T' || c == 'A' ||
+	       c == 'O' || c == 'B' || c == 'R' || c == 'L' || c == 'Z')
+			return (1);
+	else
+		return (0);
+}
 
 void move_player(t_vars *vars, double dx, double dy)
 {
@@ -26,7 +35,7 @@ void move_player(t_vars *vars, double dx, double dy)
 	new_y_g = (int )(new_y + 0.85);
 	if (new_x_g < 0 || new_y_g < 0 || !vars->t_map.map[new_y_g] || !vars->t_map.map[new_y_g][new_x_g])
 		return;
-	if (vars->t_map.map[new_y_g ][new_x_g] == '1')
+	if (is_wall(vars->t_map.map[new_y_g ][new_x_g]))
 		return;
 	vars->player.view_x = (double)new_x;
 	vars->player.view_y = (double)new_y;
