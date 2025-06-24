@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/23 16:21:36 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 23:20:43 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,10 @@ void	init_texture(t_vars *v, t_texture *txt)
 	init_img_struct(&txt->wall.left);
 	init_img_struct(&txt->wall.right);
 	init_img_struct(&txt->wall.middle);
-	init_img_struct(&txt->wall.corner);
+	init_img_struct(&txt->wall.corner_tl);
+	init_img_struct(&txt->wall.corner_tr);
+	init_img_struct(&txt->wall.corner_bl);
+	init_img_struct(&txt->wall.corner_br);
 	init_img_struct(&txt->ground);
 	init_img_struct(&txt->coin);
 	init_img_struct(&txt->player);
@@ -164,18 +167,23 @@ void	init_texture(t_vars *v, t_texture *txt)
 	get_img(v, &txt->player, "player_1");
 	get_img(v, &txt->exit, "exit");
 	get_img(v, &txt->shadow, "shadow");
-	get_img(v, &txt->wall.top, "wall_1");
-	get_img(v, &txt->wall.bottom, "wall_bottom");
-	get_img(v, &txt->wall.right, "wall_right");
-	get_img(v, &txt->wall.left, "wall_left");
+	get_img(v, &txt->wall.top, "wall_T");
+	get_img(v, &txt->wall.bottom, "wall_B");
+	get_img(v, &txt->wall.right, "wall_R");
+	get_img(v, &txt->wall.left, "wall_L");
 	get_img(v, &txt->wall.middle, "chair");
-	get_img(v, &txt->wall.corner, "corner");
+	get_img(v, &txt->wall.corner_tl, "corner_TL");
+	get_img(v, &txt->wall.corner_tr, "corner_TR");
+	get_img(v, &txt->wall.corner_bl, "corner_BL");
+	get_img(v, &txt->wall.corner_br, "corner_BR");
     get_img(v, &txt->mob, "mob");
-    // printf("mob data : \n",v->tx.player.data);
-    // print_img(&v->tx.mob);
+    //printf("mob data : \n",v->tx.player.data);
+    // print_img(&v->tx.wall.top);
+    // print_img(&v->tx.wall.bottom);
+    // print_img(&v->tx.wall.left);
+    // print_img(&v->tx.wall.right);
     // print_img(&v->tx.player);
 	transfer_tx(v);
-
 	init_frame(v, &v->frame, RES_X, RES_Y);
 
 }
@@ -209,8 +217,11 @@ void transfer_tx(t_vars *v)
     v->opt_txt.wall[1] = opt_texture(&v->tx.wall.bottom, v);
     v->opt_txt.wall[2] = opt_texture(&v->tx.wall.left, v);
     v->opt_txt.wall[3] = opt_texture(&v->tx.wall.right, v);
-    v->opt_txt.wall[4] = opt_texture(&v->tx.wall.corner, v);
-    v->opt_txt.wall[5] = opt_texture(&v->tx.wall.middle, v);
+    v->opt_txt.wall[4] = opt_texture(&v->tx.wall.corner_tl, v);
+    v->opt_txt.wall[5] = opt_texture(&v->tx.wall.corner_tr, v);
+    v->opt_txt.wall[6] = opt_texture(&v->tx.wall.corner_bl, v);
+    v->opt_txt.wall[7] = opt_texture(&v->tx.wall.corner_br, v);
+    v->opt_txt.wall[8] = opt_texture(&v->tx.wall.middle, v);
     v->opt_txt.ground = opt_texture(&v->tx.ground, v);
     v->opt_txt.exit = opt_texture(&v->tx.exit, v);
 	v->opt_txt.coin = opt_texture(&v->tx.coin, v);
@@ -218,7 +229,7 @@ void transfer_tx(t_vars *v)
 	v->opt_txt.shadow = opt_texture(&v->tx.shadow, v);
     v->opt_txt.mob = opt_texture(&v->tx.mob, v);
  
-    // dump_texture(v->opt_txt.mob,200*200);
+    dump_texture(v->opt_txt.wall[8],200*200);
 }
 #include <stdio.h>
 #include <stdint.h>

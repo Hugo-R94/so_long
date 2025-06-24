@@ -28,7 +28,10 @@ typedef struct s_wall_textures {
     t_img bottom;
     t_img left;
     t_img right;
-    t_img corner;
+    t_img corner_tl;
+    t_img corner_tr;
+    t_img corner_bl;
+    t_img corner_br;
     t_img middle; // chaise pliante par exemple
 } t_wall_textures;
 
@@ -39,7 +42,7 @@ typedef struct s_opt_tx
 	uint32_t	*coin;
 	uint32_t	*exit;
 	uint32_t	*shadow;
-	uint32_t	*wall[6];
+	uint32_t	*wall[10];
 	uint32_t	*mob;
 } t_opt_tx;
 

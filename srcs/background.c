@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/23 14:37:06 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/23 23:24:17 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,12 +200,21 @@ void draw_pixel_background(t_vars *v, int px, int py)
 					color = v->opt_txt.wall[2][py * v->tile_size + px];
 				else if (tile == 'R')  // Right
 					color = v->opt_txt.wall[3][py * v->tile_size + px];
-				else if (tile == 'O' || tile == 'A' || tile == 'D' || tile == 'Z')  // Corner
+				else if (tile == 'O')
+					color = v->opt_txt.wall[6][py * v->tile_size + px];
+				else if (tile == 'A')
 					color = v->opt_txt.wall[4][py * v->tile_size + px];
-				else                   
+				else if (tile == 'Z')
 					color = v->opt_txt.wall[5][py * v->tile_size + px];
+				else if (tile == 'D')
+					color = v->opt_txt.wall[7][py * v->tile_size + px];
+				else                   
+					color = v->opt_txt.wall[8][py * v->tile_size + px];
 			}
-
+			// if (is_wall(tile))
+			// {
+			// 	color = v->opt_txt.coin[py * v->tile_size + px];
+			// }
             // if (tile == 'A' || tile == 'M' || tile == 'O' || tile == 'D' || tile == 'T' || tile == 'B' || tile == 'R' || tile == 'L')
 			// 	color = v->opt_txt.wall[3][py * v->tile_size + px]; // test simple
 			// //	color = draw_pixel_wall(v, px, py, ty, tx);

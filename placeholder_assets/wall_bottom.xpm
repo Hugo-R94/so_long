@@ -1,7 +1,7 @@
 /* XPM */
 static char * wall_bot_xpm[] = {
 "200 200 122 2",
-"  	c None",
+"  	c #000000",
 ". 	c #CECFD4",
 "+ 	c #CDCED3",
 "@ 	c #CCCCD1",
