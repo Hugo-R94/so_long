@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/23 23:24:17 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/24 16:24:35 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,11 @@ void draw_pixel_background(t_vars *v, int px, int py)
 			// //	color = draw_pixel_wall(v, px, py, ty, tx);
             // //    color = v->opt_txt.wall[py * v->tile_size + px];
             else if (tile == 'E')
-                color = v->opt_txt.exit[py * v->tile_size + px];
+            {
+				color = v->opt_txt.ground[py * v->tile_size + px];
+				put_pixel(v->frame.image, draw_x, draw_y, color);
+				color = v->opt_txt.exit[py * v->tile_size + px];
+			}
             else
                 color = v->opt_txt.ground[py * v->tile_size + px];
 

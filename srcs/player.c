@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/23 12:46:07 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/24 17:42:19 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void get_player_grid_pos(t_vars *v)
 				v->player.grid_y = y;
 				v->player.view_x = (double)x;
 				v->player.view_y = (double)y;
+				v->player.view_jump = (double)y;
 				return;
 			}
 			x++;
@@ -71,7 +72,10 @@ void draw_pixel_player(t_vars *v, int x, int y)
     int py;
     unsigned int color_c;
     px = (v->player.view_x * v->tile_size ) - (int)v->t_cam.x;
-	py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y;
+	if (v->player.jump)
+		py = (v->player.view_jump * v->tile_size) - (int)v->t_cam.y;
+	else
+		py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y;
     color_c = v->opt_txt.player[y * v->tile_size + x];    
 	if (color_c != 0x000000 )
 		put_pixel(v->frame.image, px + x, py + y, color_c);
@@ -79,17 +83,26 @@ void draw_pixel_player(t_vars *v, int x, int y)
 
 void draw_pixel_shadow(t_vars *v, int x, int y)
 {
-    int px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
-    int py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y;
-    unsigned int color_c;
+	int	px;
+	int	py;
+	float offset = 0.0;
+	unsigned int color_c;
 
-    // Vérification bornes (optionnelle mais recommandée)
-    if (x < 0 || x >= v->tile_size || y < 0 || y >= v->tile_size)
-        return;
+	px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
 
-    color_c = v->opt_txt.shadow[y * v->tile_size + x];
+	// if (v->player.jump)
+	// {
+	// 	if (v->player.jump_counter < 7)
+	// 		offset = v->player.jump_counter * 0.15;
+	// 	else
+	// 		offset = (14 - v->player.jump_counter) * 0.15;
+	// }
 
-    // Dessiner seulement si pixel non noir (0x000000)
-    if (color_c != 0x000000)
-        put_pixel(v->frame.image, px + x, py + y, color_c);
+	// appliquer l’offset en sens inverse pour garder l’ombre au sol
+	py = ((v->player.view_y + offset) * v->tile_size) - (int)v->t_cam.y;
+
+	color_c = v->opt_txt.shadow[y * v->tile_size + x];
+
+	if (color_c != 0x000000)
+		put_pixel(v->frame.image, px + x, py + y, color_c);
 }

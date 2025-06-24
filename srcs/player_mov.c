@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_mov.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:35:11 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/23 16:48:30 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/24 17:41:23 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ void move_player(t_vars *vars, double dx, double dy)
 		return;
 	vars->player.view_x = (double)new_x;
 	vars->player.view_y = (double)new_y;
+	//if(!vars->player.jump)
+	vars->player.view_jump = (double)new_y;
+	// else
+	// 	vars->player.view_y = vars->player.view_jump;
 	vars->player.grid_x = new_x_g;
 	vars->player.grid_y = new_y_g;
 } 
@@ -55,10 +59,10 @@ void	key_pressed_p(int keycode, t_vars *v)
 		v->input.up = 1;
 	if (keycode == 115 || keycode == 65364)
 		v->input.down = 1;
-	if (keycode == 32)
+	if (keycode == 32 && v->player.jump == 0)
 	{
-		//printf("SPACE");
-		//player_jump(v);
+		v->player.jump = 1;
+		v->player.jump_counter = 0;;
 	}
 	v->moving = 1;
 	return ;
@@ -79,4 +83,3 @@ void	key_release_p(int keycode, t_vars *v)
 	v->moving = 0;
 	return ;
 }
-

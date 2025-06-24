@@ -7,6 +7,7 @@
 #include "../My_libft/headers/libft.h"
 #include <fcntl.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 #ifndef RES_X
 # define RES_X 1920
@@ -61,10 +62,11 @@ typedef struct s_texture
 typedef struct s_player {
 	double view_x;
 	double view_y;
+	double view_jump;
 	int    grid_x;
 	int    grid_y;
 	int		jump;
-	double	jump_timer;
+	double	jump_counter;
 	double	vel_x;
 	double	vel_y;
 } t_player;
@@ -194,6 +196,7 @@ void	move_player(t_vars *vars, double dx, double dy);
 void	key_pressed_p(int keycode, t_vars *v);
 void	key_release_p(int keycode, t_vars *v);
 void	game_loop(t_vars *v);
+void	player_jump(t_vars *v);
 
 //coins
 void	get_coin_count(t_vars *vars);

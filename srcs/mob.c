@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mob.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:35:39 by hugz              #+#    #+#             */
-/*   Updated: 2025/06/23 17:28:58 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/24 14:41:14 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	set_all_ennemy(t_vars *v)
 				set_ennemy(v, &v->mob[i], x, y);
 				set_mouv_axis(v, &v->mob[i]); 
 				v->mob[i].dir = 1;
-				printf("mouv axis mob n%i = %i\n",i,v->mob[i].dir);
-				printf("mob n*%i x = %i | y = %i\n", i, v->mob[i].mx, v->mob[i].my);
+				// printf("mouv axis mob n%i = %i\n",i,v->mob[i].dir);
+				// printf("mob n*%i x = %i | y = %i\n", i, v->mob[i].mx, v->mob[i].my);
 				i++;
 			}
 			x++;

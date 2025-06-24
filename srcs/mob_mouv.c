@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mob_mouv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:33:08 by hugz              #+#    #+#             */
-/*   Updated: 2025/06/23 17:32:31 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/24 14:50:42 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,9 @@ void mouv_mob_simple(t_vars *v)
 			v->mob[i].view_x = next_x;
 			v->mob[i].view_y = next_y;
 		}
-
-		printf("mob %d view_x = %f view_y = %f dir = %d\n", i, v->mob[i].view_x, v->mob[i].view_y, v->mob[i].dir);
+		v->mob[i].mx = v->mob[i].view_x + 0.5;
+		v->mob[i].my = v->mob[i].view_y + 0.5;
+		//printf("mob %d view_x = %f view_y = %f dir = %d\n", i, v->mob[i].view_x, v->mob[i].view_y, v->mob[i].dir);
 		i++;
 	}
 }
