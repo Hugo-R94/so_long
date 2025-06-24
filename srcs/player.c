@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/24 17:42:19 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/24 18:05:15 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void draw_pixel_shadow(t_vars *v, int x, int y)
 
 	px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
 
+	// Si le joueur saute, on applique un offset à l'ombre
 	// if (v->player.jump)
 	// {
 	// 	if (v->player.jump_counter < 7)
@@ -98,7 +99,6 @@ void draw_pixel_shadow(t_vars *v, int x, int y)
 	// 		offset = (14 - v->player.jump_counter) * 0.15;
 	// }
 
-	// appliquer l’offset en sens inverse pour garder l’ombre au sol
 	py = ((v->player.view_y + offset) * v->tile_size) - (int)v->t_cam.y;
 
 	color_c = v->opt_txt.shadow[y * v->tile_size + x];

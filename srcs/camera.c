@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/24 17:33:58 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/24 18:00:22 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void update_camera(t_vars *v)
 {
+	double target_y;
     double target_x = v->player.view_x * v->tile_size - RES_X / 2;
-    double target_y = v->player.view_y * v->tile_size - RES_Y / 2;
+    if (!v->player.jump)
+		target_y = v->player.view_y * v->tile_size - RES_Y / 2;
+	else
+		target_y = v->player.view_jump * v->tile_size - RES_Y / 2;
     double lerp_factor = 0.08;
     v->t_cam.x += (target_x - v->t_cam.x) * lerp_factor;
     v->t_cam.y += (target_y - v->t_cam.y) * lerp_factor;

@@ -63,6 +63,7 @@ typedef struct s_player {
 	double view_x;
 	double view_y;
 	double view_jump;
+	double jump_offset;
 	int    grid_x;
 	int    grid_y;
 	int		jump;

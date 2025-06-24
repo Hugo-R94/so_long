@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:57 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/24 12:34:33 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/24 18:05:34 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	main(void)
 		return (1);
 
 	i = 0;
-	name_checker(map_valid1);
-	fd = open(map_valid1, O_RDONLY);
+	name_checker(map_valid4);
+	fd = open(map_valid4, O_RDONLY);
 	if (fd < 0)
 	{
 		perror("open");
