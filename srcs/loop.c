@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/24 17:55:46 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/25 22:19:34 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,13 @@ if (v->coin_get >= v->coin_count)
 		printf("VICTOIRE !!\n");
 		exit(EXIT_SUCCESS);
 	}
-	
+	if (v->input.left || v->input.right) {
+    v->opt_txt.index_p += 0.33;
+    if (v->opt_txt.index_p > 5)
+        v->opt_txt.index_p = 0;
+	} else {
+		v->opt_txt.index_p = 0; // idle frame si aucune touche
+	}
 
 	//printf("%i | %i\n",v->coin_count, v->coin_get);
 	update_camera(v);
@@ -132,7 +138,7 @@ if (v->coin_get >= v->coin_count)
 	// 	printf("FPS: %i \n", fps);
 	// else
 	// 	printf("FPS: 30\n");
-	printf("FPS: %i \n", fps);
+	//printf("FPS: %i \n", fps);
 
 	if (elapsed_us < frame_time_us)
 		usleep(frame_time_us - elapsed_us);
