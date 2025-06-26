@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 18:05:05 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 18:08:15 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_player(t_vars *v)
 	v->input.right = 0;
 	v->input.up = 0;
 	v->input.down = 0;
+	v->opt_txt.index_p = 0;
 }
 
 void get_player_grid_pos(t_vars *v)

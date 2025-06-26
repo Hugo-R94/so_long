@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 15:14:16 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 18:07:54 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ if (v->coin_get >= v->coin_count)
 	}
 	
 	if (v->input.left || v->input.right) {
-    v->opt_txt.index_p += 0.33;
+   		v->opt_txt.index_p += 0.33;
     if (v->opt_txt.index_p > 5)
         v->opt_txt.index_p = 0;
 	} else {
