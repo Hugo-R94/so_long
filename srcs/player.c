@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/25 22:23:27 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/26 01:46:41 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,12 @@ void	draw_shadow(t_vars *v)
 void draw_pixel_player(t_vars *v, int x, int y)
 {
     int px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
-    int py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y;
+    int py;
+    if (v->player.jump == 1)
+        py = (v->player.view_jump * v->tile_size) - (int)v->t_cam.y;
+    else
+        py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y;
+
     int frame = (int)(v->opt_txt.index_p);
 
     // Clamp la frame entre 0 et 5
@@ -82,16 +87,15 @@ void draw_pixel_player(t_vars *v, int x, int y)
     if (x < 0 || x >= v->tile_size || y < 0 || y >= v->tile_size)
         return;
 
-    // Sécurité sur le tableau de frames
-    if (!v->opt_txt.player[frame])
-        return;
-
     unsigned int color_c;
-    // Animation gauche (left)
-    if (v->input.left == 1)
+	if (v->player.jump)
+		  color_c = v->opt_txt.placeholder[y * v->tile_size + x];
+    else if (v->input.left == 1)
         color_c = v->opt_txt.player[frame][y * v->tile_size + x];
+    else if (v->input.right == 1)
+        color_c = v->opt_txt.player_right[frame][y * v->tile_size + x];
     else
-        color_c = v->opt_txt.placeholder[y * v->tile_size + x]; // frame idle
+        color_c = v->opt_txt.placeholder[y * v->tile_size + x];
 
     if (color_c != 0x000000)
         put_pixel(v->frame.image, px + x, py + y, color_c);

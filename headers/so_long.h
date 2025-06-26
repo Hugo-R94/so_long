@@ -39,6 +39,7 @@ typedef struct s_wall_textures {
 typedef struct s_opt_tx
 {
 	uint32_t	*player[6];
+	uint32_t	*player_right[6];
 	uint32_t	*ground;
 	uint32_t	*coin;
 	uint32_t	*exit;
@@ -46,6 +47,7 @@ typedef struct s_opt_tx
 	uint32_t	*wall[10];
 	uint32_t	*mob;
 	uint32_t	*placeholder;
+	uint32_t	*jump;
 	double		index_p;
 } t_opt_tx;
 
@@ -60,6 +62,7 @@ typedef struct s_texture
 	t_img	shadow;
 	t_img	mob;
 	t_img	placeholder;
+	t_img	jump;
 }	t_texture;
 
 

@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/25 22:23:14 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/26 01:47:25 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,21 @@ void dump_texture(uint32_t *texture, int length)
     fputc('\n', f);
     fclose(f);
 }
-
+uint32_t *mirror_texture(uint32_t *src, int tile_size)
+{
+    uint32_t *dst = malloc(sizeof(uint32_t) * tile_size * tile_size);
+    if (!dst)
+        return NULL;
+    for (int y = 0; y < tile_size; y++)
+    {
+        for (int x = 0; x < tile_size; x++)
+        {
+           
+            dst[y * tile_size + x] = src[y * tile_size + (tile_size - 1 - x)];
+        }
+    }
+    return dst;
+}
 void transfer_tx(t_vars *v)
 {
 	v->opt_txt.wall[0] = opt_texture(&v->tx.wall.top, v);
@@ -248,5 +262,13 @@ void transfer_tx(t_vars *v)
 	v->opt_txt.player[3] = opt_texture(&v->tx.player[3], v);
 	v->opt_txt.player[4] = opt_texture(&v->tx.player[4], v);
 	v->opt_txt.player[5] = opt_texture(&v->tx.player[5], v);
+
+	v->opt_txt.player_right[0] = mirror_texture(v->opt_txt.player[0], v->tile_size);
+	v->opt_txt.player_right[1] = mirror_texture(v->opt_txt.player[1], v->tile_size);
+	v->opt_txt.player_right[2] = mirror_texture(v->opt_txt.player[2], v->tile_size);
+	v->opt_txt.player_right[3] = mirror_texture(v->opt_txt.player[3], v->tile_size);
+	v->opt_txt.player_right[4] = mirror_texture(v->opt_txt.player[4], v->tile_size);
+	v->opt_txt.player_right[5] = mirror_texture(v->opt_txt.player[5], v->tile_size);
+	
     dump_texture(v->opt_txt.player[0], 200*200);
 }
