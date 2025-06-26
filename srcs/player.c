@@ -6,11 +6,23 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 13:58:46 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 18:05:05 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	init_player(t_vars *v)
+{
+	v->player.vel_x = 0;
+	v->player.vel_y = 0;
+	v->player.jump = 0;
+	v->player.jump_counter = 0;
+	v->input.left = 0;
+	v->input.right = 0;
+	v->input.up = 0;
+	v->input.down = 0;
+}
 
 void get_player_grid_pos(t_vars *v)
 {
@@ -27,8 +39,7 @@ void get_player_grid_pos(t_vars *v)
 				v->player.view_x = (double)x;
 				v->player.view_y = (double)y;
 				v->player.view_jump = (double)y;
-				v->player.vel_x = 0;
-				v->player.vel_y = 0;
+				init_player(v);
 				return;
 			}
 			x++;
@@ -70,28 +81,35 @@ void	draw_shadow(t_vars *v)
 
 void draw_pixel_player(t_vars *v, int x, int y)
 {
-    int px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
+    int px;
     int py;
+    unsigned int color_c;
+
+    // Initialisation
+    color_c = 0;
+
+    px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
     if (v->player.jump == 1)
         py = (v->player.view_jump * v->tile_size) - (int)v->t_cam.y;
     else
         py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y;
 
-    int frame = (int)(v->opt_txt.index_p);
+    // Vérification des bornes
+    if (x < 0 || x >= v->tile_size || y < 0 || y >= v->tile_size)
+        return;
 
-    // Clamp la frame entre 0 et 5
+    // Limiter la frame à 0-5
+    int frame = (int)(v->opt_txt.index_p);
     if (frame < 0)
         frame = 0;
     if (frame > 5)
         frame = 5;
 
-    // Sécurité sur les indices
-    if (x < 0 || x >= v->tile_size || y < 0 || y >= v->tile_size)
-        return;
-
-    unsigned int color_c;
-	if (v->player.jump)
-		  color_c = v->opt_txt.jump[y * v->tile_size + x];
+    // Choix de la couleur selon les états
+    if (v->player.jump && v->input.left == 1)
+        color_c = v->opt_txt.jump[y * v->tile_size + x];
+    else if (v->player.jump)
+        color_c = v->opt_txt.jump_r[y * v->tile_size + x];
     else if (v->input.left == 1)
         color_c = v->opt_txt.player[frame][y * v->tile_size + x];
     else if (v->input.right == 1)
@@ -99,6 +117,7 @@ void draw_pixel_player(t_vars *v, int x, int y)
     else
         color_c = v->opt_txt.placeholder[y * v->tile_size + x];
 
+    // Dessiner seulement si la couleur n'est pas noire (transparente)
     if (color_c != 0x000000)
         put_pixel(v->frame.image, px + x, py + y, color_c);
 }

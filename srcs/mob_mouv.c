@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:33:08 by hugz              #+#    #+#             */
-/*   Updated: 2025/06/24 14:50:42 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:21:57 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void set_mouv_axis(t_vars *v, t_mob *mob)
 	ly = mob->my;
 	while (lx >= 0 && !is_wall(v->t_map.map[ly][lx]))
 		lx--;
-	lx++; // Revenir à la dernière position non mur
+	lx++;
 	while (lx < v->t_map.map_cols && !is_wall(v->t_map.map[ly][lx]))
 	{
 		lx++;
@@ -35,7 +35,7 @@ void set_mouv_axis(t_vars *v, t_mob *mob)
 	ly = mob->my;
 	while (ly >= 0 && !is_wall(v->t_map.map[ly][lx]))
 		ly--;
-	ly++; // Revenir à la dernière position non mur
+	ly++;
 	while (ly < v->t_map.map_rows && !is_wall(v->t_map.map[ly][lx]))
 	{
 		ly++;
@@ -157,16 +157,12 @@ void mouv_mob_simple(t_vars *v)
 	{
 		next_x = v->mob[i].view_x;
 		next_y = v->mob[i].view_y;
-
 		if (v->mob[i].axis == 'x')
 			next_x = next_x + (0.05f * v->mob[i].dir);
 		else if (v->mob[i].axis == 'y')
 			next_y = next_y + (0.05f * v->mob[i].dir);
-
 		check_x = (int)(next_x + 0.5f);
 		check_y = (int)(next_y + 0.5f);
-
-		// Tester si la prochaine case est un mur
 		if (is_wall(v->t_map.map[check_y][check_x]))
 			v->mob[i].dir = v->mob[i].dir * -1;
 		else
@@ -176,7 +172,6 @@ void mouv_mob_simple(t_vars *v)
 		}
 		v->mob[i].mx = v->mob[i].view_x + 0.5;
 		v->mob[i].my = v->mob[i].view_y + 0.5;
-		//printf("mob %d view_x = %f view_y = %f dir = %d\n", i, v->mob[i].view_x, v->mob[i].view_y, v->mob[i].dir);
 		i++;
 	}
 }

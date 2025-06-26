@@ -47,6 +47,7 @@ typedef struct s_opt_tx
 	uint32_t	*mob;
 	uint32_t	*placeholder;
 	uint32_t	*jump;
+	uint32_t	*jump_r;
 	double		index_p;
 	uint32_t	*p_right[6];
 } t_opt_tx;
@@ -63,7 +64,6 @@ typedef struct s_texture
 	t_img	mob;
 	t_img	placeholder;
 	t_img	jump;
-	//t_img	p_right[6];
 }	t_texture;
 
 
@@ -71,7 +71,6 @@ typedef struct s_player {
 	double view_x;
 	double view_y;
 	double view_jump;
-	double jump_offset;
 	int    grid_x;
 	int    grid_y;
 	int		jump;
@@ -216,7 +215,7 @@ void draw_pixel_coins(t_vars *v, int x, int y);
 
 //exit
 void	get_exit(t_vars *v);
-void	draw_frame(t_img *dst, t_vars *v, int dst_x, int dst_y);
+void draw_frame(t_img *dst, t_vars *v);
 
 //mob
 void	draw_pixel_mob(t_vars *v, int x, int y);

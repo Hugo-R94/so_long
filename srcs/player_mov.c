@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:35:11 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/24 17:57:46 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 14:46:44 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,40 +29,25 @@ void move_player(t_vars *vars, double dx, double dy)
 	int new_y_g;
 
 	new_x = vars->player.view_x + dx;
-
-	if (vars->player.jump)
-		new_y = vars->player.view_jump + dy; // Utilise view_jump pendant le saut
-	else
-		new_y = vars->player.view_y + dy;
-
+	new_y = vars->player.view_y + dy;
 	new_x_g = (int)(new_x + 0.5);
 	new_y_g = (int)(new_y + 0.85);
-	
-	// Vérifie limites et collision avec mur
 	if (new_x_g < 0 || new_y_g < 0 || !vars->t_map.map[new_y_g] || !vars->t_map.map[new_y_g][new_x_g])
 		return;
-
 	if (is_wall(vars->t_map.map[new_y_g][new_x_g]))
 		return;
-
-	// Met à jour la position horizontale
 	vars->player.view_x = new_x;
-
-	// Met à jour la position verticale selon l’état de saut
-	if (vars->player.jump)
-		vars->player.view_jump = new_y;
-	else
+	if(!vars->player.jump)
 	{
 		vars->player.view_y = new_y;
-		vars->player.view_jump = new_y; // Synchronise view_jump quand pas en saut
+		vars->player.view_jump = new_y;
 	}
-
 	vars->player.grid_x = new_x_g;
 	vars->player.grid_y = new_y_g;
 }
+
 void	key_pressed_p(int keycode, t_vars *v)
 {
-	//printf("key : %i pressed\n",keycode);
 	if (keycode == 65307)
 		exit(0);
 	if (keycode == 97 || keycode == 65361)
@@ -84,7 +69,6 @@ void	key_pressed_p(int keycode, t_vars *v)
 
 void	key_release_p(int keycode, t_vars *v)
 {
-	//printf("key : %i released\n",keycode);
 	if (keycode == 97 || keycode == 65361)
 		v->input.left = 0;
 	if (keycode == 100 || keycode == 65363)

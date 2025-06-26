@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:57 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 12:57:00 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 14:21:49 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	main(void)
 {
+	
 	int		fd;
 	int		i;
 	t_vars *vars;
@@ -45,13 +46,14 @@ int	main(void)
 	char *map_valid5 = "maps/valid/valid5.ber";
 
 	// allocation de vars
+	
 	vars = malloc(sizeof(t_vars));
 	if (!vars)
 		return (1);
-
+	
 	i = 0;
-	name_checker(map_valid5);
-	fd = open(map_valid5, O_RDONLY);
+	name_checker(map_valid1);
+	fd = open(map_valid1, O_RDONLY);
 	if (fd < 0)
 	{
 		perror("open");
@@ -72,18 +74,23 @@ int	main(void)
 		ft_printf("vars mlx failed.");
 		return (1);
 	}
+	
 	vars->win = mlx_new_window(vars->mlx, RES_X, RES_Y, "SO LONG");
 	if (!vars->win)
 		return (1);
 	vars->img = mlx_new_image(vars->mlx, RES_X, RES_Y);
 	if (!vars->img)
 		return (1);
+	
 	check_map(vars->t_map.map);
+	
 	vars->t_map.map = remap(vars->t_map.map);
 	while (vars->t_map.map[i])
 		printf("%s", vars->t_map.map[i++]);
 	printf("\n");
+	
 	init_all(vars);
+	
 	// printf("offsetx = %i | offset_y = %i\n ",vars->offset_x,vars->offset_y);
 	// printf("cam x = %f | cam y = %f\n",vars->t_cam.x,vars->t_cam.y);
 	//render_frame(vars);

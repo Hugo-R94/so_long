@@ -6,55 +6,39 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 13:59:50 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:32:41 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+static void transfer_tx_1(t_vars *v);
 
 void	init_all(t_vars *v)
 {
 	if (!v)
 		return;
-
 	calculate_tile_size_n_mapsize(v);
 	calculate_offset(v);
-	// init_background(v);
+	get_player_grid_pos(v);
 	init_texture(v, &v->tx);
 	nb_mob(v);
-	get_player_grid_pos(v);
+	printf("vel x = %f | vel y = %f\n",v->player.vel_x,v->player.vel_y);
 	init_coins(v);
 	set_all_ennemy(v);
 	get_exit(v);
-
-	// init_player(v);
-	// init_coins(v);
-	// init_camera(v);
 }
 
 
 void	init_img_struct(t_img *txt)
 {
-		if (!txt)
+	if (!txt)
 		return;
-
 	ft_memset(txt, 0, sizeof(t_img));
-
-	txt->image = NULL;
-	txt->pix = 0;
-	txt->gc = 0;
-	txt->size_line = 0;
-	txt->bpp = 32;
-	txt->width = 0;
-	txt->height = 0;
-	txt->type = 0;
-	txt->format = 0;
-	txt->data = NULL;
-
 	txt->shm.shmid = -1;
 	txt->shm.shmaddr = (char *)-1;
 	txt->shm.readOnly = False;
 }
+
 
 void get_img(t_vars *v, t_img *img, const char *txt_name)
 {
@@ -141,7 +125,7 @@ void print_img(t_img *img)
 	printf("  shm.readOnly : %d\n", img->shm.readOnly);
 }
 
-void	init_texture(t_vars *v, t_texture *txt)
+void	init_all_img_struct(t_vars *v, t_texture *txt)
 {
 	init_img_struct(&txt->player[0]);
 	init_img_struct(&txt->player[1]);
@@ -149,13 +133,10 @@ void	init_texture(t_vars *v, t_texture *txt)
 	init_img_struct(&txt->player[3]);
 	init_img_struct(&txt->player[4]);
 	init_img_struct(&txt->player[5]);
-
-
 	init_img_struct(&txt->ground);
 	init_img_struct(&txt->coin);
 	init_img_struct(&txt->exit);
 	init_img_struct(&txt->shadow);
-
 	init_img_struct(&txt->wall.top);
 	init_img_struct(&txt->wall.bottom);
 	init_img_struct(&txt->wall.left);
@@ -165,24 +146,23 @@ void	init_texture(t_vars *v, t_texture *txt)
 	init_img_struct(&txt->wall.corner_bl);
 	init_img_struct(&txt->wall.corner_br);
 	init_img_struct(&txt->wall.middle);
-
+	init_img_struct(&txt->jump);
 	init_img_struct(&txt->mob);
 	init_img_struct(&txt->placeholder);
-	init_img_struct(&txt->jump);
-	
+}
+
+void	get_all_img(t_vars *v, t_texture *txt)
+{
 	get_img(v, &txt->player[0], "hulk_0");
 	get_img(v, &txt->player[1], "hulk_1");
 	get_img(v, &txt->player[2], "hulk_2");
 	get_img(v, &txt->player[3], "hulk_3");
 	get_img(v, &txt->player[4], "hulk_4");
 	get_img(v, &txt->player[5], "hulk_5");
-
-	
 	get_img(v, &txt->ground, "ground");
 	get_img(v, &txt->coin, "coin_0");
 	get_img(v, &txt->exit, "exit");
 	get_img(v, &txt->shadow, "shadow");
-
 	get_img(v, &txt->wall.top, "wall_T");
 	get_img(v, &txt->wall.bottom, "wall_B");
 	get_img(v, &txt->wall.left, "wall_L");
@@ -192,11 +172,17 @@ void	init_texture(t_vars *v, t_texture *txt)
 	get_img(v, &txt->wall.corner_bl, "corner_BL");
 	get_img(v, &txt->wall.corner_br, "corner_BR");
 	get_img(v, &txt->wall.middle, "chair");
-
-	get_img(v, &txt->mob, "mob");
 	get_img(v, &txt->jump, "jump");
+	get_img(v, &txt->mob, "mob");
 	get_img(v, &txt->placeholder, "player_1");
+}
 
+void	init_texture(t_vars *v, t_texture *txt)
+{
+	
+	init_all_img_struct(v, &v->tx);
+	get_all_img(v, &v->tx);
+	transfer_tx_1(v);
 	transfer_tx(v);
 
 	init_frame(v, &v->frame, 1920, 1080);
@@ -247,7 +233,7 @@ uint32_t *mirror_texture(uint32_t *src, int tile_size)
     }
     return dst;
 }
-void transfer_tx(t_vars *v)
+static void transfer_tx_1(t_vars *v)
 {
 	v->opt_txt.player[0] = opt_texture(&v->tx.player[0], v);
 	v->opt_txt.player[1] = opt_texture(&v->tx.player[1], v);
@@ -255,19 +241,16 @@ void transfer_tx(t_vars *v)
 	v->opt_txt.player[3] = opt_texture(&v->tx.player[3], v);
 	v->opt_txt.player[4] = opt_texture(&v->tx.player[4], v);
 	v->opt_txt.player[5] = opt_texture(&v->tx.player[5], v);
-
 	v->opt_txt.p_right[0] = mirror_texture(v->opt_txt.player[0], v->tile_size);
 	v->opt_txt.p_right[1] = mirror_texture(v->opt_txt.player[1], v->tile_size);
 	v->opt_txt.p_right[2] = mirror_texture(v->opt_txt.player[2], v->tile_size);
 	v->opt_txt.p_right[3] = mirror_texture(v->opt_txt.player[3], v->tile_size);
 	v->opt_txt.p_right[4] = mirror_texture(v->opt_txt.player[4], v->tile_size);
 	v->opt_txt.p_right[5] = mirror_texture(v->opt_txt.player[5], v->tile_size);
-	
 	v->opt_txt.ground = opt_texture(&v->tx.ground, v);
 	v->opt_txt.coin = opt_texture(&v->tx.coin, v);
 	v->opt_txt.exit = opt_texture(&v->tx.exit, v);
 	v->opt_txt.shadow = opt_texture(&v->tx.shadow, v);
-	
 	v->opt_txt.wall[0] = opt_texture(&v->tx.wall.top, v);
 	v->opt_txt.wall[1] = opt_texture(&v->tx.wall.bottom, v);
 	v->opt_txt.wall[2] = opt_texture(&v->tx.wall.left, v);
@@ -277,23 +260,13 @@ void transfer_tx(t_vars *v)
 	v->opt_txt.wall[6] = opt_texture(&v->tx.wall.corner_bl, v);
 	v->opt_txt.wall[7] = opt_texture(&v->tx.wall.corner_br, v);
 	v->opt_txt.wall[8] = opt_texture(&v->tx.wall.middle, v);
-	
-	v->opt_txt.mob = opt_texture(&v->tx.mob, v);
+}
+
+void transfer_tx(t_vars *v)
+{
 	v->opt_txt.jump = opt_texture(&v->tx.jump, v);
+	v->opt_txt.mob = opt_texture(&v->tx.mob, v);
 	v->opt_txt.placeholder = opt_texture(&v->tx.placeholder, v);
-	
-	// v->opt_txt.p_right[0] = opt_texture(&v->tx.p_right[0], v);
-	// v->opt_txt.p_right[1] = opt_texture(&v->tx.p_right[1], v);
-	// v->opt_txt.p_right[2] = opt_texture(&v->tx.p_right[2], v);
-	// v->opt_txt.p_right[3] = opt_texture(&v->tx.p_right[3], v);
-	// v->opt_txt.p_right[4] = opt_texture(&v->tx.p_right[4], v);
-	// v->opt_txt.p_right[5] = opt_texture(&v->tx.p_right[5], v);
-	// v->opt_txt.p_right[0] = opt_texture(&v->tx.player[0], v);
-	// v->opt_txt.p_right[1] = opt_texture(&v->tx.player[1], v);
-	// v->opt_txt.p_right[2] = opt_texture(&v->tx.player[2], v);
-	// v->opt_txt.p_right[3] = opt_texture(&v->tx.player[3], v);
-	// v->opt_txt.p_right[4] = opt_texture(&v->tx.player[4], v);
-	// v->opt_txt.p_right[5] = opt_texture(&v->tx.player[5], v);
-	
+	v->opt_txt.jump_r = mirror_texture(v->opt_txt.jump, v->tile_size);
     //dump_texture(v->opt_txt.player_right[0], 200*200);
 }
