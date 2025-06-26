@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:57 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 01:24:47 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/26 11:58:47 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	main(void)
 		printf("%s", vars->t_map.map[i++]);
 	printf("\n");
 	init_all(vars);
-	
 	// printf("offsetx = %i | offset_y = %i\n ",vars->offset_x,vars->offset_y);
 	// printf("cam x = %f | cam y = %f\n",vars->t_cam.x,vars->t_cam.y);
 	//render_frame(vars);

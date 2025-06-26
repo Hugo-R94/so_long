@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/24 18:00:22 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 12:00:47 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ void render_frame(t_vars *v)
 	// draw_shadow(v);
     // draw_player(v);
 	draw_frame(v->frame.image, v, 1,1);
-	
+	// CA PLANTE ICI
     mlx_put_image_to_window(v->mlx, v->win, v->frame.image, 0, 0);
+	
 }
 
 int init_frame(t_vars *v, t_img *frame, int width, int height)
@@ -47,22 +48,25 @@ int init_frame(t_vars *v, t_img *frame, int width, int height)
 
 	frame->width = width;
 	frame->height = height;
-//	printf("ici ca marche \n");
-	frame->image = (XImage *)mlx_new_image(v->mlx, width, height);
+	frame->image = mlx_new_image(v->mlx, width, height);
 	if (!frame->image)
 	{
 		ft_printf("Erreur : mlx_new_image a échoué\n");
 		return (1);
 	}
 
-	frame->data = mlx_get_data_addr((void *)frame->image, &frame->bpp, &frame->size_line, &endian);
+	frame->data = mlx_get_data_addr(frame->image, &frame->bpp, &frame->size_line, &endian);
 	if (!frame->data)
 	{
 		ft_printf("Erreur : mlx_get_data_addr a retourné NULL\n");
 		return (1);
 	}
 
+	ft_printf("Init frame: width=%d height=%d bpp=%d size_line=%d\n",
+		width, height, frame->bpp, frame->size_line);
+
 	memset(frame->data, 0, height * frame->size_line);
+
 	return (0);
 }
 

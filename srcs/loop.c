@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 01:24:05 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/26 12:00:07 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	game_loop(t_vars *v)
 	const long frame_time_us = 33333;
 
 	gettimeofday(&start, NULL);
-
+	
 	// --- logique du jeu ---
 	double accel = 0.02;
 	double friction = 0.85;
@@ -46,28 +46,16 @@ void	game_loop(t_vars *v)
 			v->player.grid_y == v->coin[i].cy &&
 			v->coin[i].vis == 1)
 		{
-			v->coin[i].vis = 0;
+			
 			v->coin_get++;
+			v->coin[i].vis = 0;
 			printf("Coin #%d ramassé, total: %d/%d\n", i, v->coin_get, v->coin_count);
 		}
 		i++;
 	}
 	mouv_mob_simple(v);
 	int y = 0;
-	if (v->player.jump)
-	{
-		if (v->player.jump_counter < 7)
-			v->player.view_jump -= 0.15;
-		else if (v->player.jump_counter < 14)
-			v->player.view_jump += 0.15;
-		else
-		{
-			v->player.jump = 0;
-			v->player.jump_counter = 0;
-			v->player.view_y = v->player.view_jump; 
-		}
-		v->player.jump_counter++;
-	}
+	
 
 	while (y < v->nb_mob)
 {
@@ -117,6 +105,7 @@ if (v->coin_get >= v->coin_count)
 		printf("VICTOIRE !!\n");
 		exit(EXIT_SUCCESS);
 	}
+	
 	if (v->input.left || v->input.right) {
     v->opt_txt.index_p += 0.33;
     if (v->opt_txt.index_p > 5)
@@ -124,15 +113,31 @@ if (v->coin_get >= v->coin_count)
 	} else {
 		v->opt_txt.index_p = 0; // idle frame si aucune touche
 	}
-
+	if (v->player.jump)
+	{
+		if (v->player.jump_counter < 7)
+			v->player.view_jump -= 0.15;
+		else if (v->player.jump_counter < 14)
+			v->player.view_jump += 0.15;
+		else
+		{
+			v->player.jump = 0;
+			v->player.jump_counter = 0;
+			v->player.view_y = v->player.view_jump; 
+		}
+		v->player.jump_counter++;
+	}
+	
 	//printf("%i | %i\n",v->coin_count, v->coin_get);
 	update_camera(v);
+	
 	render_frame(v);
 
 	gettimeofday(&end, NULL);
 	elapsed_us = (end.tv_sec - start.tv_sec) * 1000000L
 	           + (end.tv_usec - start.tv_usec);
-	
+
+
 	int fps = 1000000.0 / elapsed_us;
 	// if (fps < 30)
 	// 	printf("FPS: %i \n", fps);

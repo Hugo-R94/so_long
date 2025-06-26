@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 01:46:41 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/26 11:31:56 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void draw_pixel_player(t_vars *v, int x, int y)
     else if (v->input.left == 1)
         color_c = v->opt_txt.player[frame][y * v->tile_size + x];
     else if (v->input.right == 1)
-        color_c = v->opt_txt.player_right[frame][y * v->tile_size + x];
+        color_c = v->opt_txt.p_right[frame][y * v->tile_size + x];
     else
         color_c = v->opt_txt.placeholder[y * v->tile_size + x];
 

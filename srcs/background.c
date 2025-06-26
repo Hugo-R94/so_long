@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/25 21:50:47 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/26 11:44:56 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,113 +226,7 @@ void draw_pixel_background(t_vars *v, int px, int py)
 				color = v->opt_txt.exit[py * v->tile_size + px];
 			}
             else
-                color = v->opt_txt.ground[py * v->tile_size + px];void	init_texture(t_vars *v, t_texture *txt)
-{
-	char frame_name[64];
-
-	if (!txt)
-		return;
-
-	init_img_struct(&txt->wall.bottom);
-	init_img_struct(&txt->wall.top);
-	init_img_struct(&txt->wall.left);
-	init_img_struct(&txt->wall.right);
-	init_img_struct(&txt->wall.middle);
-	init_img_struct(&txt->wall.corner_tl);
-	init_img_struct(&txt->wall.corner_tr);
-	init_img_struct(&txt->wall.corner_bl);
-	init_img_struct(&txt->wall.corner_br);
-	init_img_struct(&txt->ground);
-	init_img_struct(&txt->coin);
-	init_img_struct(&txt->exit);
-	init_img_struct(&txt->shadow);
-	init_img_struct(&txt->mob);
-
-	init_img_struct(&txt->player[0]);
-	init_img_struct(&txt->player[1]);
-	init_img_struct(&txt->player[2]);
-	init_img_struct(&txt->player[3]);
-	init_img_struct(&txt->player[4]);
-	init_img_struct(&txt->player[5]);
-
-	get_img(v, &txt->player[0], "hulk_0");
-	get_img(v, &txt->player[1], "hulk_1");
-	get_img(v, &txt->player[2], "hulk_2");
-	get_img(v, &txt->player[3], "hulk_3");
-	get_img(v, &txt->player[4], "hulk_4");
-	get_img(v, &txt->player[5], "hulk_5");
-
-	get_img(v, &txt->ground, "ground");
-	get_img(v, &txt->coin, "coin_0");
-	get_img(v, &txt->exit, "exit");
-	get_img(v, &txt->shadow, "shadow");
-	get_img(v, &txt->wall.top, "wall_T");
-	get_img(v, &txt->wall.bottom, "wall_B");
-	get_img(v, &txt->wall.right, "wall_R");
-	get_img(v, &txt->wall.left, "wall_L");
-	get_img(v, &txt->wall.middle, "chair");
-	get_img(v, &txt->wall.corner_tl, "corner_TL");
-	get_img(v, &txt->wall.corner_tr, "corner_TR");
-	get_img(v, &txt->wall.corner_bl, "corner_BL");
-	get_img(v, &txt->wall.corner_br, "corner_BR");
-	get_img(v, &txt->mob, "mob");
-
-	transfer_tx(v);
-    
-	init_frame(v, &v->frame, RES_X, RES_Y);
-}
-
-
-void dump_texture(uint32_t *texture, int length)
-{
-    FILE *f = fopen("test.txt", "w");
-    if (!f)
-    {
-        perror("Erreur ouverture fichier");
-        return;
-    }
-    
-    for (int i = 0; i < length; i++)
-    {
-        if (i > 0 && i % 200 == 0)
-            fputc('\n', f);
-
-        if (texture[i] == 0x000000)
-            fputc(' ', f);
-        else
-            fputc('x', f);
-    }
-    fputc('\n', f);
-    fclose(f);
-}
-
-void transfer_tx(t_vars *v)
-{
-	v->opt_txt.wall[0] = opt_texture(&v->tx.wall.top, v);
-	v->opt_txt.wall[1] = opt_texture(&v->tx.wall.bottom, v);
-	v->opt_txt.wall[2] = opt_texture(&v->tx.wall.left, v);
-	v->opt_txt.wall[3] = opt_texture(&v->tx.wall.right, v);
-	v->opt_txt.wall[4] = opt_texture(&v->tx.wall.corner_tl, v);
-	v->opt_txt.wall[5] = opt_texture(&v->tx.wall.corner_tr, v);
-	v->opt_txt.wall[6] = opt_texture(&v->tx.wall.corner_bl, v);
-	v->opt_txt.wall[7] = opt_texture(&v->tx.wall.corner_br, v);
-	v->opt_txt.wall[8] = opt_texture(&v->tx.wall.middle, v);
-
-	v->opt_txt.ground = opt_texture(&v->tx.ground, v);
-	v->opt_txt.exit = opt_texture(&v->tx.exit, v);
-	v->opt_txt.coin = opt_texture(&v->tx.coin, v);
-	v->opt_txt.shadow = opt_texture(&v->tx.shadow, v);
-	v->opt_txt.mob = opt_texture(&v->tx.mob, v);
-
-	v->opt_txt.player[0] = opt_texture(&v->tx.player[0], v);
-	v->opt_txt.player[1] = opt_texture(&v->tx.player[1], v);
-	v->opt_txt.player[2] = opt_texture(&v->tx.player[2], v);
-	v->opt_txt.player[3] = opt_texture(&v->tx.player[3], v);
-	v->opt_txt.player[4] = opt_texture(&v->tx.player[4], v);
-	v->opt_txt.player[5] = opt_texture(&v->tx.player[5], v);
-    dump_texture(v->opt_txt.player[0], 200*200);
-}
-
+                color = v->opt_txt.ground[py * v->tile_size + px];void	init_texture(t_vars *v, t_texture *txt);
 			if (color != 0x000000)
 				put_pixel(v->frame.image, draw_x, draw_y, color);
             tx++;
