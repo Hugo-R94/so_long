@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 13:36:39 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 13:59:50 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,8 @@ void	init_texture(t_vars *v, t_texture *txt)
 
 	init_img_struct(&txt->mob);
 	init_img_struct(&txt->placeholder);
-
+	init_img_struct(&txt->jump);
+	
 	get_img(v, &txt->player[0], "hulk_0");
 	get_img(v, &txt->player[1], "hulk_1");
 	get_img(v, &txt->player[2], "hulk_2");
@@ -193,6 +194,7 @@ void	init_texture(t_vars *v, t_texture *txt)
 	get_img(v, &txt->wall.middle, "chair");
 
 	get_img(v, &txt->mob, "mob");
+	get_img(v, &txt->jump, "jump");
 	get_img(v, &txt->placeholder, "player_1");
 
 	transfer_tx(v);
@@ -277,6 +279,7 @@ void transfer_tx(t_vars *v)
 	v->opt_txt.wall[8] = opt_texture(&v->tx.wall.middle, v);
 	
 	v->opt_txt.mob = opt_texture(&v->tx.mob, v);
+	v->opt_txt.jump = opt_texture(&v->tx.jump, v);
 	v->opt_txt.placeholder = opt_texture(&v->tx.placeholder, v);
 	
 	// v->opt_txt.p_right[0] = opt_texture(&v->tx.p_right[0], v);

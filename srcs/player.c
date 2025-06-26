@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 12:49:07 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 13:58:46 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void draw_pixel_player(t_vars *v, int x, int y)
 
     unsigned int color_c;
 	if (v->player.jump)
-		  color_c = v->opt_txt.placeholder[y * v->tile_size + x];
+		  color_c = v->opt_txt.jump[y * v->tile_size + x];
     else if (v->input.left == 1)
         color_c = v->opt_txt.player[frame][y * v->tile_size + x];
     else if (v->input.right == 1)
