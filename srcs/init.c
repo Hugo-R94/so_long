@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 12:23:35 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 12:29:11 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,8 +240,7 @@ void dump_texture(uint32_t *texture, int length)
 }
 uint32_t *mirror_texture(uint32_t *src, int tile_size)
 {
-   // uint32_t *dst = malloc(sizeof(uint32_t) * tile_size * tile_size);
-    uint32_t *dst = malloc(sizeof(uint32_t) * tile_size * tile_size);
+   	uint32_t *dst = malloc(sizeof(uint32_t) * tile_size * tile_size);
 	int y;
 	int x;
     if (!dst)
@@ -268,12 +267,12 @@ void transfer_tx(t_vars *v)
 	v->opt_txt.player[4] = opt_texture(&v->tx.player[4], v);
 	v->opt_txt.player[5] = opt_texture(&v->tx.player[5], v);
 
-	// v->opt_txt.p_right[0] = mirror_texture(v->opt_txt.player[0], v->tile_size);
-	// v->opt_txt.p_right[1] = mirror_texture(v->opt_txt.player[1], v->tile_size);
-	// v->opt_txt.p_right[2] = mirror_texture(v->opt_txt.player[2], v->tile_size);
-	// v->opt_txt.p_right[3] = mirror_texture(v->opt_txt.player[3], v->tile_size);
-	// v->opt_txt.p_right[4] = mirror_texture(v->opt_txt.player[4], v->tile_size);
-	// v->opt_txt.p_right[5] = mirror_texture(v->opt_txt.player[5], v->tile_size);
+	v->opt_txt.p_right[0] = mirror_texture(v->opt_txt.player[0], v->tile_size);
+	v->opt_txt.p_right[1] = mirror_texture(v->opt_txt.player[1], v->tile_size);
+	v->opt_txt.p_right[2] = mirror_texture(v->opt_txt.player[2], v->tile_size);
+	v->opt_txt.p_right[3] = mirror_texture(v->opt_txt.player[3], v->tile_size);
+	v->opt_txt.p_right[4] = mirror_texture(v->opt_txt.player[4], v->tile_size);
+	v->opt_txt.p_right[5] = mirror_texture(v->opt_txt.player[5], v->tile_size);
 	
 	v->opt_txt.ground = opt_texture(&v->tx.ground, v);
 	v->opt_txt.coin = opt_texture(&v->tx.coin, v);
@@ -293,12 +292,12 @@ void transfer_tx(t_vars *v)
 	v->opt_txt.mob = opt_texture(&v->tx.mob, v);
 	v->opt_txt.placeholder = opt_texture(&v->tx.placeholder, v);
 	
-	v->opt_txt.p_right[0] = opt_texture(&v->tx.p_right[0], v);
-	v->opt_txt.p_right[1] = opt_texture(&v->tx.p_right[1], v);
-	v->opt_txt.p_right[2] = opt_texture(&v->tx.p_right[2], v);
-	v->opt_txt.p_right[3] = opt_texture(&v->tx.p_right[3], v);
-	v->opt_txt.p_right[4] = opt_texture(&v->tx.p_right[4], v);
-	v->opt_txt.p_right[5] = opt_texture(&v->tx.p_right[5], v);
+	// v->opt_txt.p_right[0] = opt_texture(&v->tx.p_right[0], v);
+	// v->opt_txt.p_right[1] = opt_texture(&v->tx.p_right[1], v);
+	// v->opt_txt.p_right[2] = opt_texture(&v->tx.p_right[2], v);
+	// v->opt_txt.p_right[3] = opt_texture(&v->tx.p_right[3], v);
+	// v->opt_txt.p_right[4] = opt_texture(&v->tx.p_right[4], v);
+	// v->opt_txt.p_right[5] = opt_texture(&v->tx.p_right[5], v);
 	// v->opt_txt.p_right[0] = opt_texture(&v->tx.player[0], v);
 	// v->opt_txt.p_right[1] = opt_texture(&v->tx.player[1], v);
 	// v->opt_txt.p_right[2] = opt_texture(&v->tx.player[2], v);
