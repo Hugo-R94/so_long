@@ -63,7 +63,7 @@ typedef struct s_texture
 	t_img	mob;
 	t_img	placeholder;
 	t_img	jump;
-	t_img	p_right[6];
+	//t_img	p_right[6];
 }	t_texture;
 
 

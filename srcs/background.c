@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 11:44:56 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 13:37:58 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,17 +208,13 @@ void draw_pixel_background(t_vars *v, int px, int py)
 					color = v->opt_txt.wall[5][py * v->tile_size + px];
 				else if (tile == 'D')
 					color = v->opt_txt.wall[7][py * v->tile_size + px];
-				else                   
+				else 
+				{   
+					color = v->opt_txt.ground[py * v->tile_size + px];
+					put_pixel(v->frame.image, draw_x, draw_y, color);
 					color = v->opt_txt.wall[8][py * v->tile_size + px];
+				}
 			}
-			// if (is_wall(tile))
-			// {
-			// 	color = v->opt_txt.coin[py * v->tile_size + px];
-			// }
-            // if (tile == 'A' || tile == 'M' || tile == 'O' || tile == 'D' || tile == 'T' || tile == 'B' || tile == 'R' || tile == 'L')
-			// 	color = v->opt_txt.wall[3][py * v->tile_size + px]; // test simple
-			// //	color = draw_pixel_wall(v, px, py, ty, tx);
-            // //    color = v->opt_txt.wall[py * v->tile_size + px];
             else if (tile == 'E')
             {
 				color = v->opt_txt.ground[py * v->tile_size + px];

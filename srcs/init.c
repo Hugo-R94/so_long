@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 12:29:11 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 13:36:39 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	init_all(t_vars *v)
 	calculate_offset(v);
 	// init_background(v);
 	init_texture(v, &v->tx);
-	
 	nb_mob(v);
 	get_player_grid_pos(v);
 	init_coins(v);
@@ -111,12 +110,12 @@ uint32_t *opt_texture(t_img *img, t_vars *v)
         }
         x++;
     }
-	//  if (img->image)
-    // {
-    //     mlx_destroy_image(v->mlx, img->image);
-    //     img->image = NULL;
-    //     img->data = NULL;
-    // }
+	 if (img->image)
+    {
+        mlx_destroy_image(v->mlx, img->image);
+        img->image = NULL;
+        img->data = NULL;
+    }
     return tx;
 }
 void print_img(t_img *img)
@@ -150,13 +149,7 @@ void	init_texture(t_vars *v, t_texture *txt)
 	init_img_struct(&txt->player[3]);
 	init_img_struct(&txt->player[4]);
 	init_img_struct(&txt->player[5]);
-	
-	init_img_struct(&txt->p_right[0]);
-	init_img_struct(&txt->p_right[1]);
-	init_img_struct(&txt->p_right[2]);
-	init_img_struct(&txt->p_right[3]);
-	init_img_struct(&txt->p_right[4]);
-	init_img_struct(&txt->p_right[5]);
+
 
 	init_img_struct(&txt->ground);
 	init_img_struct(&txt->coin);
@@ -183,12 +176,6 @@ void	init_texture(t_vars *v, t_texture *txt)
 	get_img(v, &txt->player[4], "hulk_4");
 	get_img(v, &txt->player[5], "hulk_5");
 
-	get_img(v, &txt->p_right[0], "hulk_5");
-	get_img(v, &txt->p_right[1], "hulk_4");
-	get_img(v, &txt->p_right[2], "hulk_3");
-	get_img(v, &txt->p_right[3], "hulk_2");
-	get_img(v, &txt->p_right[4], "hulk_1");
-	get_img(v, &txt->p_right[5], "hulk_0");
 	
 	get_img(v, &txt->ground, "ground");
 	get_img(v, &txt->coin, "coin_0");

@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:51:14 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/24 18:00:53 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/26 12:39:26 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,17 @@ unsigned int	get_pixel(t_img *img, int x, int y)
 	return (*(unsigned int *)(img->data + offset));
 }
 
-void	put_pixel(t_img *img, int x, int y, unsigned int color)
+void put_pixel(t_img *img, int x, int y, unsigned int color)
 {
-	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
-		return;
+    //printf("img width = %i | img height = %i\n", img->width, img->height);
+	
+    if (x < 0 || y < 0 || x >= img->width || y >= img->height)
+        return;
 
-	int	offset = y * img->size_line + x * (img->bpp / 8);
-	*(unsigned int *)(img->data + offset) = color;
+    int offset = y * img->size_line + x * (img->bpp / 8);
+    *(unsigned int *)(img->data + offset) = color;
 }
+
 
 void	draw_image(t_img *dst, t_img *src, int dst_x, int dst_y)
 {
