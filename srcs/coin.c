@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   coin.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 15:02:17 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/27 12:07:49 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,37 +65,24 @@ void load_coin(t_vars *vars)
 
 void	init_coins(t_vars *v)
 {
-	int i;
 	
-	i = 0;
 	get_coin_count(v);
 	load_coin(v);
 	v->coin_get = 0;
-}
-
-void draw_coin(t_vars *v, int index)
-{
-    int cx = (v->coin[index].cx * v->tile_size ) - (int)v->t_cam.x;
-	int cy = (v->coin[index].cy * v->tile_size) - (int)v->t_cam.y;
-	if (v->coin[index].vis == 1)
-   		draw_image(&v->frame, &v->tx.coin, cx, cy);
 }
 
 void	draw_single_coin(t_vars *v, int i, int x, int y)
 {
 	int		draw_x;
 	int		draw_y;
-	int		pix_x;
-	int		pix_y;
 	int		tile;
 
 	tile = v->tile_size;
 	draw_x = (v->coin[i].cx * tile) - (int)v->t_cam.x + x;
 	draw_y = (v->coin[i].cy * tile) - (int)v->t_cam.y + y;
-	pix_y = 0;
     unsigned int color_c = v->opt_txt.coin[y * v->tile_size +x];
 	 if (color_c != 0x000000)
-        put_pixel(v->frame.image, draw_x, draw_y, color_c);
+        put_pixel(&v->frame, draw_x, draw_y, color_c);
 }
 void	draw_pixel_coins(t_vars *v, int x, int y)
 {

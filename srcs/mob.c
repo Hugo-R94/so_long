@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mob.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:35:39 by hugz              #+#    #+#             */
-/*   Updated: 2025/06/26 15:27:11 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/27 12:46:35 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void set_ennemy(t_vars *v, t_mob *mob, int x, int y)
+void set_ennemy(t_mob *mob, int x, int y)
 {
 	mob->mx = x;
 	mob->my = y;
@@ -59,7 +59,7 @@ void	set_all_ennemy(t_vars *v)
 		{
 			if (v->t_map.map[y][x] == 'M')
 			{
-				set_ennemy(v, &v->mob[i], x, y);
+				set_ennemy(&v->mob[i], x, y);
 				set_mouv_axis(v, &v->mob[i]); 
 				v->mob[i].dir = 1;
 				i++;
@@ -128,8 +128,7 @@ void draw_pixel_mob(t_vars *v, int px, int py)
 		i++;
 	}
 }
-void handle_draw_mob(t_vars *v, int i, int px, int py,
-					 int top, int bottom, int left, int right)
+void handle_draw_mob(t_vars *v, int i, int px, int py, int top, int bottom, int left, int right)
 {
 	int mx = v->mob[i].mx;
 	int my = v->mob[i].my;
@@ -141,8 +140,7 @@ void handle_draw_mob(t_vars *v, int i, int px, int py,
 	{
 		int draw_x = (int)(v->mob[i].view_x * v->tile_size) - v->t_cam.x + px;
 		int draw_y = (int)(v->mob[i].view_y * v->tile_size) - v->t_cam.y + py;
-
-		if (px < v->tile_size && py < v->tile_size)
+		if (px < v->tile_size && py < v->tile_size && draw_x >= 0 && draw_y >= 0)
 		{
 			unsigned int color = v->opt_txt.mob[py * v->tile_size + px];
 			if (color != 0x000000)

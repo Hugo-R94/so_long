@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 18:08:15 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/27 12:49:47 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ void get_player_grid_pos(t_vars *v)
 //     draw_image(&v->frame, &v->tx.player, px, py);
 // }
 
-void	draw_shadow(t_vars *v)
-{
-	 int px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
-   	 int py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y ;
-	 draw_image(&v->frame, &v->tx.shadow, px, py);
-}
+// void	draw_shadow(t_vars *v)
+// {
+// 	 int px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
+//    	 int py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y ;
+// 	 draw_image(&v->img, &v->tx.shadow, px, py);
+// }
 // void draw_pixel_player(t_vars *v, int x, int y)
 // {
 // 	int px;
@@ -84,7 +84,7 @@ void draw_pixel_player(t_vars *v, int x, int y)
 {
     int px;
     int py;
-    unsigned int color_c;
+    uint32_t color_c;
 
     // Initialisation
     color_c = 0;
@@ -97,8 +97,10 @@ void draw_pixel_player(t_vars *v, int x, int y)
 
     // Vérification des bornes
     if (x < 0 || x >= v->tile_size || y < 0 || y >= v->tile_size)
+	{
+		printf("return x ou y < 0 player\n");
         return;
-
+	}
     // Limiter la frame à 0-5
     int frame = (int)(v->opt_txt.index_p);
     if (frame < 0)
@@ -106,7 +108,6 @@ void draw_pixel_player(t_vars *v, int x, int y)
     if (frame > 5)
         frame = 5;
 
-    // Choix de la couleur selon les états
     if (v->player.jump && v->input.left == 1)
         color_c = v->opt_txt.jump[y * v->tile_size + x];
     else if (v->player.jump)
@@ -117,34 +118,20 @@ void draw_pixel_player(t_vars *v, int x, int y)
         color_c = v->opt_txt.p_right[frame][y * v->tile_size + x];
     else
         color_c = v->opt_txt.placeholder[y * v->tile_size + x];
-
-    // Dessiner seulement si la couleur n'est pas noire (transparente)
     if (color_c != 0x000000)
-        put_pixel(v->frame.image, px + x, py + y, color_c);
-}
+        put_pixel(&v->frame, px + x, py + y, color_c);
+}	
 
 void draw_pixel_shadow(t_vars *v, int x, int y)
 {
 	int	px;
 	int	py;
-	float offset = 0.0;
-	unsigned int color_c;
+	uint32_t color_c;
 
 	px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
-
-	// Si le joueur saute, on applique un offset à l'ombre
-	// if (v->player.jump)
-	// {
-	// 	if (v->player.jump_counter < 7)
-	// 		offset = v->player.jump_counter * 0.15;
-	// 	else
-	// 		offset = (14 - v->player.jump_counter) * 0.15;
-	// }
-
-	py = ((v->player.view_y + offset) * v->tile_size) - (int)v->t_cam.y;
-
+	py = ((v->player.view_y) * v->tile_size) - (int)v->t_cam.y;
 	color_c = v->opt_txt.shadow[y * v->tile_size + x];
 
 	if (color_c != 0x000000)
-		put_pixel(v->frame.image, px + x, py + y, color_c);
+		put_pixel(&v->frame, px + x, py + y, color_c);
 }

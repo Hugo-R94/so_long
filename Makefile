@@ -10,7 +10,7 @@ MLX_DIR = minilibx-linux-master
 
 # === Compilation ===
 CC = gcc
-CFLAGS = -g
+CFLAGS = -Wall -Werror -Wextra -g
 INCLUDES = -I$(SO_LONG_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 LDFLAGS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd -no-pie
 
@@ -30,6 +30,7 @@ SRCS =  $(SRCS_DIR)/map.c \
 		$(SRCS_DIR)/remap.c \
 		$(SRCS_DIR)/mob.c \
 		$(SRCS_DIR)/mob_mouv.c \
+		$(SRCS_DIR)/cleanup.c \
 		main.c 
 # === Objets dans le dossier objs ===
 OBJS = $(SRCS:.c=.o)

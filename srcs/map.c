@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/23 12:08:29 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/27 13:26:08 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,47 @@ int	name_checker(char *str)
 
 char	**getmap(int fd)
 {
-	char	**map;
-	char	*line;
-	int		i;
+	char	**map = NULL;
+	char	*line = NULL;
+	int		i = 0;
 
-	map = NULL;
-	i = 0;
 	line = get_next_line(fd, 0);
 	while (line)
 	{
-		map = ft_realloc(map, i);
+		char **tmp = ft_realloc(map, i);
+		if (!tmp)
+		{
+			free(line);
+			// free all previously allocated map lines
+			for (int j = 0; j < i; j++)
+				free(map[j]);
+			free(map);
+			return (NULL);
+		}
+		map = tmp;
 		map[i] = malloc(sizeof(char) * (ft_strlen(line) + 1));
 		if (!map[i])
+		{
+			free(line);
+			for (int j = 0; j < i; j++)
+				free(map[j]);
+			free(map);
 			return (NULL);
+		}
 		ft_strcpy(map[i], line);
 		free(line);
 		i++;
 		line = get_next_line(fd, 0);
 	}
-	map = ft_realloc(map, i);
+	char **tmp = ft_realloc(map, i);
+	if (!tmp)
+	{
+		for (int j = 0; j < i; j++)
+			free(map[j]);
+		free(map);
+		return (NULL);
+	}
+	map = tmp;
 	map[i] = NULL;
 	line = get_next_line(fd, 1);
 	return (map);

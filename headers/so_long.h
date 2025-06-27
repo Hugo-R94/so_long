@@ -169,7 +169,7 @@ void	init_all(t_vars *v);
 //init texture func
 void	init_img_struct(t_img *txt);
 void	get_img(t_vars *v, t_img *img, const char *txt_name);
-void	init_texture(t_vars *v, t_texture *txt);
+void	init_texture(t_vars *v);
 uint32_t *opt_texture(t_img *img, t_vars *v);
 void	transfer_tx(t_vars *v);
 
@@ -179,7 +179,7 @@ char 	set_wall(char **map, int y, int x, int rows, int cols);
 
 //image drawing with alpha
 unsigned int	get_pixel(t_img *img, int x, int y);
-void			put_pixel(t_img *img, int x, int y, unsigned int color);
+void put_pixel(t_img *img, int x, int y, uint32_t color);
 void			draw_image(t_img *dst, t_img *src, int dst_x, int dst_y);
 //background
 int	calculate_tile_size_n_mapsize(t_vars *v);
@@ -201,9 +201,11 @@ void draw_pixel_shadow(t_vars *v, int x, int y);
 
 //player mouvements
 void	move_player(t_vars *vars, double dx, double dy);
-void	key_pressed_p(int keycode, t_vars *v);
-void	key_release_p(int keycode, t_vars *v);
-void	game_loop(t_vars *v);
+//void	key_pressed_p(int keycode, t_vars *v);
+int		 key_pressed_p(int keycode, void *param);
+//void	key_release_p(int keycode, t_vars *v);
+int		key_release_p(int keycode, void *param);
+int	game_loop(void *param);
 void	player_jump(t_vars *v);
 
 //coins
@@ -215,17 +217,20 @@ void draw_pixel_coins(t_vars *v, int x, int y);
 
 //exit
 void	get_exit(t_vars *v);
-void draw_frame(t_img *dst, t_vars *v);
+void draw_frame(t_vars *v);
 
 //mob
 void	draw_pixel_mob(t_vars *v, int x, int y);
 void	nb_mob(t_vars *v);
-void	set_ennemy(t_vars *v, t_mob *mob, int x, int y);
+void set_ennemy(t_mob *mob, int x, int y);
 void	set_all_ennemy(t_vars *v);
 void	set_mouv_axis(t_vars *v, t_mob *mob);
 void mouv_all_mob(t_vars *v);
 void mouv_mob_simple(t_vars *v);
-
-
-
+void handle_draw_mob(t_vars *v, int i, int px, int py, int top, int bottom, int left, int right);
+void cleanup_optimized_textures(t_vars *v);
+void cleanup_frame(t_vars *v);
+void cleanup_all_textures(t_vars *v);
+ void cleanup_all(t_vars *v);
+ 
 #endif

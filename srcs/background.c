@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 14:47:27 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/27 13:05:55 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ void draw_pixel_background(t_vars *v, int px, int py)
     if (right >= v->t_map.map_cols) right = v->t_map.map_cols - 1;
 
     int ty = top;
+	if (px < 0 || py < 0)
+		return;
+	
     while (ty <= bottom)
     {
         int tx = left;
@@ -76,6 +79,13 @@ void draw_pixel_background(t_vars *v, int px, int py)
 
             char tile = v->t_map.map[ty][tx];
             unsigned int color = 0x000000;
+			// if (draw_x < 0 || draw_y < 0)
+			// {
+			// 	return;
+			// }
+			// printf("CAMERA x = %d | y = %d\n", (int)v->t_cam.x, (int)v->t_cam.y);
+			// printf("draw x = %i | draw y = %i\n",draw_x, draw_y);
+			
 			if (is_wall(tile))
 			{
 				if (tile == 'T')       // Top
@@ -97,20 +107,20 @@ void draw_pixel_background(t_vars *v, int px, int py)
 				else 
 				{   
 					color = v->opt_txt.ground[py * v->tile_size + px];
-					put_pixel(v->frame.image, draw_x, draw_y, color);
+					put_pixel(&v->frame, draw_x, draw_y, color);
 					color = v->opt_txt.wall[8][py * v->tile_size + px];
 				}
 			}
             else if (tile == 'E')
             {
 				color = v->opt_txt.ground[py * v->tile_size + px];
-				put_pixel(v->frame.image, draw_x, draw_y, color);
+				put_pixel(&v->frame, draw_x, draw_y, color);
 				color = v->opt_txt.exit[py * v->tile_size + px];
 			}
             else
-                color = v->opt_txt.ground[py * v->tile_size + px];void	init_texture(t_vars *v, t_texture *txt);
+				color = v->opt_txt.ground[py * v->tile_size + px];
 			if (color != 0x000000)
-				put_pixel(v->frame.image, draw_x, draw_y, color);
+				put_pixel(&v->frame, draw_x, draw_y, color);
             tx++;
         }
         ty++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 17:56:35 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/27 11:37:05 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,25 +115,49 @@ static void handle_exit_check(t_vars *v)
     }
 }
 
-void game_loop(t_vars *v)
-{
-	// if(v->opt_txt.index_p >= 1)
-	// 	exit(EXIT_FAILURE);
-    struct timeval start, end;
-    long elapsed_us;
-    const long frame_time_us = 33333;
-    gettimeofday(&start, NULL);
-    update_player_velocity(v);
-    handle_coin_collection(v);
-    mouv_mob_simple(v);
-    check_mob_collisions(v);
-    handle_exit_check(v);
-    handle_jump_and_animation(v);
-    update_camera(v);
-    render_frame(v);
-    gettimeofday(&end, NULL);
+// void game_loop(t_vars *v)
+// {
+// 	// if(v->opt_txt.index_p >= 1)
+// 	// 	exit(EXIT_FAILURE);
+//     struct timeval start, end;
+//     long elapsed_us;
+//     const long frame_time_us = 33333;
+//     gettimeofday(&start, NULL);
+//     update_player_velocity(v);
+//     handle_coin_collection(v);
+//     mouv_mob_simple(v);
+//     check_mob_collisions(v);
+//     handle_exit_check(v);
+//     handle_jump_and_animation(v);
+//     update_camera(v);
+//     render_frame(v);
+//     gettimeofday(&end, NULL);
 
-    elapsed_us = (end.tv_sec - start.tv_sec) * 1000000L + (end.tv_usec - start.tv_usec);
-    if (elapsed_us < frame_time_us)
-        usleep(frame_time_us - elapsed_us);
+//     elapsed_us = (end.tv_sec - start.tv_sec) * 1000000L + (end.tv_usec - start.tv_usec);
+//     if (elapsed_us < frame_time_us)
+//         usleep(frame_time_us - elapsed_us);
+// }
+int	game_loop(void *param)
+{
+	t_vars *v = (t_vars *)param;
+	struct timeval start, end;
+	long elapsed_us;
+	const long frame_time_us = 33333;
+
+	gettimeofday(&start, NULL);
+	update_player_velocity(v);
+	handle_coin_collection(v);
+	mouv_mob_simple(v);
+	check_mob_collisions(v);
+	handle_exit_check(v);
+	handle_jump_and_animation(v);
+	update_camera(v);
+	render_frame(v);
+	gettimeofday(&end, NULL);
+
+	elapsed_us = (end.tv_sec - start.tv_sec) * 1000000L
+		+ (end.tv_usec - start.tv_usec);
+	if (elapsed_us < frame_time_us)
+		usleep(frame_time_us - elapsed_us);
+	return (0);
 }

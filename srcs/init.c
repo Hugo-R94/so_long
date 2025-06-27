@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 17:32:41 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/27 13:04:46 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	init_all(t_vars *v)
 		return;
 	calculate_tile_size_n_mapsize(v);
 	calculate_offset(v);
+	v->t_cam.x = 0;
+	v->t_cam.y = 0;
 	get_player_grid_pos(v);
-	init_texture(v, &v->tx);
+	init_texture(v);
 	nb_mob(v);
 	printf("vel x = %f | vel y = %f\n",v->player.vel_x,v->player.vel_y);
 	init_coins(v);
@@ -125,7 +127,7 @@ void print_img(t_img *img)
 	printf("  shm.readOnly : %d\n", img->shm.readOnly);
 }
 
-void	init_all_img_struct(t_vars *v, t_texture *txt)
+void	init_all_img_struct(t_texture *txt)
 {
 	init_img_struct(&txt->player[0]);
 	init_img_struct(&txt->player[1]);
@@ -177,10 +179,10 @@ void	get_all_img(t_vars *v, t_texture *txt)
 	get_img(v, &txt->placeholder, "player_1");
 }
 
-void	init_texture(t_vars *v, t_texture *txt)
+void	init_texture(t_vars *v)
 {
 	
-	init_all_img_struct(v, &v->tx);
+	init_all_img_struct(&v->tx);
 	get_all_img(v, &v->tx);
 	transfer_tx_1(v);
 	transfer_tx(v);
@@ -219,7 +221,7 @@ uint32_t *mirror_texture(uint32_t *src, int tile_size)
 	int y;
 	int x;
     if (!dst)
-        return NULL;
+		return NULL;
 	y = 0;
  	while (y < tile_size)
     {

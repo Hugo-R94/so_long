@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 17:28:25 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/27 13:07:33 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@ void update_camera(t_vars *v)
     double lerp_factor = 0.08;
     v->t_cam.x += (target_x - v->t_cam.x) * lerp_factor;
     v->t_cam.y += (target_y - v->t_cam.y) * lerp_factor;
+	// if (v->t_cam.y < 0)
+   	// 	v->t_cam.y = 0;
+
 }
 
 
 void render_frame(t_vars *v)
 {
-	int i = 0;
     memset(v->frame.data, 0, v->frame.height * v->frame.size_line); // nettoie frame
-	draw_frame(v->frame.image, v);
+	draw_frame(v);
     mlx_put_image_to_window(v->mlx, v->win, v->frame.image, 0, 0);
 	
 }

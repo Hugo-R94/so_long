@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_mov.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:35:11 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/26 14:46:44 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/27 11:35:35 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,36 @@ void move_player(t_vars *vars, double dx, double dy)
 	vars->player.grid_y = new_y_g;
 }
 
-void	key_pressed_p(int keycode, t_vars *v)
+int	key_pressed_p(int keycode, void *param)
 {
-	if (keycode == 65307)
+	t_vars	*v;
+
+	v = (t_vars *)param;
+	if (keycode == 65307) // Échap
 		exit(0);
-	if (keycode == 97 || keycode == 65361)
+	if (keycode == 97 || keycode == 65361) // a / flèche gauche
 		v->input.left = 1;
-	if (keycode == 100 || keycode == 65363)
+	if (keycode == 100 || keycode == 65363) // d / flèche droite
 		v->input.right = 1;
-	if (keycode == 119 || keycode == 65362)
+	if (keycode == 119 || keycode == 65362) // w / flèche haut
 		v->input.up = 1;
-	if (keycode == 115 || keycode == 65364)
+	if (keycode == 115 || keycode == 65364) // s / flèche bas
 		v->input.down = 1;
-	if (keycode == 32 && v->player.jump == 0)
+	if (keycode == 32 && v->player.jump == 0) // espace
 	{
 		v->player.jump = 1;
 		v->player.jump_counter = 0;
 	}
 	v->moving = 1;
-	return ;
+	return (0);
 }
 
-void	key_release_p(int keycode, t_vars *v)
+
+int	key_release_p(int keycode, void *param)
 {
+	t_vars	*v;
+
+	v = (t_vars *)param;
 	if (keycode == 97 || keycode == 65361)
 		v->input.left = 0;
 	if (keycode == 100 || keycode == 65363)
@@ -77,7 +84,6 @@ void	key_release_p(int keycode, t_vars *v)
 		v->input.up = 0;
 	if (keycode == 115 || keycode == 65364)
 		v->input.down = 0;
-		if (keycode == 32)
 	v->moving = 0;
-	return ;
+	return (0);
 }
