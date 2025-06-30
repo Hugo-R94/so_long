@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/27 13:04:46 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/30 17:57:31 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_all(t_vars *v)
 	get_player_grid_pos(v);
 	init_texture(v);
 	nb_mob(v);
-	printf("vel x = %f | vel y = %f\n",v->player.vel_x,v->player.vel_y);
+	//printf("vel x = %f | vel y = %f\n",v->player.vel_x,v->player.vel_y);
 	init_coins(v);
 	set_all_ennemy(v);
 	get_exit(v);
@@ -52,6 +52,7 @@ void get_img(t_vars *v, t_img *img, const char *txt_name)
     path = malloc(len);
     if (!path)
     {
+		free(path);
         write(2, "Erreur : malloc échoué dans get_img\n", 37);
         exit(EXIT_FAILURE);
     }
@@ -270,5 +271,4 @@ void transfer_tx(t_vars *v)
 	v->opt_txt.mob = opt_texture(&v->tx.mob, v);
 	v->opt_txt.placeholder = opt_texture(&v->tx.placeholder, v);
 	v->opt_txt.jump_r = mirror_texture(v->opt_txt.jump, v->tile_size);
-    //dump_texture(v->opt_txt.player_right[0], 200*200);
 }

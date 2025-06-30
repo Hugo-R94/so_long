@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:00:00 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/27 15:11:03 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/30 14:13:16 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,33 +150,44 @@ void cleanup_all_textures(t_vars *v)
     printf("✅ Nettoyage terminé !\n");
 }
 
-/**
- * Version d'urgence pour les cas d'erreur
- * Plus robuste mais moins bavarde
- */
+
 void emergency_cleanup(t_vars *v)
 {
-    if (!v)
-        return;
-    
-    // Libère opt_txt sans printf
-    for (int i = 0; i < 6; i++)
-    {
-        if (v->opt_txt.player[i]) { free(v->opt_txt.player[i]); v->opt_txt.player[i] = NULL; }
-        if (v->opt_txt.p_right[i]) { free(v->opt_txt.p_right[i]); v->opt_txt.p_right[i] = NULL; }
-    }
-    
-    for (int i = 0; i < 9; i++)
-        if (v->opt_txt.wall[i]) { free(v->opt_txt.wall[i]); v->opt_txt.wall[i] = NULL; }
-    
-    if (v->opt_txt.ground) { free(v->opt_txt.ground); v->opt_txt.ground = NULL; }
-    if (v->opt_txt.coin) { free(v->opt_txt.coin); v->opt_txt.coin = NULL; }
-    if (v->opt_txt.exit) { free(v->opt_txt.exit); v->opt_txt.exit = NULL; }
-    if (v->opt_txt.shadow) { free(v->opt_txt.shadow); v->opt_txt.shadow = NULL; }
-    if (v->opt_txt.jump) { free(v->opt_txt.jump); v->opt_txt.jump = NULL; }
-    if (v->opt_txt.jump_r) { free(v->opt_txt.jump_r); v->opt_txt.jump_r = NULL; }
-    if (v->opt_txt.mob) { free(v->opt_txt.mob); v->opt_txt.mob = NULL; }
-    if (v->opt_txt.placeholder) { free(v->opt_txt.placeholder); v->opt_txt.placeholder = NULL; }
+	if (!v)
+		return;
+
+	if (v->opt_txt.player[0]) { free(v->opt_txt.player[0]); v->opt_txt.player[0] = NULL; }
+	if (v->opt_txt.player[1]) { free(v->opt_txt.player[1]); v->opt_txt.player[1] = NULL; }
+	if (v->opt_txt.player[2]) { free(v->opt_txt.player[2]); v->opt_txt.player[2] = NULL; }
+	if (v->opt_txt.player[3]) { free(v->opt_txt.player[3]); v->opt_txt.player[3] = NULL; }
+	if (v->opt_txt.player[4]) { free(v->opt_txt.player[4]); v->opt_txt.player[4] = NULL; }
+	if (v->opt_txt.player[5]) { free(v->opt_txt.player[5]); v->opt_txt.player[5] = NULL; }
+
+	if (v->opt_txt.p_right[0]) { free(v->opt_txt.p_right[0]); v->opt_txt.p_right[0] = NULL; }
+	if (v->opt_txt.p_right[1]) { free(v->opt_txt.p_right[1]); v->opt_txt.p_right[1] = NULL; }
+	if (v->opt_txt.p_right[2]) { free(v->opt_txt.p_right[2]); v->opt_txt.p_right[2] = NULL; }
+	if (v->opt_txt.p_right[3]) { free(v->opt_txt.p_right[3]); v->opt_txt.p_right[3] = NULL; }
+	if (v->opt_txt.p_right[4]) { free(v->opt_txt.p_right[4]); v->opt_txt.p_right[4] = NULL; }
+	if (v->opt_txt.p_right[5]) { free(v->opt_txt.p_right[5]); v->opt_txt.p_right[5] = NULL; }
+
+	if (v->opt_txt.wall[0]) { free(v->opt_txt.wall[0]); v->opt_txt.wall[0] = NULL; }
+	if (v->opt_txt.wall[1]) { free(v->opt_txt.wall[1]); v->opt_txt.wall[1] = NULL; }
+	if (v->opt_txt.wall[2]) { free(v->opt_txt.wall[2]); v->opt_txt.wall[2] = NULL; }
+	if (v->opt_txt.wall[3]) { free(v->opt_txt.wall[3]); v->opt_txt.wall[3] = NULL; }
+	if (v->opt_txt.wall[4]) { free(v->opt_txt.wall[4]); v->opt_txt.wall[4] = NULL; }
+	if (v->opt_txt.wall[5]) { free(v->opt_txt.wall[5]); v->opt_txt.wall[5] = NULL; }
+	if (v->opt_txt.wall[6]) { free(v->opt_txt.wall[6]); v->opt_txt.wall[6] = NULL; }
+	if (v->opt_txt.wall[7]) { free(v->opt_txt.wall[7]); v->opt_txt.wall[7] = NULL; }
+	if (v->opt_txt.wall[8]) { free(v->opt_txt.wall[8]); v->opt_txt.wall[8] = NULL; }
+
+	if (v->opt_txt.ground) { free(v->opt_txt.ground); v->opt_txt.ground = NULL; }
+	if (v->opt_txt.coin) { free(v->opt_txt.coin); v->opt_txt.coin = NULL; }
+	if (v->opt_txt.exit) { free(v->opt_txt.exit); v->opt_txt.exit = NULL; }
+	if (v->opt_txt.shadow) { free(v->opt_txt.shadow); v->opt_txt.shadow = NULL; }
+	if (v->opt_txt.jump) { free(v->opt_txt.jump); v->opt_txt.jump = NULL; }
+	if (v->opt_txt.jump_r) { free(v->opt_txt.jump_r); v->opt_txt.jump_r = NULL; }
+	if (v->opt_txt.mob) { free(v->opt_txt.mob); v->opt_txt.mob = NULL; }
+	if (v->opt_txt.placeholder) { free(v->opt_txt.placeholder); v->opt_txt.placeholder = NULL; }
 }
 
 /**
@@ -200,13 +211,50 @@ void emergency_cleanup(t_vars *v)
  * }
  */
 
- void cleanup_all(t_vars *v)
+
+static void free_vars_resources(t_vars *v)
 {
-    if (v->t_map.map)
-        free_tab(v->t_map.map);
+    if (v->frame.image)
+    {
+        mlx_destroy_image(v->mlx, v->frame.image);
+        v->frame.image = NULL;
+    }
+    if (v->img)
+    {
+        mlx_destroy_image(v->mlx, v->img);
+        v->img = NULL;
+    }
+    if (v->win)
+    {
+        mlx_destroy_window(v->mlx, v->win);
+        v->win = NULL;
+    }
+    if (v->mlx)
+    {
+        mlx_destroy_display(v->mlx);
+        free(v->mlx);
+        v->mlx = NULL;
+    }
+}
+
+int	clean_and_exit(t_vars *v)
+{
+    if (!v)
+        return (0);
+    free_vars_resources(v);
     if (v->coin)
+    {
         free(v->coin);
+        v->coin = NULL;
+    }
     if (v->mob)
+    {
         free(v->mob);
+        v->mob = NULL;
+    }
     cleanup_all_textures(v);
+    free_tab(v->t_map.map);
+    free(v);
+    exit(EXIT_SUCCESS);
+    return (0);
 }

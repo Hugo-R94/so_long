@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/27 12:49:47 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/30 18:01:11 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_player(t_vars *v)
 	v->input.up = 0;
 	v->input.down = 0;
 	v->opt_txt.index_p = 0;
+	v->mouv_counter = 0;
 }
 
 void get_player_grid_pos(t_vars *v)

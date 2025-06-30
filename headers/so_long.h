@@ -128,6 +128,7 @@ typedef struct	s_vars {
 	void		*win;
 	void		*img;
 	t_map		t_map;
+	int			mouv_counter;
 	int			tile_size;
 	int			offset_x;//peut etre a supprimer
 	int			nb_mob;
@@ -231,6 +232,7 @@ void handle_draw_mob(t_vars *v, int i, int px, int py, int top, int bottom, int 
 void cleanup_optimized_textures(t_vars *v);
 void cleanup_frame(t_vars *v);
 void cleanup_all_textures(t_vars *v);
- void cleanup_all(t_vars *v);
- 
+void cleanup_all(t_vars *v);
+int	clean_and_exit(t_vars *v);
+
 #endif

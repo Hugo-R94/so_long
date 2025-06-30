@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/27 13:05:55 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/30 13:22:16 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,83 +52,111 @@ void	calculate_offset(t_vars *v)
 	v->t_map.map_cols = cols;
 	v->moving = 0;
 }
-
-void draw_pixel_background(t_vars *v, int px, int py)
+static uint32_t get_tile_color_wall(t_vars *v, char tile, int px, int py)
 {
-    int top = (int)v->player.view_y - 3;
-    int bottom = (int)v->player.grid_y + 3;
-    int left = (int)v->player.grid_x - 6;
-    int right = (int)v->player.grid_x + 6;
-
-    if (top < 0) top = 0;
-    if (bottom >= v->t_map.map_rows) bottom = v->t_map.map_rows - 1;
-    if (left < 0) left = 0;
-    if (right >= v->t_map.map_cols) right = v->t_map.map_cols - 1;
-
-    int ty = top;
-	if (px < 0 || py < 0)
-		return;
+	uint32_t color;
 	
-    while (ty <= bottom)
+	if (is_wall(tile))
     {
-        int tx = left;
-        while (tx <= right)
-        {
-            int draw_x = (tx * v->tile_size) - (int)v->t_cam.x + px;
-            int draw_y = (ty * v->tile_size) - (int)v->t_cam.y + py;
+        if (tile == 'T')
+            color = v->opt_txt.wall[0][py * v->tile_size + px];
+        else if (tile == 'B')
+            color = v->opt_txt.wall[1][py * v->tile_size + px];
+        else if (tile == 'L')
+            color = v->opt_txt.wall[2][py * v->tile_size + px];
+        else if (tile == 'R')
+            color = v->opt_txt.wall[3][py * v->tile_size + px];
+        else if (tile == 'O')
+            color = v->opt_txt.wall[6][py * v->tile_size + px];
+        else if (tile == 'A')
+            color = v->opt_txt.wall[4][py * v->tile_size + px];
+        else if (tile == 'Z')
+            color = v->opt_txt.wall[5][py * v->tile_size + px];
+        else if (tile == 'D')
+            color = v->opt_txt.wall[7][py * v->tile_size + px];
+        else
+            color = v->opt_txt.wall[8][py * v->tile_size + px];
+    }
+	return (color);
+}
 
-            char tile = v->t_map.map[ty][tx];
-            unsigned int color = 0x000000;
-			// if (draw_x < 0 || draw_y < 0)
-			// {
-			// 	return;
-			// }
-			// printf("CAMERA x = %d | y = %d\n", (int)v->t_cam.x, (int)v->t_cam.y);
-			// printf("draw x = %i | draw y = %i\n",draw_x, draw_y);
-			
-			if (is_wall(tile))
-			{
-				if (tile == 'T')       // Top
-					color = v->opt_txt.wall[0][py * v->tile_size + px];
-				else if (tile == 'B')  // Bottom
-					color = v->opt_txt.wall[1][py * v->tile_size + px];
-				else if (tile == 'L')  // Left
-					color = v->opt_txt.wall[2][py * v->tile_size + px];
-				else if (tile == 'R')  // Right
-					color = v->opt_txt.wall[3][py * v->tile_size + px];
-				else if (tile == 'O')
-					color = v->opt_txt.wall[6][py * v->tile_size + px];
-				else if (tile == 'A')
-					color = v->opt_txt.wall[4][py * v->tile_size + px];
-				else if (tile == 'Z')
-					color = v->opt_txt.wall[5][py * v->tile_size + px];
-				else if (tile == 'D')
-					color = v->opt_txt.wall[7][py * v->tile_size + px];
-				else 
-				{   
-					color = v->opt_txt.ground[py * v->tile_size + px];
-					put_pixel(&v->frame, draw_x, draw_y, color);
-					color = v->opt_txt.wall[8][py * v->tile_size + px];
-				}
-			}
-            else if (tile == 'E')
-            {
-				color = v->opt_txt.ground[py * v->tile_size + px];
-				put_pixel(&v->frame, draw_x, draw_y, color);
-				color = v->opt_txt.exit[py * v->tile_size + px];
-			}
-            else
-				color = v->opt_txt.ground[py * v->tile_size + px];
-			if (color != 0x000000)
-				put_pixel(&v->frame, draw_x, draw_y, color);
-            tx++;
-        }
-        ty++;
+static unsigned int get_tile_color(t_vars *v, char tile, int px, int py)
+{
+    unsigned int color;
+
+    color = 0x000000;
+    if (is_wall(tile))
+		return (get_tile_color_wall(v, tile, px, py));
+    else if (tile == 'E')
+        color = v->opt_txt.exit[py * v->tile_size + px];
+    else
+        color = v->opt_txt.ground[py * v->tile_size + px];
+    return color;
+}
+
+static void draw_tile_pixel(t_vars *v, int tx, int ty, int px, int py)
+{
+    int draw_x;
+    int draw_y;
+    char tile;
+    unsigned int color;
+
+    draw_x = (tx * v->tile_size) - (int)v->t_cam.x + px;
+    draw_y = (ty * v->tile_size) - (int)v->t_cam.y + py;
+    tile = v->t_map.map[ty][tx];
+    color = get_tile_color(v, tile, px, py);
+
+    if (is_wall(tile) || tile == 'E')
+    {
+        unsigned int bg_color;
+        bg_color = v->opt_txt.ground[py * v->tile_size + px];
+        put_pixel(&v->frame, draw_x, draw_y, bg_color);
+    }
+    if (color != 0x000000)
+        put_pixel(&v->frame, draw_x, draw_y, color);
+}
+
+static void draw_pixel_background_line(t_vars *v, int ty, int left, int right, int px, int py)
+{
+    int tx;
+
+    tx = left;
+    while (tx <= right)
+    {
+        draw_tile_pixel(v, tx, ty, px, py);
+        tx++;
     }
 }
 
+void draw_pixel_background(t_vars *v, int px, int py)
+{
+    int top;
+    int bottom;
+    int left;
+    int right;
+    int ty;
 
-
+    top = (int)v->player.view_y - 3;
+    bottom = (int)v->player.grid_y + 3;
+    left = (int)v->player.grid_x - 6;
+    right = (int)v->player.grid_x + 6;
+    if (top < 0)
+        top = 0;
+    if (bottom >= v->t_map.map_rows)
+        bottom = v->t_map.map_rows - 1;
+    if (left < 0)
+        left = 0;
+    if (right >= v->t_map.map_cols)
+        right = v->t_map.map_cols - 1;
+    if (px < 0 || py < 0)
+        return;
+    ty = top;
+    while (ty <= bottom)
+    {
+        draw_pixel_background_line(v, ty, left, right, px, py);
+        ty++;
+    }
+}
 
 void	get_exit(t_vars *v)
 {

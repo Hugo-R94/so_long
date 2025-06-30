@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 11:06:36 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/16 11:44:23 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/06/27 15:55:55 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ void	free_tab(char **map)
 {
 	int	i;
 
+	if (!map)
+		return;
 	i = 0;
 	while (map[i])
 		i++;
-	while (i >= 0)
-		free(map[i--]);
+	while (--i >= 0)
+		free(map[i]);
 	free(map);
 }

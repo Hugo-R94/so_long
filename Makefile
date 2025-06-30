@@ -31,7 +31,8 @@ SRCS =  $(SRCS_DIR)/map.c \
 		$(SRCS_DIR)/mob.c \
 		$(SRCS_DIR)/mob_mouv.c \
 		$(SRCS_DIR)/cleanup.c \
-		main.c 
+		so_long.c 
+
 # === Objets dans le dossier objs ===
 OBJS = $(SRCS:.c=.o)
 OBJS := $(OBJS:srcs/%=$(OBJDIR)/%)
@@ -51,7 +52,7 @@ $(OBJDIR)/%.o: srcs/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/main.o: main.c
+$(OBJDIR)/so_long.o: so_long.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 

@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/27 13:26:08 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/30 14:22:03 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,18 @@ char	**ft_realloc(char **map, int size)
 	if (!new_map)
 		return (NULL);
 	i = 0;
-	while (i < size && map && map[i])
+	while (i < size && map && map)
 	{
 		new_map[i] = map[i];
 		i++;
 	}
+	
 	new_map[i] = NULL;
-	free(map);
+	 if (map)
+        free(map);
 	return (new_map);
 }
+
 
 int	name_checker(char *str)
 {
@@ -54,80 +57,62 @@ int	name_checker(char *str)
 		return (0);
 	if (ft_strcmp(str + len - 4, ".ber") == 0)
 	{
-		printf("C'est bien un .ber\n");
+		//printf("C'est bien un .ber\n");
 		return (1);
 	}
-	printf("C'est pas un .ber\n");
+	//printf("C'est pas un .ber\n");
 	return (0);
 }
 
-char	**getmap(int fd)
+static char	**add_line_to_map(char **map, char *line, int i)
 {
-	char	**map = NULL;
-	char	*line = NULL;
-	int		i = 0;
+    char	**tmp;
 
-	line = get_next_line(fd, 0);
-	while (line)
-	{
-		char **tmp = ft_realloc(map, i);
-		if (!tmp)
-		{
-			free(line);
-			// free all previously allocated map lines
-			for (int j = 0; j < i; j++)
-				free(map[j]);
-			free(map);
-			return (NULL);
-		}
-		map = tmp;
-		map[i] = malloc(sizeof(char) * (ft_strlen(line) + 1));
-		if (!map[i])
-		{
-			free(line);
-			for (int j = 0; j < i; j++)
-				free(map[j]);
-			free(map);
-			return (NULL);
-		}
-		ft_strcpy(map[i], line);
-		free(line);
-		i++;
-		line = get_next_line(fd, 0);
-	}
-	char **tmp = ft_realloc(map, i);
-	if (!tmp)
-	{
-		for (int j = 0; j < i; j++)
-			free(map[j]);
-		free(map);
-		return (NULL);
-	}
-	map = tmp;
-	map[i] = NULL;
-	line = get_next_line(fd, 1);
-	return (map);
+    tmp = ft_realloc(map, i);
+    if (!tmp)
+    {
+        free(line);
+        free_tab(map);
+        return (NULL);
+    }
+    map = tmp;
+    map[i] = malloc(sizeof(char) * (ft_strlen(line) + 1));
+    if (!map[i])
+    {
+        free(line);
+        free_tab(map);
+        return (NULL);
+    }
+    ft_strcpy(map[i], line);
+    free(line);
+    return (map);
 }
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	**map;
-// 	int		i;
+char **getmap(int fd)
+{
+    char	**map;
+    char	*line;
+    int		i;
 
-// 	i = 0;
-// 	fd = open("maps/valid/valid5.ber", O_RDONLY);
-// 	if (fd < 0)
-// 	{
-// 		perror("open");
-// 		return (1);
-// 	}
-// 	map = getmap(fd);
-// 	if (!map)
-// 		return (1);
-// 	while (map[i])
-// 		printf("%s", map[i++]);
-// 	printf("map checking >>>>\n");
-// 	check_map(map);
-// 	return (0);
-// }
+    map = NULL;
+    line = NULL;
+    i = 0;
+    line = get_next_line(fd, 0);
+    while (line)
+    {
+        map = add_line_to_map(map, line, i);
+        if (!map)
+            return (NULL);
+        i++;
+        line = get_next_line(fd, 0);
+    }
+    char **tmp = ft_realloc(map, i);
+    if (!tmp)
+    {
+        free_tab(map);
+        return NULL;
+    }
+    map = tmp;
+    map[i] = NULL;
+    return map;
+}

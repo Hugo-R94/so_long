@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/27 13:07:33 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/30 13:27:48 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ void update_camera(t_vars *v)
     double lerp_factor = 0.08;
     v->t_cam.x += (target_x - v->t_cam.x) * lerp_factor;
     v->t_cam.y += (target_y - v->t_cam.y) * lerp_factor;
-	// if (v->t_cam.y < 0)
-   	// 	v->t_cam.y = 0;
-
 }
 
 

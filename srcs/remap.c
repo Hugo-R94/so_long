@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:49:28 by hugz              #+#    #+#             */
-/*   Updated: 2025/06/23 14:38:32 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/30 13:37:46 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,45 +43,50 @@ char set_wall(char **map, int y, int x, int rows, int cols)
     return '1';
 }
 
+static char *remap_line(char **map, int y, int cols, int rows)
+{
+    char *new_line;
+    int x;
+
+    new_line = malloc(sizeof(char) * (cols + 1));
+    if (!new_line)
+        return NULL;
+    x = 0;
+    while (x < cols)
+    {
+        if (map[y][x] == '1')
+            new_line[x] = set_wall(map, y, x, rows, cols);
+        else
+            new_line[x] = map[y][x];
+        x++;
+    }
+    new_line[cols] = '\0';
+    return new_line;
+}
+
 char **remap(char **map)
 {
-    int rows = 0;
-    int cols = 0;
+    int rows;
+    int cols;
     char **new_map;
-    int y, x;
+    int y;
 
-    // Calcul du nombre de lignes
+    rows = 0;
     while (map[rows])
         rows++;
-
-    // Largeur de la map (longueur de la première ligne)
     cols = strlen(map[0]);
-
-    // Allocation du tableau de chaînes
     new_map = malloc(sizeof(char *) * (rows + 1));
     if (!new_map)
         return NULL;
-
     y = 0;
     while (y < rows)
     {
-        new_map[y] = malloc(sizeof(char) * (cols + 1));
+        new_map[y] = remap_line(map, y, cols, rows);
         if (!new_map[y])
             return NULL;
-
-        x = 0;
-        while (x < cols)
-        {
-            if (map[y][x] == '1')
-                new_map[y][x] = set_wall(map, y, x, rows, cols);
-            else
-                new_map[y][x] = map[y][x];
-            x++;
-        }
-        new_map[y][cols] = '\0';
         y++;
     }
     new_map[rows] = NULL;
-
+    free_tab(map);
     return new_map;
 }

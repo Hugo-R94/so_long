@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:35:11 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/27 11:35:35 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/27 15:44:32 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	key_pressed_p(int keycode, void *param)
 
 	v = (t_vars *)param;
 	if (keycode == 65307) // Échap
-		exit(0);
+		clean_and_exit(v);
 	if (keycode == 97 || keycode == 65361) // a / flèche gauche
 		v->input.left = 1;
 	if (keycode == 100 || keycode == 65363) // d / flèche droite

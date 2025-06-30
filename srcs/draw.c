@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:51:14 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/27 12:44:11 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/30 13:08:19 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ unsigned int	get_pixel(t_img *img, int x, int y)
 
 void put_pixel(t_img *img, int x, int y, uint32_t color)
 {
-   // printf("x = %i | y = %i\n",x ,y);
     if (!img || !img->data || x < 0 || y < 0)
     {
         return;
@@ -38,11 +37,11 @@ void put_pixel(t_img *img, int x, int y, uint32_t color)
 	
 }
 
-void draw_frame(t_vars *v)
+void    draw_bg(t_vars *v)
 {
     int py;
-	int px;
-    
+    int px;
+        
 	py = 0;
     while (py < v->tile_size)
     {
@@ -52,21 +51,28 @@ void draw_frame(t_vars *v)
         py++;
     }
 	py = 0;
+    py = 0;
     while (py < v->tile_size)
     {
         px = 0;
         while (px < v->tile_size)
         {
-           // printf("y = %i\n", py);
             draw_pixel_mob(v, px, py);
-            //sleep(2);
             draw_pixel_coins(v, px, py);
             draw_pixel_shadow(v, px, py);
             px++;
         }
         py++;
     }
+}
+
+void draw_frame(t_vars *v)
+{
+    int py;
+	int px;
+    
 	py = 0;
+    draw_bg(v);
     while (py < v->tile_size)
     {
         px = 0;
@@ -75,3 +81,4 @@ void draw_frame(t_vars *v)
         py++;
     }
 }
+

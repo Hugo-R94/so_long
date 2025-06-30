@@ -6,7 +6,7 @@
 /*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:57 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/27 13:32:26 by hugz             ###   ########.fr       */
+/*   Updated: 2025/06/30 14:14:03 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(void)
 
 	// allocation de vars
 	
-	vars = malloc(sizeof(t_vars));
+	vars =  malloc(sizeof(t_vars));
 	if (!vars)
 		return (1);
 	i = 0;
@@ -87,15 +87,12 @@ int	main(void)
 	while (vars->t_map.map[i])
 		printf("%s", vars->t_map.map[i++]);
 	printf("\n");
-	
 	init_all(vars);
-	
-	mlx_hook(vars->win, 2, 1L << 0, key_pressed_p, vars);     // key down
-	mlx_hook(vars->win, 3, 1L << 1, key_release_p, vars);   // key up
+	mlx_hook(vars->win, 2, 1L << 0, key_pressed_p, vars);
+	mlx_hook(vars->win, 3, 1L << 1, key_release_p, vars); 
+	mlx_hook(vars->win, 17, 0, clean_and_exit, vars);
 	mlx_loop_hook(vars->mlx, game_loop, vars);           // loop appelée à chaque "frame"
 	mlx_loop(vars->mlx);
-	//cleanup_all_textures(vars);
-	cleanup_all(vars);
-	free(vars);
+	clean_and_exit(vars);
 	return 0;
 }
