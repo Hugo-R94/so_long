@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/30 17:57:31 by hugz             ###   ########.fr       */
+/*   Updated: 2025/07/01 14:19:12 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_all(t_vars *v)
 {
 	if (!v)
 		return;
+	v->overlay = NULL;
 	calculate_tile_size_n_mapsize(v);
 	calculate_offset(v);
 	v->t_cam.x = 0;
@@ -24,7 +25,6 @@ void	init_all(t_vars *v)
 	get_player_grid_pos(v);
 	init_texture(v);
 	nb_mob(v);
-	//printf("vel x = %f | vel y = %f\n",v->player.vel_x,v->player.vel_y);
 	init_coins(v);
 	set_all_ennemy(v);
 	get_exit(v);
@@ -187,9 +187,7 @@ void	init_texture(t_vars *v)
 	get_all_img(v, &v->tx);
 	transfer_tx_1(v);
 	transfer_tx(v);
-
 	init_frame(v, &v->frame, 1920, 1080);
-
 }
 
 
@@ -267,8 +265,15 @@ static void transfer_tx_1(t_vars *v)
 
 void transfer_tx(t_vars *v)
 {
+	int height;
+	int width;
+	
+	height = 100;
+	width = 1920;
 	v->opt_txt.jump = opt_texture(&v->tx.jump, v);
 	v->opt_txt.mob = opt_texture(&v->tx.mob, v);
 	v->opt_txt.placeholder = opt_texture(&v->tx.placeholder, v);
 	v->opt_txt.jump_r = mirror_texture(v->opt_txt.jump, v->tile_size);
+	v->overlay = mlx_xpm_file_to_image(v->mlx,"placeholder_assets/overlay.xpm",&height, &width);
+	//dump_texture(v->overlay, 19200);
 }

@@ -146,6 +146,7 @@ typedef struct	s_vars {
 	int			coin_get;
 	t_coin		*coin;
 	t_img		frame;
+	void		*overlay;
 }				t_vars;
 
 //map building and checking ----- on touche pas ca marche

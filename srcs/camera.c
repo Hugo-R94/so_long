@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/30 13:27:48 by hugz             ###   ########.fr       */
+/*   Updated: 2025/07/01 14:22:18 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void update_camera(t_vars *v)
 
 void render_frame(t_vars *v)
 {
-    memset(v->frame.data, 0, v->frame.height * v->frame.size_line); // nettoie frame
+	memset(v->frame.data, 0, v->frame.height * v->frame.size_line); // nettoie frame
 	draw_frame(v);
-    mlx_put_image_to_window(v->mlx, v->win, v->frame.image, 0, 0);
-	
+	mlx_put_image_to_window(v->mlx, v->win, v->frame.image, 0, 0);
+	mlx_put_image_to_window(v->mlx, v->win, v->overlay, 0, 0);
 }
 
 int init_frame(t_vars *v, t_img *frame, int width, int height)
@@ -57,4 +57,3 @@ int init_frame(t_vars *v, t_img *frame, int width, int height)
 	memset(frame->data, 0, height * frame->size_line);
 	return (0);
 }
-

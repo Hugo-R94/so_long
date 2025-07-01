@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:00:00 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/30 14:13:16 by hugz             ###   ########.fr       */
+/*   Updated: 2025/07/01 14:26:34 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void cleanup_optimized_textures(t_vars *v)
     for (int i = 0; i < 9; i++)
         free_opt_texture(&v->opt_txt.wall[i]);
     
-    // Libère les autres textures
     free_opt_texture(&v->opt_txt.ground);
     free_opt_texture(&v->opt_txt.coin);
     free_opt_texture(&v->opt_txt.exit);
@@ -73,7 +72,6 @@ void cleanup_optimized_textures(t_vars *v)
     free_opt_texture(&v->opt_txt.jump_r);
     free_opt_texture(&v->opt_txt.mob);
     free_opt_texture(&v->opt_txt.placeholder);
-    
     printf("✅ Textures optimisées libérées\n");
 }
 
@@ -99,7 +97,6 @@ void cleanup_mlx_textures(t_vars *v)
     free_mlx_image(v, &v->tx.wall.corner_bl);
     free_mlx_image(v, &v->tx.wall.corner_br);
     free_mlx_image(v, &v->tx.wall.middle);
-    
     // Libère les autres images
     free_mlx_image(v, &v->tx.ground);
     free_mlx_image(v, &v->tx.coin);
@@ -219,6 +216,8 @@ static void free_vars_resources(t_vars *v)
         mlx_destroy_image(v->mlx, v->frame.image);
         v->frame.image = NULL;
     }
+	if (v->overlay)
+		mlx_destroy_image(v->mlx, v->overlay);
     if (v->img)
     {
         mlx_destroy_image(v->mlx, v->img);

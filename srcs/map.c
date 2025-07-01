@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/30 14:22:03 by hugz             ###   ########.fr       */
+/*   Updated: 2025/07/01 14:17:07 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,8 @@ int	name_checker(char *str)
 		return (0);
 	if (ft_strcmp(str + len - 4, ".ber") == 0)
 	{
-		//printf("C'est bien un .ber\n");
 		return (1);
 	}
-	//printf("C'est pas un .ber\n");
 	return (0);
 }
 
