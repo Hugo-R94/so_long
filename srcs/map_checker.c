@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/23 15:08:47 by hugz             ###   ########.fr       */
+/*   Updated: 2025/07/01 17:08:26 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ void	check_map(char **map)
 		|| check_wall(map) == -1 || check_invalid(map) == -1)
 		error_map(map);
 	check_path(map);
-	printf("Map valide.\n");
+	//printf("Map valide.\n");
 	return ;
 }

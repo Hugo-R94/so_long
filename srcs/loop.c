@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/01 14:15:57 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/01 17:15:29 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void handle_coin_collection(t_vars *v)
         {
             v->coin_get++;
             v->coin[i].vis = 0;
-            printf("Coin #%d ramassé, total: %d/%d\n", i, v->coin_get, v->coin_count);
+            //printf("Coin #%d ramassé, total: %d/%d\n", i, v->coin_get, v->coin_count);
         }
         i++;
     }
@@ -110,7 +110,6 @@ static void handle_exit_check(t_vars *v)
         v->player.grid_y == v->exit.ey &&
         v->exit.open == 1)
     {
-        printf("VICTOIRE !!\n");
         exit(EXIT_SUCCESS);
     }
 }
@@ -132,17 +131,11 @@ int	game_loop(void *param)
 	update_camera(v);
 	render_frame(v);
 	gettimeofday(&end, NULL);
-    if (v->input.down == 1 || v->input.up == 1|| v->input.left  == 1|| v->input.right ==1 )
-    {
-        v->mouv_counter =  v->mouv_counter + 1;
-        // ft_printf("mouve counter = %i\n",v->mouv_counter);
-        ft_putstr("mouv counter = ");
-        ft_putnb(v->mouv_counter);
-        ft_putchar('\n');
-    }
-	elapsed_us = (end.tv_sec - start.tv_sec) * 1000000L
-		+ (end.tv_usec - start.tv_usec);
-	if (elapsed_us < frame_time_us)
+	if (v->input.down == 1 || v->input.up == 1|| v->input.left  == 1|| v->input.right ==1 )
+		v->mouv_counter =  v->mouv_counter + 1;
+	elapsed_us = (end.tv_sec - start.tv_sec) * 1000000L + (end.tv_usec - start.tv_usec);
+	v->fps = 1000000 / elapsed_us;
+	if (v->fps > 30)
 		usleep(frame_time_us - elapsed_us);
 	return (0); 
 }

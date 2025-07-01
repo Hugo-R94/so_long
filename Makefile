@@ -31,6 +31,7 @@ SRCS =  $(SRCS_DIR)/map.c \
 		$(SRCS_DIR)/mob.c \
 		$(SRCS_DIR)/mob_mouv.c \
 		$(SRCS_DIR)/cleanup.c \
+		$(SRCS_DIR)/ft_sprintf.c \
 		so_long.c 
 
 # === Objets dans le dossier objs ===

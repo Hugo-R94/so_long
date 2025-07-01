@@ -147,6 +147,9 @@ typedef struct	s_vars {
 	t_coin		*coin;
 	t_img		frame;
 	void		*overlay;
+	int			fps;
+	int			case_move;
+	
 }				t_vars;
 
 //map building and checking ----- on touche pas ca marche
@@ -200,7 +203,7 @@ void draw_player(t_vars *v);
 void	draw_shadow(t_vars *v);
 void draw_pixel_player(t_vars *v, int x, int y);
 void draw_pixel_shadow(t_vars *v, int x, int y);
-
+char	*ft_sprintf(const char *format, ...);
 //player mouvements
 void	move_player(t_vars *vars, double dx, double dy);
 //void	key_pressed_p(int keycode, t_vars *v);

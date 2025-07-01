@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/01 14:19:12 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/01 16:59:00 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ void	init_all(t_vars *v)
 {
 	if (!v)
 		return;
-	v->overlay = NULL;
 	calculate_tile_size_n_mapsize(v);
 	calculate_offset(v);
 	v->t_cam.x = 0;
 	v->t_cam.y = 0;
+	v->fps = 0;
+	v->overlay = NULL;
 	get_player_grid_pos(v);
 	init_texture(v);
 	nb_mob(v);

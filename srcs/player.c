@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/30 18:01:11 by hugz             ###   ########.fr       */
+/*   Updated: 2025/07/01 17:05:03 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	init_player(t_vars *v)
 	v->input.down = 0;
 	v->opt_txt.index_p = 0;
 	v->mouv_counter = 0;
+	v->case_move = 0;
+	
 }
 
 void get_player_grid_pos(t_vars *v)
@@ -87,28 +89,22 @@ void draw_pixel_player(t_vars *v, int x, int y)
     int py;
     uint32_t color_c;
 
-    // Initialisation
     color_c = 0;
-
     px = (v->player.view_x * v->tile_size) - (int)v->t_cam.x;
     if (v->player.jump == 1)
         py = (v->player.view_jump * v->tile_size) - (int)v->t_cam.y;
     else
         py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y;
-
-    // Vérification des bornes
     if (x < 0 || x >= v->tile_size || y < 0 || y >= v->tile_size)
 	{
 		printf("return x ou y < 0 player\n");
         return;
 	}
-    // Limiter la frame à 0-5
     int frame = (int)(v->opt_txt.index_p);
     if (frame < 0)
         frame = 0;
     if (frame > 5)
         frame = 5;
-
     if (v->player.jump && v->input.left == 1)
         color_c = v->opt_txt.jump[y * v->tile_size + x];
     else if (v->player.jump)
