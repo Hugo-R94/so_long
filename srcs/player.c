@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/01 17:05:03 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 12:10:35 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	init_player(t_vars *v)
 	v->input.down = 0;
 	v->opt_txt.index_p = 0;
 	v->mouv_counter = 0;
-	v->case_move = 0;
-	
 }
 
 void get_player_grid_pos(t_vars *v)
@@ -82,6 +80,19 @@ void get_player_grid_pos(t_vars *v)
 // 	if (color_c != 0x000000 )
 // 		put_pixel(v->frame.image, px + x, py + y, color_c);
 // }
+static uint32_t	put_color_player(t_vars *v, int x, int y, int frame)
+{
+	   if (v->player.jump && v->input.left == 1)
+        return(v->opt_txt.jump[y * v->tile_size + x]);
+    else if (v->player.jump)
+        return (v->opt_txt.jump_r[y * v->tile_size + x]);
+    else if (v->input.left == 1)
+        return (v->opt_txt.player[frame][y * v->tile_size + x]);
+    else if (v->input.right == 1)
+        return (v->opt_txt.p_right[frame][y * v->tile_size + x]);
+    else
+        return (v->opt_txt.placeholder[y * v->tile_size + x]);
+}
 
 void draw_pixel_player(t_vars *v, int x, int y)
 {
@@ -96,25 +107,13 @@ void draw_pixel_player(t_vars *v, int x, int y)
     else
         py = (v->player.view_y * v->tile_size) - (int)v->t_cam.y;
     if (x < 0 || x >= v->tile_size || y < 0 || y >= v->tile_size)
-	{
-		printf("return x ou y < 0 player\n");
         return;
-	}
     int frame = (int)(v->opt_txt.index_p);
-    if (frame < 0)
-        frame = 0;
-    if (frame > 5)
-        frame = 5;
-    if (v->player.jump && v->input.left == 1)
-        color_c = v->opt_txt.jump[y * v->tile_size + x];
-    else if (v->player.jump)
-        color_c = v->opt_txt.jump_r[y * v->tile_size + x];
-    else if (v->input.left == 1)
-        color_c = v->opt_txt.player[frame][y * v->tile_size + x];
-    else if (v->input.right == 1)
-        color_c = v->opt_txt.p_right[frame][y * v->tile_size + x];
-    else
-        color_c = v->opt_txt.placeholder[y * v->tile_size + x];
+	if (frame < 0)
+		frame = 0;
+	if (frame > 5)
+		frame = 5;
+	color_c = put_color_player(v,x,y,frame);
     if (color_c != 0x000000)
         put_pixel(&v->frame, px + x, py + y, color_c);
 }	

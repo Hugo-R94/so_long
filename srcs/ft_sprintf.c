@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:58:49 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/01 16:19:06 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 12:03:06 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_sprintf(const char *format, ...)
 {
 	va_list	args;
 	int		i = 0, j = 0;
-	char	*res = malloc(1024);
+	char	*res = malloc(300	);
 	char	*tmp;
 
 	if (!res)

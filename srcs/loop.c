@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/01 17:15:29 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/01 17:27:02 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static void update_player_velocity(t_vars *v)
 {
-    double accel = 0.02;
+    double accel = 0.022;
     double friction = 0.85;
 
     if (v->input.left)  v->player.vel_x -= accel;
@@ -41,7 +41,6 @@ static void handle_coin_collection(t_vars *v)
         {
             v->coin_get++;
             v->coin[i].vis = 0;
-            //printf("Coin #%d ramassé, total: %d/%d\n", i, v->coin_get, v->coin_count);
         }
         i++;
     }
@@ -114,9 +113,9 @@ static void handle_exit_check(t_vars *v)
     }
 }
 
-int	game_loop(void *param)
+int	game_loop(t_vars *v)
 {
-	t_vars *v = (t_vars *)param;
+	//t_vars *v = (t_vars *)param;
 	struct timeval start, end;
 	long elapsed_us;
 	const long frame_time_us = 33333;

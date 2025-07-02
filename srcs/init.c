@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/01 16:59:00 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 12:03:05 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	init_all(t_vars *v)
 	calculate_offset(v);
 	v->t_cam.x = 0;
 	v->t_cam.y = 0;
-	v->fps = 0;
 	v->overlay = NULL;
 	get_player_grid_pos(v);
 	init_texture(v);
@@ -29,6 +28,8 @@ void	init_all(t_vars *v)
 	init_coins(v);
 	set_all_ennemy(v);
 	get_exit(v);
+	v->fps = 0;
+	v->case_move = 0;
 }
 
 
@@ -276,5 +277,4 @@ void transfer_tx(t_vars *v)
 	v->opt_txt.placeholder = opt_texture(&v->tx.placeholder, v);
 	v->opt_txt.jump_r = mirror_texture(v->opt_txt.jump, v->tile_size);
 	v->overlay = mlx_xpm_file_to_image(v->mlx,"placeholder_assets/overlay.xpm",&height, &width);
-	//dump_texture(v->overlay, 19200);
 }

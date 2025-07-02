@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remap.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:49:28 by hugz              #+#    #+#             */
-/*   Updated: 2025/06/30 13:37:46 by hugz             ###   ########.fr       */
+/*   Updated: 2025/07/02 12:04:08 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ char set_wall(char **map, int y, int x, int rows, int cols)
 {
     if (map[y][x] != '1')
         return map[y][x];
-
-    // Coins
     if (y == 0 && x == 0)
         return 'A';  // coin haut gauche
     if (y == 0 && x == cols - 2)
@@ -28,8 +26,6 @@ char set_wall(char **map, int y, int x, int rows, int cols)
         return 'O';  // coin bas gauche
     if (y == rows - 1 && x == cols - 2)
         return 'D';  // coin bas droit
-
-    // Bords (hors coins)
     if (y == 0)
         return 'T';  // mur top
     if (y == rows - 1)
@@ -38,8 +34,6 @@ char set_wall(char **map, int y, int x, int rows, int cols)
         return 'L';  // mur left
     if (x == cols - 2)
         return 'R';  // mur right
-
-    // Mur intérieur
     return '1';
 }
 

@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/01 17:12:04 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 12:15:28 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,12 +150,9 @@ void draw_pixel_background(t_vars *v, int px, int py)
         right = v->t_map.map_cols - 1;
     if (px < 0 || py < 0)
         return;
-    ty = top;
-    while (ty <= bottom)
-    {
+    ty = top - 1;
+    while (++ty <= bottom)
         draw_pixel_background_line(v, ty, left, right, px, py);
-        ty++;
-    }
 }
 
 void	get_exit(t_vars *v)

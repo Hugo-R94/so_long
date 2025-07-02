@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:35:11 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/01 17:06:10 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/01 17:18:11 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void move_player(t_vars *vars, double dx, double dy)
     vars->player.grid_x = new_x_g;
     vars->player.grid_y = new_y_g;
 }
+
 
 
 int	key_pressed_p(int keycode, void *param)
