@@ -177,10 +177,14 @@ void	get_img(t_vars *v, t_img *img, const char *txt_name);
 void	init_texture(t_vars *v);
 uint32_t *opt_texture(t_img *img, t_vars *v);
 void	transfer_tx(t_vars *v);
+void	get_all_img(t_vars *v, t_texture *txt);
+void	init_all_img_struct(t_texture *txt);
+void	transfer_tx_1(t_vars *v);
+uint32_t *mirror_texture(uint32_t *src, int tile_size);
 
 //remap
 char	**remap(char **map);
-char 	set_wall(char **map, int y, int x, int rows, int cols);
+char	set_wall(char **map, int y, int x, int *bounds);
 
 //image drawing with alpha
 unsigned int	get_pixel(t_img *img, int x, int y);
@@ -207,10 +211,10 @@ char	*ft_sprintf(const char *format, ...);
 //player mouvements
 void	move_player(t_vars *vars, double dx, double dy);
 //void	key_pressed_p(int keycode, t_vars *v);
-int		 key_pressed_p(int keycode, void *param);
+int	key_pressed_p(int keycode, t_vars *v);
 //void	key_release_p(int keycode, t_vars *v);
-int		key_release_p(int keycode, void *param);
-int	game_loop(void *param);
+int		key_release_p(int keycode, t_vars *v);
+int	game_loop(t_vars *v);
 void	player_jump(t_vars *v);
 
 //coins
@@ -224,7 +228,17 @@ void draw_pixel_coins(t_vars *v, int x, int y);
 void	get_exit(t_vars *v);
 void draw_frame(t_vars *v);
 
+//loop
+void	update_player_velocity(t_vars *v);
+void	handle_coin_collection(t_vars *v);
+void	check_mob_collisions(t_vars *v);
+void handle_jump_and_animation(t_vars *v);
+void handle_exit_check(t_vars *v);
 //mob
+int	get_mob_width(t_vars *v, t_mob *mob);
+int	get_mob_height(t_vars *v, t_mob *mob);
+void	mouv_mob_x(t_vars *v, t_mob *mob);
+void	mouv_mob_simple_one(t_vars *v, int i);
 void	draw_pixel_mob(t_vars *v, int x, int y);
 void	nb_mob(t_vars *v);
 void set_ennemy(t_mob *mob, int x, int y);
@@ -232,11 +246,14 @@ void	set_all_ennemy(t_vars *v);
 void	set_mouv_axis(t_vars *v, t_mob *mob);
 void mouv_all_mob(t_vars *v);
 void mouv_mob_simple(t_vars *v);
-void handle_draw_mob(t_vars *v, int i, int px, int py, int top, int bottom, int left, int right);
+void	handle_draw_mob(t_vars *v, int i, int *b, int *pos);
+
 void cleanup_optimized_textures(t_vars *v);
 void cleanup_frame(t_vars *v);
 void cleanup_all_textures(t_vars *v);
 void cleanup_all(t_vars *v);
 int	clean_and_exit(t_vars *v);
+void	cleanup_mlx_textures(t_vars *v);
+void	emergency_cleanup_sub1(t_vars *v);
 
 #endif

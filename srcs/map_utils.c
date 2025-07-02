@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 11:06:36 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/27 15:55:55 by hugz             ###   ########.fr       */
+/*   Updated: 2025/07/02 14:51:12 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/so_long.h"
-
 
 void	error_ff(char **map, char **clonemap)
 {
@@ -66,7 +65,7 @@ void	free_tab(char **map)
 	int	i;
 
 	if (!map)
-		return;
+		return ;
 	i = 0;
 	while (map[i])
 		i++;

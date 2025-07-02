@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/01 17:08:26 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 14:50:38 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int	check_invalid(char **map)
 		while (map[i][y])
 		{
 			if (map[i][y] != '1' && map[i][y] != 'C' && map[i][y] != '0' &&
-				map[i][y] != 'E' && map[i][y] != 'P'  && map[i][y] != 'M' && map[i][y] != '\n')
+				map[i][y] != 'E' && map[i][y] != 'P'
+				&& map[i][y] != 'M' && map[i][y] != '\n')
 				return (-1);
 			y++;
 		}
@@ -106,6 +107,5 @@ void	check_map(char **map)
 		|| check_wall(map) == -1 || check_invalid(map) == -1)
 		error_map(map);
 	check_path(map);
-	//printf("Map valide.\n");
 	return ;
 }

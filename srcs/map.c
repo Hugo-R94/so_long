@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/01 14:17:07 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 14:55:01 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ char	**ft_realloc(char **map, int size)
 		new_map[i] = map[i];
 		i++;
 	}
-	
 	new_map[i] = NULL;
-	 if (map)
-        free(map);
+	if (map)
+		free(map);
 	return (new_map);
 }
-
 
 int	name_checker(char *str)
 {
@@ -64,53 +62,53 @@ int	name_checker(char *str)
 
 static char	**add_line_to_map(char **map, char *line, int i)
 {
-    char	**tmp;
+	char	**tmp;
 
-    tmp = ft_realloc(map, i);
-    if (!tmp)
-    {
-        free(line);
-        free_tab(map);
-        return (NULL);
-    }
-    map = tmp;
-    map[i] = malloc(sizeof(char) * (ft_strlen(line) + 1));
-    if (!map[i])
-    {
-        free(line);
-        free_tab(map);
-        return (NULL);
-    }
-    ft_strcpy(map[i], line);
-    free(line);
-    return (map);
+	tmp = ft_realloc(map, i);
+	if (!tmp)
+	{
+		free(line);
+		free_tab(map);
+		return (NULL);
+	}
+	map = tmp;
+	map[i] = malloc(sizeof(char) * (ft_strlen(line) + 1));
+	if (!map[i])
+	{
+		free(line);
+		free_tab(map);
+		return (NULL);
+	}
+	ft_strcpy(map[i], line);
+	free(line);
+	return (map);
 }
 
-char **getmap(int fd)
+char	**getmap(int fd)
 {
-    char	**map;
-    char	*line;
-    int		i;
+	char	**map;
+	char	*line;
+	int		i;
+	char	**tmp;
 
-    map = NULL;
-    line = NULL;
-    i = 0;
-    line = get_next_line(fd, 0);
-    while (line)
-    {
-        map = add_line_to_map(map, line, i);
-        if (!map)
-            return (NULL);
-        i++;
-        line = get_next_line(fd, 0);
-    }
-    char **tmp = ft_realloc(map, i);
-    if (!tmp)
-    {
-        free_tab(map);
-        return NULL;
-    }
-    map = tmp;
-    map[i] = NULL;
-    return map;
+	map = NULL;
+	line = NULL;
+	i = 0;
+	line = get_next_line(fd, 0);
+	while (line)
+	{
+		map = add_line_to_map(map, line, i++);
+		if (!map)
+			return (NULL);
+		line = get_next_line(fd, 0);
+	}
+	tmp = ft_realloc(map, i);
+	if (!tmp)
+	{
+		free_tab(map);
+		return (NULL);
+	}
+	map = tmp;
+	map[i] = NULL;
+	return (map);
 }

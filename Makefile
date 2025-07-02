@@ -21,17 +21,24 @@ SRCS =  $(SRCS_DIR)/map.c \
 	    $(SRCS_DIR)/flood_fill.c \
 		$(SRCS_DIR)/background.c \
 		$(SRCS_DIR)/init.c \
+		$(SRCS_DIR)/init1.c \
 		$(SRCS_DIR)/player.c \
 		$(SRCS_DIR)/camera.c \
 		$(SRCS_DIR)/draw.c \
 		$(SRCS_DIR)/coin.c \
 		$(SRCS_DIR)/player_mov.c \
 		$(SRCS_DIR)/loop.c \
+		$(SRCS_DIR)/gameloop.c \
 		$(SRCS_DIR)/remap.c \
 		$(SRCS_DIR)/mob.c \
 		$(SRCS_DIR)/mob_mouv.c \
+		$(SRCS_DIR)/mob_mouv1.c \
+		$(SRCS_DIR)/mob_mouv2.c \
 		$(SRCS_DIR)/cleanup.c \
 		$(SRCS_DIR)/ft_sprintf.c \
+		$(SRCS_DIR)/background_utils.c \
+		$(SRCS_DIR)/cleanup_utils.c \
+		$(SRCS_DIR)/cleanup_utils2.c \
 		so_long.c 
 
 # === Objets dans le dossier objs ===

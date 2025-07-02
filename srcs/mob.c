@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mob.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:35:39 by hugz              #+#    #+#             */
-/*   Updated: 2025/06/27 12:46:35 by hugz             ###   ########.fr       */
+/*   Updated: 2025/07/02 15:18:47 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void set_ennemy(t_mob *mob, int x, int y)
+void	set_ennemy(t_mob *mob, int x, int y)
 {
 	mob->mx = x;
 	mob->my = y;
@@ -21,13 +21,14 @@ void set_ennemy(t_mob *mob, int x, int y)
 	mob->vis = 1;
 }
 
-
 void	nb_mob(t_vars *v)
 {
-	int x = 0;
-	int y;
-	int mob_nb = 0;
+	int	x;
+	int	y;
+	int	mob_nb;
 
+	x = 0;
+	mob_nb = 0;
 	while (v->t_map.map[x])
 	{
 		y = 0;
@@ -42,12 +43,11 @@ void	nb_mob(t_vars *v)
 	v->nb_mob = mob_nb;
 }
 
-
 void	set_all_ennemy(t_vars *v)
 {
-	int y;
-	int x;
-	int i;
+	int	y;
+	int	x;
+	int	i;
 
 	i = 0;
 	y = 0;
@@ -60,7 +60,7 @@ void	set_all_ennemy(t_vars *v)
 			if (v->t_map.map[y][x] == 'M')
 			{
 				set_ennemy(&v->mob[i], x, y);
-				set_mouv_axis(v, &v->mob[i]); 
+				set_mouv_axis(v, &v->mob[i]);
 				v->mob[i].dir = 1;
 				i++;
 			}
@@ -70,81 +70,56 @@ void	set_all_ennemy(t_vars *v)
 	}
 }
 
-
-// void draw_pixel_mob(t_vars *v, int px, int py)
-// {
-// 	int top = v->player.grid_y - 3;
-// 	int bottom = v->player.grid_y + 3;
-// 	int left = v->player.grid_x - 6;
-// 	int right = v->player.grid_x + 6;
-
-// 	if (top < 0) top = 0;
-// 	if (bottom >= v->t_map.map_rows) bottom = v->t_map.map_rows - 1;
-// 	if (left < 0) left = 0;
-// 	if (right >= v->t_map.map_cols) right = v->t_map.map_cols - 1;
-
-// 	int i = 0;
-// 	while (i < v->nb_mob)
-// 	{
-// 		int mx = v->mob[i].mx;  // grille
-// 		int my = v->mob[i].my;  // grille
-// 		if (mx < left || mx > right || my < top || my > bottom)
-// 		{
-// 			i++;
-// 			continue;
-// 		}
-// 		if (v->mob[i].vis == 1)
-// 		{
-// 			int draw_x = (int)(v->mob[i].view_x * v->tile_size) - v->t_cam.x + px;
-// 			int draw_y = (int)(v->mob[i].view_y * v->tile_size) - v->t_cam.y + py;
-
-// 			if (px < v->tile_size && py < v->tile_size)
-// 			{
-// 				unsigned int color = v->opt_txt.mob[py * v->tile_size + px];
-// 				if (color != 0x000000)
-// 					put_pixel(&v->frame, draw_x, draw_y, color);
-// 			}
-// 		}
-// 		i++;
-// 	}
-// }
-
-void draw_pixel_mob(t_vars *v, int px, int py)
+void	draw_pixel_mob(t_vars *v, int px, int py)
 {
-	int top = v->player.grid_y - 3;
-	int bottom = v->player.grid_y + 3;
-	int left = v->player.grid_x - 6;
-	int right = v->player.grid_x + 6;
+	int	bounds[4];
+	int	pos[2];
+	int	i;
 
-	if (top < 0) top = 0;
-	if (bottom >= v->t_map.map_rows) bottom = v->t_map.map_rows - 1;
-	if (left < 0) left = 0;
-	if (right >= v->t_map.map_cols) right = v->t_map.map_cols - 1;
-
-	int i = 0;
+	bounds[0] = v->player.grid_y - 3;
+	bounds[1] = v->player.grid_y + 3;
+	bounds[2] = v->player.grid_x - 6;
+	bounds[3] = v->player.grid_x + 6;
+	if (bounds[0] < 0)
+		bounds[0] = 0;
+	if (bounds[1] >= v->t_map.map_rows)
+		bounds[1] = v->t_map.map_rows - 1;
+	if (bounds[2] < 0)
+		bounds[2] = 0;
+	if (bounds[3] >= v->t_map.map_cols)
+		bounds[3] = v->t_map.map_cols - 1;
+	pos[0] = px;
+	pos[1] = py;
+	i = 0;
 	while (i < v->nb_mob)
 	{
-		handle_draw_mob(v, i, px, py, top, bottom, left, right);
+		handle_draw_mob(v, i, bounds, pos);
 		i++;
 	}
 }
-void handle_draw_mob(t_vars *v, int i, int px, int py, int top, int bottom, int left, int right)
+
+void	handle_draw_mob(t_vars *v, int i, int *b, int *pos)
 {
-	int mx = v->mob[i].mx;
-	int my = v->mob[i].my;
+	int				mx;
+	int				my;
+	unsigned int	color;
+	int				dx;
+	int				dy;
 
-	if (mx < left || mx > right || my < top || my > bottom)
-		return;
-
+	mx = v->mob[i].mx;
+	my = v->mob[i].my;
+	if (mx < b[2] || mx > b[3] || my < b[0] || my > b[1])
+		return ;
 	if (v->mob[i].vis == 1)
 	{
-		int draw_x = (int)(v->mob[i].view_x * v->tile_size) - v->t_cam.x + px;
-		int draw_y = (int)(v->mob[i].view_y * v->tile_size) - v->t_cam.y + py;
-		if (px < v->tile_size && py < v->tile_size && draw_x >= 0 && draw_y >= 0)
+		dx = (int)(v->mob[i].view_x * v->tile_size) - v->t_cam.x + pos[0];
+		dy = (int)(v->mob[i].view_y * v->tile_size) - v->t_cam.y + pos[1];
+		if (pos[0] < v->tile_size && pos[1] < v->tile_size
+			&& dx >= 0 && dy >= 0)
 		{
-			unsigned int color = v->opt_txt.mob[py * v->tile_size + px];
+			color = v->opt_txt.mob[pos[1] * v->tile_size + pos[0]];
 			if (color != 0x000000)
-				put_pixel(&v->frame, draw_x, draw_y, color);
+				put_pixel(&v->frame, dx, dy, color);
 		}
 	}
 }
