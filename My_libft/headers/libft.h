@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:26:03 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 11:52:28 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 17:03:27 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <unistd.h>
 # include "ft_printf.h"
 # include "get_next_line.h"
-
-
 
 typedef struct s_list
 {
@@ -81,7 +79,5 @@ int		ft_puthexa(unsigned long int nb, bool up);
 int		ft_putptr(void *ptr);
 int		ft_putunsigned(int nb);
 void	ft_print_bit(unsigned char octet);
-unsigned char	ft_swap_bits(unsigned char octet);
-unsigned char	ft_reverse_bits(unsigned char octet);
 char	*ft_strcat(char *dest, const char *src);
 #endif

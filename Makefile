@@ -6,7 +6,7 @@ SRCS_DIR = srcs
 OBJDIR = objs
 LIBFT_DIR = My_libft
 SO_LONG_DIR = headers
-MLX_DIR = minilibx-linux-master
+MLX_DIR = minilibx-linux
 
 # === Compilation ===
 CC = gcc

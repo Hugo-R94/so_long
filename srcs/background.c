@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 16:00:42 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 17:10:15 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ void	draw_pixel_background(t_vars *v, int px, int py)
 	int	top;
 	int	bottom;
 
-	top = (int)v->player.view_y - 3;
-	bottom = (int)v->player.grid_y + 3;
-	p[0] = (int)v->player.grid_x - 6;
-	p[1] = (int)v->player.grid_x + 6;
+	top = (int)(v->t_cam.y / v->tile_size);
+	bottom = (int)((v->t_cam.y + RES_Y) / v->tile_size);
+	p[0] = (int)(v->t_cam.x / v->tile_size);
+	p[1] = (int)((v->t_cam.x + RES_X) / v->tile_size);
 	if (top < 0)
 		top = 0;
 	if (bottom >= v->t_map.map_rows)

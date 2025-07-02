@@ -6,13 +6,13 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:51:14 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 14:07:25 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 16:43:46 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-unsigned int	get_pixel(t_img *img, int x, int y)
+uint32_t	get_pixel(t_img *img, int x, int y)
 {
 	int	offset;
 

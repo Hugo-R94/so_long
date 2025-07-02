@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 14:55:01 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 17:59:06 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ char	**ft_realloc(char **map, int size)
 	if (!new_map)
 		return (NULL);
 	i = 0;
-	while (i < size && map && map)
+	while (i < size && map && map[i])
 	{
 		new_map[i] = map[i];
 		i++;
 	}
 	new_map[i] = NULL;
-	if (map)
-		free(map);
+	free(map);
 	return (new_map);
 }
+
 
 int	name_checker(char *str)
 {
@@ -68,10 +68,11 @@ static char	**add_line_to_map(char **map, char *line, int i)
 	if (!tmp)
 	{
 		free(line);
-		free_tab(map);
+		free_tab(map); 
 		return (NULL);
 	}
 	map = tmp;
+
 	map[i] = malloc(sizeof(char) * (ft_strlen(line) + 1));
 	if (!map[i])
 	{

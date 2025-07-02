@@ -6,12 +6,11 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:54:12 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/06/19 11:53:03 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/02 17:06:15 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -27,12 +26,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strcat(str_join, s2);
 	return (str_join);
 }
-
-// #include <stdio.h>
-
-// int	main(void)
-// {
-//     char *str1 = "lorem ipsum ";
-//     char *str2 = "dolor sit amet";
-// 	printf("%s", ft_strjoin(str1,str2));
-// }
