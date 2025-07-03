@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:37:47 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 13:01:09 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 12:10:23 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	emergency_cleanup(t_vars *v)
 	}
 }
 
-static void	free_vars_resources(t_vars *v)
+void	free_vars_resources(t_vars *v)
 {
 	if (v->frame.image)
 	{

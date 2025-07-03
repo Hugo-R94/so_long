@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:57 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 17:48:52 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 12:16:05 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,25 @@ void	init_vars(t_vars *vars, char *map_path)
 	name_checker(map_path);
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
-		exit(1);
+	{
+		free(vars);
+		exit(EXIT_FAILURE);
+	}
 	vars->t_map.map = getmap(fd);
 	close(fd);
 	if (!vars->t_map.map)
-		exit(1);
-	check_map(vars->t_map.map);
+		error_map(vars->t_map.map, vars);
+	check_map(vars->t_map.map, vars);
 	vars->t_map.map = remap(vars->t_map.map);
 	vars->mlx = mlx_init();
 	if (!vars->mlx)
-		exit(1);
+		error_exit(vars);
 	vars->win = mlx_new_window(vars->mlx, RES_X, RES_Y, "SO LONG");
 	if (!vars->win)
-		exit(1);
+		error_exit(vars);
 	vars->img = mlx_new_image(vars->mlx, RES_X, RES_Y);
 	if (!vars->img)
-		exit(1);
+		error_exit(vars);
 	init_all(vars);
 }
 

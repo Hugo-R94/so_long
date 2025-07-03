@@ -6,17 +6,19 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 11:06:36 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 17:50:20 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 12:22:49 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "so_long.h"
 
-void	error_ff(char **map, char **clonemap)
+void	error_ff(char **map, char **clonemap, char **clonemap2, t_vars *v)
 {
-	free(map);
+	free_tab(map);
 	free_tab(clonemap);
-	printf("Error floodfill impossible\n");
+	free_tab(clonemap2);
+	free(v);
+	ft_printf("Error floodfill impossible\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -30,10 +32,11 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-void	error_map(char **map)
+void	error_map(char **map, t_vars *v)
 {
-	free(map);
-	printf("Error map invalid.\n");
+	free_tab(map);
+	free(v);
+	ft_printf("Error map invalid.\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -64,9 +67,9 @@ void	free_tab(char **map)
 {
 	int	i;
 
+	i = 0;
 	if (!map)
 		return ;
-	i = 0;
 	while (map[i])
 	{
 		free(map[i]);

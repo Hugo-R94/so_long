@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:42:43 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 16:43:38 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 12:21:53 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,12 +169,15 @@ char		**clone_map(char **map);
 char		**remap(char **map);
 char		set_wall(char **map, int y, int x, int *bounds);
 int			count_element(char **map, char element);
-void		check_map(char **map);
+void		check_map(char **map, t_vars *v);
 int			check_invalid(char **map);
-void		error_map(char **map);
-void		error_ff(char **map, char **clonemap);
+void		error_map(char **map, t_vars *v);
+void		error_ff(char **map, char **clonemap, char **clonemap2, t_vars *v);
 int			flood_fill_element(char **map, int x, int y, char element);
 void		find_player(char **map, int *x, int *y);
+void		check_path(char **map, t_vars *v);
+void		free_vars_resources(t_vars *v);
+void		error_exit(t_vars *vars);
 
 // 🛠️ Initialisation
 void		init_vars(t_vars *vars, char *map_path);

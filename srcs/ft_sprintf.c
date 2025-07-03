@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:58:49 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 14:14:21 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 12:24:54 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,20 @@ char	*ft_sprintf(const char *format, ...)
 	res[j] = '\0';
 	va_end(args);
 	return (res);
+}
+
+void	error_exit(t_vars *vars)
+{
+	if (vars)
+	{
+		if (vars->img)
+			mlx_destroy_image(vars->mlx, vars->img);
+		if (vars->win)
+			mlx_destroy_window(vars->mlx, vars->win);
+		if (vars->mlx)
+			free(vars->mlx);
+		if (vars->t_map.map)
+			free_tab(vars->t_map.map);
+	}
+	exit(EXIT_FAILURE);
 }

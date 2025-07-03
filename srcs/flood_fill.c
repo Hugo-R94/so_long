@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 14:07:43 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 17:42:21 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 12:24:40 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	find_player(char **map, int *x, int *y)
 	}
 }
 
-void	check_path(char **map)
+void	check_path(char **map, t_vars *v)
 {
 	char	**checkmap;
 	char	**checkmap2;
@@ -116,11 +116,13 @@ void	check_path(char **map)
 	nb_c = count_element(map, 'C');
 	checkmap = clone_map(map);
 	checkmap2 = clone_map(map);
+	if (checkmap2 == NULL || checkmap == NULL)
+		error_ff(map, checkmap, checkmap2, v);
 	find_player(map, &px, &py);
 	if (flood_fill_element(checkmap, px, py, 'E') != 1)
-		error_ff(map, checkmap);
+		error_ff(map, checkmap, checkmap2, v);
 	if (flood_fill_element(checkmap2, px, py, 'C') != nb_c)
-		error_ff(map, checkmap2);
+		error_ff(map, checkmap, checkmap2, v);
 	free_tab(checkmap);
 	free_tab(checkmap2);
 	return ;

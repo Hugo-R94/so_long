@@ -6,13 +6,11 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 14:50:38 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:53:07 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/so_long.h"
-
-void	check_path(char **map);
 
 static int	check_horizontal_wall(char *line)
 {
@@ -35,7 +33,7 @@ static int	check_vertical_wall(char **map, int col_index)
 	i = 0;
 	while (map[i])
 	{
-		if (map[i][col_index] != '1')
+		if ((int)ft_strlen(map[i]) <= col_index || map[i][col_index] != '1')
 			return (-1);
 		i++;
 	}
@@ -93,7 +91,7 @@ int	check_invalid(char **map)
 	return (1);
 }
 
-void	check_map(char **map)
+void	check_map(char **map, t_vars *v)
 {
 	int	p_count;
 	int	c_count;
@@ -105,7 +103,7 @@ void	check_map(char **map)
 	check_invalid(map);
 	if (p_count != 1 || e_count != 1 || c_count < 1
 		|| check_wall(map) == -1 || check_invalid(map) == -1)
-		error_map(map);
-	check_path(map);
+		error_map(map, v);
+	check_path(map, v);
 	return ;
 }

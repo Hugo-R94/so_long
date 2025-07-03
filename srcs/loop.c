@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 14:50:04 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:26:33 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,6 @@ void	handle_exit_check(t_vars *v)
 		&& v->player.grid_y == v->exit.ey
 		&& v->exit.open == 1)
 	{
-		exit(EXIT_SUCCESS);
+		clean_and_exit(v);
 	}
 }
