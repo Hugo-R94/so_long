@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 11:06:36 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/03 12:22:49 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 13:34:36 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	error_ff(char **map, char **clonemap, char **clonemap2, t_vars *v)
 	free_tab(clonemap);
 	free_tab(clonemap2);
 	free(v);
-	ft_printf("Error floodfill impossible\n");
+	ft_putstr_fd("Error\nFloodFill invalid.\n", 2);
 	exit(EXIT_FAILURE);
 }
 
@@ -36,7 +36,7 @@ void	error_map(char **map, t_vars *v)
 {
 	free_tab(map);
 	free(v);
-	ft_printf("Error map invalid.\n");
+	ft_putstr_fd("Error\nMap invalid.\n", 2);
 	exit(EXIT_FAILURE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 14:43:44 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 14:27:04 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,40 @@ void	init_img_struct(t_img *txt)
 	txt->shm.shmaddr = (char *)-1;
 	txt->shm.readOnly = False;
 }
+void	set_pointer_null(t_vars *v)
+{
+	int	i;
+
+	i = 0;
+	while (i < 6)
+	{
+		v->opt_txt.player[i] = NULL;
+		i++;
+	}
+	i = 0;
+	while (i < 6)
+	{
+		v->opt_txt.p_right[i] = NULL;
+		i++;
+	}
+	v->opt_txt.ground = NULL;
+	v->opt_txt.coin = NULL;
+	v->opt_txt.exit = NULL;
+	v->opt_txt.shadow = NULL;
+	i = 0;
+	while (i < 9)
+	{
+		v->opt_txt.wall[i] = NULL;
+		i++;
+	}
+	v->opt_txt.jump = NULL;
+	v->opt_txt.mob = NULL;
+	v->opt_txt.placeholder = NULL;
+}
 
 void	init_texture(t_vars *v)
 {
+	set_pointer_null(v);
 	init_all_img_struct(&v->tx);
 	get_all_img(v, &v->tx);
 	transfer_tx_1(v);

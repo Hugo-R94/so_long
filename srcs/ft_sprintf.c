@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:58:49 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/03 12:24:54 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 13:34:28 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ void	error_exit(t_vars *vars)
 		if (vars->t_map.map)
 			free_tab(vars->t_map.map);
 	}
+	ft_putstr_fd("Error\n Vars initialisation issue.", 2);
 	exit(EXIT_FAILURE);
 }

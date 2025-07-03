@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:42:43 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/03 12:21:53 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 14:08:59 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,14 +155,14 @@ typedef struct s_vars {
 	t_mob		*mob;
 }	t_vars;
 
-// 🧠 Utilitaires généraux
+// Utilitaires généraux
 int			ft_strcmp(char *s1, char *s2);
 char		*ft_strcpy(char *dest, char *src);
 char		*ft_sprintf(const char *format, ...);
 char		**ft_realloc(char **map, int size);
 void		free_tab(char **map);
 
-// 🗺️ Map / Parsing / Validation
+// Map / Parsing / Validation
 int			name_checker(char *str);
 char		**getmap(int fd);
 char		**clone_map(char **map);
@@ -179,7 +179,7 @@ void		check_path(char **map, t_vars *v);
 void		free_vars_resources(t_vars *v);
 void		error_exit(t_vars *vars);
 
-// 🛠️ Initialisation
+// Initialisation
 void		init_vars(t_vars *vars, char *map_path);
 void		init_all(t_vars *v);
 void		init_all_img_struct(t_texture *txt);
@@ -188,7 +188,7 @@ void		init_img_struct(t_img *txt);
 void		get_all_img(t_vars *v, t_texture *txt);
 void		get_img(t_vars *v, t_img *img, const char *txt_name);
 
-// 🖼️ Images & textures
+// Images & textures
 uint32_t	*opt_texture(t_img *img, t_vars *v);
 uint32_t	*mirror_texture(uint32_t *src, int tile_size);
 uint32_t	get_pixel(t_img *img, int x, int y);
@@ -197,7 +197,7 @@ void		draw_image(t_img *dst, t_img *src, int dst_x, int dst_y);
 void		transfer_tx(t_vars *v);
 void		transfer_tx_1(t_vars *v);
 
-// 🪞 Background & Caméra
+// Background & Caméra
 int			calculate_tile_size_n_mapsize(t_vars *v);
 void		calculate_offset(t_vars *v);
 void		draw_background(t_vars *v, t_img *dst);
@@ -207,7 +207,7 @@ void		update_camera(t_vars *v);
 int			init_frame(t_vars *v, t_img *frame, int width, int height);
 void		render_frame(t_vars *v);
 
-// 🧍 Joueur
+// Joueur
 void		get_player_grid_pos(t_vars *v);
 void		draw_player(t_vars *v);
 void		draw_shadow(t_vars *v);
@@ -216,30 +216,30 @@ void		draw_pixel_shadow(t_vars *v, int x, int y);
 void		move_player(t_vars *v, double dx, double dy);
 void		player_jump(t_vars *v);
 
-// 🎮 Input & boucle de jeu
+// Input & boucle de jeu
 int			key_pressed_p(int keycode, t_vars *v);
 int			key_release_p(int keycode, t_vars *v);
 int			game_loop(t_vars *v);
 
-// 💰 Coins
+// Coins
 void		get_coin_count(t_vars *v);
 void		load_coin(t_vars *v);
 void		init_coins(t_vars *v);
 void		draw_coin(t_vars *v, int index);
 void		draw_pixel_coins(t_vars *v, int x, int y);
 
-// 🏁 Exit
+// Exit
 void		get_exit(t_vars *v);
 void		draw_frame(t_vars *v);
 
-// 🔁 Logique de jeu
+// Logique de jeu
 void		update_player_velocity(t_vars *v);
 void		handle_coin_collection(t_vars *v);
 void		check_mob_collisions(t_vars *v);
 void		handle_jump_and_animation(t_vars *v);
 void		handle_exit_check(t_vars *v);
 
-// 👾 Mobs
+// Mobs
 int			get_mob_width(t_vars *v, t_mob *mob);
 int			get_mob_height(t_vars *v, t_mob *mob);
 void		mouv_mob_x(t_vars *v, t_mob *mob);
@@ -253,7 +253,7 @@ void		mouv_all_mob(t_vars *v);
 void		mouv_mob_simple(t_vars *v);
 void		handle_draw_mob(t_vars *v, int i, int *b, int *pos);
 
-// 🧹 Cleanup / Quitter le jeu
+// Cleanup / Quitter le jeu
 void		cleanup_optimized_textures(t_vars *v);
 void		cleanup_frame(t_vars *v);
 void		cleanup_all_textures(t_vars *v);
@@ -261,5 +261,6 @@ void		cleanup_mlx_textures(t_vars *v);
 void		cleanup_all(t_vars *v);
 void		emergency_cleanup_sub1(t_vars *v);
 int			clean_and_exit(t_vars *v);
+void		emergency_cleanup(t_vars *v);
 
 #endif

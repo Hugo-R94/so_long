@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 17:10:15 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 14:04:09 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ static void	draw_tile_pixel(t_vars *v, int *tx, int ty)
 	draw_x = (tx[0] * v->tile_size) - (int)v->t_cam.x + tx[1];
 	draw_y = (ty * v->tile_size) - (int)v->t_cam.y + tx[2];
 	tile = v->t_map.map[ty][tx[0]];
+	if (tile == '\n')
+		return ;
 	color = get_tile_color(v, tile, tx[1], tx[2]);
-	if (is_wall(tile) || tile == 'E')
+	if ((is_wall(tile) || tile == 'E'))
 	{
 		bg_color = v->opt_txt.ground[tx[2] * v->tile_size + tx[1]];
 		put_pixel(&v->frame, draw_x, draw_y, bg_color);

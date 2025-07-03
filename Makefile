@@ -1,24 +1,28 @@
-# === Nom de l'exécutable ===
+#EXE
 NAME = so_long
 
-# === Dossiers ===
+#COLORS
+YELLOW	= \033[1;33m
+RESET	= \033[0m
+
+#DIR
 SRCS_DIR = srcs
 OBJDIR = objs
 LIBFT_DIR = My_libft
-SO_LONG_DIR = headers
+INCLUDE_DIR = headers
 MLX_DIR = minilibx-linux
 
-# === Compilation ===
+#CC
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g
-INCLUDES = -I$(SO_LONG_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+INCLUDES = -I$(INCLUDE_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 LDFLAGS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd -no-pie
 
-# === Fichiers sources ===
+#FILES
 SRCS =  $(SRCS_DIR)/map.c \
-	    $(SRCS_DIR)/map_checker.c \
-	    $(SRCS_DIR)/map_utils.c \
-	    $(SRCS_DIR)/flood_fill.c \
+		$(SRCS_DIR)/map_checker.c \
+		$(SRCS_DIR)/map_utils.c \
+		$(SRCS_DIR)/flood_fill.c \
 		$(SRCS_DIR)/background.c \
 		$(SRCS_DIR)/init.c \
 		$(SRCS_DIR)/init1.c \
@@ -39,30 +43,25 @@ SRCS =  $(SRCS_DIR)/map.c \
 		$(SRCS_DIR)/background_utils.c \
 		$(SRCS_DIR)/cleanup_utils.c \
 		$(SRCS_DIR)/cleanup_utils2.c \
-		so_long.c 
+		$(SRCS_DIR)/so_long.c
 
-# === Objets dans le dossier objs ===
-OBJS = $(SRCS:.c=.o)
-OBJS := $(OBJS:srcs/%=$(OBJDIR)/%)
+#OBJS
+OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJDIR)/%.o)
 
-# === Librairies ===
+#LIB
 LIBFT = $(LIBFT_DIR)/libft.a
 MLX = $(MLX_DIR)/libmlx.a
 
-# === Règles ===
+#RULES
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
 
-# Compilation des .o en respectant le dossier objs/
-$(OBJDIR)/%.o: srcs/%.c
+$(OBJDIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(OBJDIR)/so_long.o: so_long.c
-	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@echo -e "$(YELLOW)Compiling $<...$(RESET)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
@@ -70,7 +69,7 @@ $(LIBFT):
 $(MLX):
 	$(MAKE) -C $(MLX_DIR)
 
-clean:	
+clean:
 	$(MAKE) clean -C $(LIBFT_DIR)
 	$(MAKE) clean -C $(MLX_DIR)
 	rm -rf $(OBJDIR)

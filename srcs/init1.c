@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 14:16:09 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 14:33:10 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 14:27:28 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,26 @@ void	get_img(t_vars *v, t_img *img, const char *txt_name)
 	int		len;
 	int		endian;
 
-	len = ft_strlen("placeholder_assets/")
+	len = ft_strlen("assets/")
 		+ ft_strlen(txt_name) + ft_strlen(".xpm") + 1;
 	path = malloc(len);
 	if (!path)
 	{
+		printf("texture %s manquante.\n", txt_name);
 		free(path);
 		exit(EXIT_FAILURE);
 	}
-	ft_strcpy(path, "placeholder_assets/");
+	ft_strcpy(path, "assets/");
 	ft_strcat(path, txt_name);
 	ft_strcat(path, ".xpm");
 	img->image = mlx_xpm_file_to_image(v->mlx, path, &img->width, &img->height);
 	free(path);
 	if (!img->image)
-		exit(EXIT_FAILURE);
+		emergency_cleanup(v);
 	img->data = mlx_get_data_addr(img->image, &img->bpp,
 			&img->size_line, &endian);
 	if (!img->data)
-		exit(EXIT_FAILURE);
+		emergency_cleanup(v);
 }
 
 void	init_all_img_struct(t_texture *txt)

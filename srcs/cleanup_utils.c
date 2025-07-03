@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:37:47 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/03 12:10:23 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/03 14:29:13 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	emergency_cleanup_sub(t_vars *v)
 		if (v->opt_txt.p_right[i])
 		{
 			free(v->opt_txt.p_right[i]);
-			v->opt_txt.p_right[1] = NULL;
+			v->opt_txt.p_right[i] = NULL;
 		}
 	}
 }
@@ -57,10 +57,13 @@ void	emergency_cleanup(t_vars *v)
 			v->opt_txt.wall[i] = NULL;
 		}
 	}
+	free_tab(v->t_map.map);
+	free(v);
+	exit(EXIT_FAILURE);
 }
 
 void	free_vars_resources(t_vars *v)
-{
+{		
 	if (v->frame.image)
 	{
 		mlx_destroy_image(v->mlx, v->frame.image);
