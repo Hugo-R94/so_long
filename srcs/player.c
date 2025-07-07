@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 15:28:13 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:10:51 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	draw_pixel_player(t_vars *v, int x, int y)
 	color_c = put_color_player(v, x, y, frame);
 	if (color_c != 0x000000)
 		put_pixel(&v->frame, px + x, py + y, color_c);
-}	
+}
 
 void	draw_pixel_shadow(t_vars *v, int x, int y)
 {

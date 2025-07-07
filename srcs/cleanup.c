@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 00:00:00 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 15:39:24 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:11:17 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void	free_opt_texture(uint32_t **texture)
 
 static void	free_mlx_image(t_vars *v, t_img *img)
 {
-	if (!img)
+	if (!v || !img)
 		return ;
-	if (img->image)
+	if (v->mlx && img->image)
 	{
 		mlx_destroy_image(v->mlx, img->image);
 		img->image = NULL;
@@ -69,7 +69,7 @@ void	cleanup_mlx_textures(t_vars *v)
 	if (!v)
 		return ;
 	i = -1;
-	while (i++ < 6)
+	while (++i < 6)
 		free_mlx_image(v, &v->tx.player[i]);
 	free_mlx_image(v, &v->tx.wall.top);
 	free_mlx_image(v, &v->tx.wall.bottom);

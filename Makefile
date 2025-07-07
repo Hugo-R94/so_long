@@ -43,6 +43,7 @@ SRCS =  $(SRCS_DIR)/map.c \
 		$(SRCS_DIR)/background_utils.c \
 		$(SRCS_DIR)/cleanup_utils.c \
 		$(SRCS_DIR)/cleanup_utils2.c \
+		$(SRCS_DIR)/cleanup_tx.c \
 		$(SRCS_DIR)/so_long.c
 
 #OBJS

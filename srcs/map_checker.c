@@ -6,7 +6,7 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:17:13 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/03 11:53:07 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:35:53 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	check_horizontal_wall(char *line)
 	int	i;
 
 	i = 0;
+	if (line[i] == '\n')
+		return (-1);
 	while (line[i] && line[i] != '\n')
 	{
 		if (line[i] != '1')

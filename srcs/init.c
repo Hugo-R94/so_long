@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/03 14:27:04 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:44:33 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,45 +40,24 @@ void	init_img_struct(t_img *txt)
 	txt->shm.shmaddr = (char *)-1;
 	txt->shm.readOnly = False;
 }
-void	set_pointer_null(t_vars *v)
-{
-	int	i;
-
-	i = 0;
-	while (i < 6)
-	{
-		v->opt_txt.player[i] = NULL;
-		i++;
-	}
-	i = 0;
-	while (i < 6)
-	{
-		v->opt_txt.p_right[i] = NULL;
-		i++;
-	}
-	v->opt_txt.ground = NULL;
-	v->opt_txt.coin = NULL;
-	v->opt_txt.exit = NULL;
-	v->opt_txt.shadow = NULL;
-	i = 0;
-	while (i < 9)
-	{
-		v->opt_txt.wall[i] = NULL;
-		i++;
-	}
-	v->opt_txt.jump = NULL;
-	v->opt_txt.mob = NULL;
-	v->opt_txt.placeholder = NULL;
-}
 
 void	init_texture(t_vars *v)
 {
-	set_pointer_null(v);
+	int		h;
+	int		w;
+	char	*path;
+
+	path = ft_sprintf("assets/overlay.xpm");
+	h = 100;
+	w = 1920;
+	init_frame(v, &v->frame, 1920, 1080);
 	init_all_img_struct(&v->tx);
 	get_all_img(v, &v->tx);
+	v->overlay = mlx_xpm_file_to_image(v->mlx, path, &h, &w);
+	free(path);
+	check_texture(v);
 	transfer_tx_1(v);
 	transfer_tx(v);
-	init_frame(v, &v->frame, 1920, 1080);
 }
 
 void	transfer_tx_1(t_vars *v)
@@ -112,17 +91,8 @@ void	transfer_tx_1(t_vars *v)
 
 void	transfer_tx(t_vars *v)
 {
-	int		h;
-	int		w;
-	char	*path;
-
-	path = ft_sprintf("placeholder_assets/overlay.xpm");
-	h = 100;
-	w = 1920;
 	v->opt_txt.jump = opt_texture(&v->tx.jump, v);
 	v->opt_txt.mob = opt_texture(&v->tx.mob, v);
 	v->opt_txt.placeholder = opt_texture(&v->tx.placeholder, v);
 	v->opt_txt.jump_r = mirror_texture(v->opt_txt.jump, v->tile_size);
-	v->overlay = mlx_xpm_file_to_image(v->mlx, path, &h, &w);
-	free(path);
 }

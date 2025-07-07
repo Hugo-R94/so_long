@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:37:47 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/03 14:29:13 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:15:34 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	emergency_cleanup(t_vars *v)
 }
 
 void	free_vars_resources(t_vars *v)
-{		
+{
 	if (v->frame.image)
 	{
 		mlx_destroy_image(v->mlx, v->frame.image);
@@ -93,7 +93,6 @@ int	clean_and_exit(t_vars *v)
 {
 	if (!v)
 		return (0);
-	free_vars_resources(v);
 	if (v->coin)
 	{
 		free(v->coin);
@@ -106,6 +105,7 @@ int	clean_and_exit(t_vars *v)
 	}
 	cleanup_all_textures(v);
 	free_tab(v->t_map.map);
+	free_vars_resources(v);
 	free(v);
 	exit(EXIT_SUCCESS);
 	return (0);

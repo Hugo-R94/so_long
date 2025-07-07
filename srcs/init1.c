@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 14:16:09 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/03 14:27:28 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:15:14 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,19 @@ void	get_img(t_vars *v, t_img *img, const char *txt_name)
 	path = malloc(len);
 	if (!path)
 	{
-		printf("texture %s manquante.\n", txt_name);
-		free(path);
-		exit(EXIT_FAILURE);
+		img->image = NULL;
+		return ;
 	}
 	ft_strcpy(path, "assets/");
 	ft_strcat(path, txt_name);
 	ft_strcat(path, ".xpm");
 	img->image = mlx_xpm_file_to_image(v->mlx, path, &img->width, &img->height);
 	free(path);
-	if (!img->image)
-		emergency_cleanup(v);
-	img->data = mlx_get_data_addr(img->image, &img->bpp,
-			&img->size_line, &endian);
-	if (!img->data)
-		emergency_cleanup(v);
+	if (img->image)
+		img->data = mlx_get_data_addr(img->image, &img->bpp,
+				&img->size_line, &endian);
+	else
+		img->data = NULL;
 }
 
 void	init_all_img_struct(t_texture *txt)

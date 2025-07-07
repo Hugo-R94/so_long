@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   coin.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 10:23:24 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/02 14:04:06 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:15:56 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	get_coin_count(t_vars *vars)
 				count++;
 			j++;
 		}
-	i++;
+		i++;
 	}
 	vars->coin_count = count;
 }

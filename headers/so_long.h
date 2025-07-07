@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:42:43 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/03 14:08:59 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:17:31 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@
 #  define RES_Y 1080
 # endif
 
-typedef struct s_input {
+typedef struct s_input
+{
 	int		left;
 	int		right;
 	int		up;
 	int		down;
 }	t_input;
 
-typedef struct s_wall_textures {
+typedef struct s_wall_textures
+{
 	t_img	top;
 	t_img	bottom;
 	t_img	left;
@@ -48,7 +50,8 @@ typedef struct s_wall_textures {
 	t_img	middle;
 }	t_wall_textures;
 
-typedef struct s_opt_tx {
+typedef struct s_opt_tx
+{
 	uint32_t	*player[6];
 	uint32_t	*ground;
 	uint32_t	*coin;
@@ -63,7 +66,8 @@ typedef struct s_opt_tx {
 	uint32_t	*p_right[6];
 }	t_opt_tx;
 
-typedef struct s_texture {
+typedef struct s_texture
+{
 	t_wall_textures	wall;
 	t_img			ground;
 	t_img			coin;
@@ -75,7 +79,8 @@ typedef struct s_texture {
 	t_img			jump;
 }	t_texture;
 
-typedef struct s_player {
+typedef struct s_player
+{
 	double	view_x;
 	double	view_y;
 	double	view_jump;
@@ -87,13 +92,15 @@ typedef struct s_player {
 	double	vel_y;
 }	t_player;
 
-typedef struct s_coin {
+typedef struct s_coin
+{
 	int		cx;
 	int		cy;
 	bool	vis;
 }	t_coin;
 
-typedef struct s_map {
+typedef struct s_map
+{
 	char	**map;
 	int		map_cols;
 	int		map_rows;
@@ -101,7 +108,8 @@ typedef struct s_map {
 	int		height_px;
 }	t_map;
 
-typedef struct s_camera {
+typedef struct s_camera
+{
 	double	x;
 	double	y;
 	double	speed;
@@ -111,13 +119,15 @@ typedef struct s_camera {
 	int		limit_bottom;
 }	t_camera;
 
-typedef struct s_exit {
+typedef struct s_exit
+{
 	int		open;
 	int		ex;
 	int		ey;
 }	t_exit;
 
-typedef struct s_mob {
+typedef struct s_mob
+{
 	bool	vis;
 	int		mx;
 	int		my;
@@ -127,7 +137,8 @@ typedef struct s_mob {
 	double	view_y;
 }	t_mob;
 
-typedef struct s_vars {
+typedef struct s_vars
+{
 	void		*mlx;
 	void		*win;
 	void		*img;
@@ -262,5 +273,6 @@ void		cleanup_all(t_vars *v);
 void		emergency_cleanup_sub1(t_vars *v);
 int			clean_and_exit(t_vars *v);
 void		emergency_cleanup(t_vars *v);
+void		check_texture(t_vars *v);
 
 #endif

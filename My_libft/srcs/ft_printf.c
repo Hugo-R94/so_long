@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hugz <hugz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:28:53 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/05/20 10:53:24 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:22:44 by hugz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_idformat(va_list args, char *str, int index)
 	if (str[index + 1] == 'x')
 		char_count = ft_puthexa(va_arg(args, unsigned int), 0);
 	if (str[index + 1] == 'X')
-	char_count = ft_puthexa(va_arg(args, unsigned int), 1);
+		char_count = ft_puthexa(va_arg(args, unsigned int), 1);
 	if (str[index + 1] == '%')
 		char_count = ft_putchar('%');
 	return (char_count);

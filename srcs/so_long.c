@@ -6,11 +6,18 @@
 /*   By: hrouchy <hrouchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:57 by hrouchy           #+#    #+#             */
-/*   Updated: 2025/07/03 14:00:31 by hrouchy          ###   ########.fr       */
+/*   Updated: 2025/07/04 13:23:12 by hrouchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static void	name_error(t_vars *vars)
+{
+	free(vars);
+	ft_putstr_fd("Error\nfd error.\n", 2);
+	exit(EXIT_FAILURE);
+}
 
 void	init_vars(t_vars *vars, char *map_path)
 {
@@ -19,10 +26,7 @@ void	init_vars(t_vars *vars, char *map_path)
 	name_checker(map_path);
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
-	{
-		free(vars);
-		exit(EXIT_FAILURE);
-	}
+		name_error(vars);
 	vars->t_map.map = getmap(fd);
 	close(fd);
 	if (!vars->t_map.map)
